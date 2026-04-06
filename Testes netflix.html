@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Nossa História</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ==== ESTILOS GERAIS ==== */
+    body {
+      background-color: #141414;
+      color: #fff;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ==== TELA DE ENTRADA (ESTILO NETFLIX) ==== */
+    #preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #141414; z-index: 9999;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .profile-screen { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .profile-title { font-size: 3.5vw; font-weight: 400; color: #fff; margin-bottom: 2em; }
+    .profiles-container { display: flex; gap: 4vw; justify-content: center; }
+    .profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+    
+    .avatar {
+      width: 10vw; height: 10vw; min-width: 120px; min-height: 120px; max-width: 200px; max-height: 200px;
+      border-radius: 4px; box-sizing: border-box; border: 3px solid transparent;
+      display: flex; justify-content: center; align-items: center; font-size: 4rem; color: #fff;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .avatar-sim { background-color: #e50914; }
+    .avatar-nao { background-color: #333; }
+    .profile-name { margin-top: 15px; color: #808080; font-size: 1.5rem; transition: color 0.2s; }
+    .profile:hover .avatar { border-color: #fff; }
+    .profile:hover .profile-name { color: #fff; }
+
+    @keyframes shake {
+      0% { transform: translateX(0); } 25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); } 75% { transform: translateX(-10px); } 100% { transform: translateX(0); }
+    }
+    .shake { animation: shake 0.4s ease-in-out; }
+
+    /* ==== ANIMAÇÃO DE INTRODUÇÃO (L & F) ==== */
+    #intro-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000;
+      z-index: 9998; display: none; justify-content: center; align-items: center;
+    }
+    .custom-logo {
+      font-family: 'Playfair Display', serif; font-size: 120px; font-weight: bold; color: #e50914;
+      text-shadow: 0 0 20px rgba(229, 9, 20, 0.8), 0 0 40px rgba(229, 9, 20, 0.5);
+      opacity: 0; display: flex; align-items: center; gap: 15px;
+    }
+    .custom-logo span { font-size: 80px; color: #b20710; }
+    .animate-intro { animation: netflixIntro 4.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+    @keyframes netflixIntro {
+      0% { transform: scale(0.5); opacity: 0; filter: blur(10px); }
+      15% { transform: scale(1); opacity: 1; filter: blur(0px); }
+      60% { transform: scale(1.1); opacity: 1; filter: blur(0px); }
+      85% { transform: scale(15); opacity: 0; filter: blur(5px); }
+      100% { transform: scale(20); opacity: 0; display: none; }
+    }
+
+    #main-content { display: none; animation: fadeIn 1.5s ease-in-out; width: 100%; }
+
+    /* ==== BARRA DE NAVEGAÇÃO (NAVBAR) ==== */
+    #navbar {
+      position: fixed; top: 0; left: 0; width: 100%;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 4%; box-sizing: border-box; z-index: 999;
+      background-color: transparent; transition: background-color 0.4s ease, padding 0.4s ease;
+    }
+    #navbar.scrolled { background-color: #141414; box-shadow: 0 2px 10px rgba(0,0,0,0.8); padding: 10px 4%; }
+    .nav-left { display: flex; align-items: center; gap: 40px; }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: bold; color: #e50914; text-decoration: none; }
+    .nav-links { display: flex; list-style: none; gap: 20px; margin: 0; padding: 0; }
+    .nav-links li a { color: #e5e5e5; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; font-weight: bold;}
+    .nav-links li a:hover { color: #b3b3b3; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-search { color: #fff; font-size: 1.2rem; cursor: pointer; }
+    .nav-avatar { width: 35px; height: 35px; background-color: #e50914; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer; }
+
+    /* ==== BANNER PRINCIPAL (HERO) ==== */
+    .hero {
+      background-image: linear-gradient(to top, #141414 0%, rgba(20,20,20,0.3) 100%), url('https://dl.dropboxusercontent.com/scl/fi/h2ycbdowaz2e0nnbpkm3i/IMG_0612.jpg?rlkey=pfztrnrqy6urvc91cwugw9wz8&st=qirnt31f&raw=1');
+      background-size: cover; background-position: center top; height: 90vh;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 0 4% 8%;
+    }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: 4em; margin: 0 0 5px 0; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+    .hero-subtitle { font-size: 1.2rem; margin-bottom: 25px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); max-width: 600px; color: #ccc; }
+
+    /* ==== BOTÕES ESTILO NETFLIX ==== */
+    .hero-buttons { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+    .btn-play, .btn-info {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 10px 24px; border: none; border-radius: 4px; font-size: 1.2rem; font-weight: bold;
+      cursor: pointer; transition: transform 0.2s, background-color 0.2s, opacity 0.2s;
+    }
+    .btn-play { background-color: #fff; color: #000; }
+    .btn-play:hover { opacity: 0.8; }
+    .btn-info { background-color: rgba(109, 109, 110, 0.7); color: #fff; }
+    .btn-info:hover { background-color: rgba(109, 109, 110, 0.4); }
+
+    /* Contador */
+    .counter-container { display: flex; flex-wrap: wrap; gap: 15px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+    .time-block { display: flex; flex-direction: column; align-items: center; background: rgba(0, 0, 0, 0.5); padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
+    .time-value { font-size: 24px; font-weight: bold; }
+    .time-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ==== FILEIRAS (CARROSSÉIS) ==== */
+    .row { margin: 0 4% 40px; }
+    .row h2 { font-size: 1.5rem; margin-bottom: 15px; color: #e5e5e5; }
+    .carousel-container { position: relative; display: flex; align-items: center; }
+    .scroll-btn {
+      position: absolute; z-index: 10; background: rgba(0, 0, 0, 0.7); color: white; border: none;
+      height: 140px; width: 40px; cursor: pointer; font-size: 24px; transition: background 0.3s, color 0.3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .scroll-btn:hover { background: rgba(0, 0, 0, 0.9); color: #e50914; }
+    .left-btn { left: 0; border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+    .right-btn { right: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+
+    .posters {
+      display: flex; gap: 10px; overflow-x: auto; padding: 10px 45px 20px 45px;
+      scrollbar-width: none; scroll-behavior: smooth; width: 100%;
+    }
+    .posters::-webkit-scrollbar { display: none; }
+    .poster {
+      width: 250px; height: 140px; object-fit: cover; border-radius: 4px; cursor: pointer;
+      transition: transform 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.5); background-color: #222; flex-shrink: 0; 
+    }
+    .poster:hover { transform: scale(1.08); z-index: 10; border: 2px solid #fff; }
+
+    /* ==== MODAL DE IMAGEM E VÍDEO EXPANDIDO ==== */
+    .image-modal {
+      display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.95); justify-content: center; align-items: center; animation: zoomIn 0.3s ease;
+    }
+    .modal-content-wrapper { position: relative; max-width: 90%; max-height: 80vh; display: flex; justify-content: center; align-items: center; width: 100%; }
+    .modal-media { max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.8); object-fit: contain; }
+    
+    .close-modal {
+      position: fixed; top: 20px; right: 30px; color: #fff; font-size: 45px; font-weight: bold;
+      cursor: pointer; transition: 0.3s; z-index: 10001; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+    .close-modal:hover { color: #e50914; }
+
+    .nav-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 30px; font-weight: bold;
+      cursor: pointer; z-index: 10002; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%;
+      width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: 0.3s; user-select: none;
+    }
+    .nav-arrow:hover { background-color: #e50914; }
+    .prev-arrow { left: -70px; }
+    .next-arrow { right: -70px; }
+
+    @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* ==== SEÇÕES DE CONTEÚDO ==== */
+    .content-section { margin: 0 4% 50px; background-color: #181818; padding: 30px; border-radius: 8px; }
+    .message-container { position: relative; }
+    .message { font-size: 1.1rem; line-height: 1.8; white-space: pre-line; color: #d2d2d2; font-family: 'Lora', serif; max-height: 130px; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+    .message.expandido { max-height: 2000px; }
+    .fade-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, #181818); pointer-events: none; transition: opacity 0.3s ease; }
+    .fade-overlay.oculto { opacity: 0; }
+    .btn-ler-mais { background: none; border: none; color: #e50914; font-size: 1rem; font-weight: bold; cursor: pointer; padding: 10px 0 0 0; display: inline-flex; align-items: center; gap: 5px; transition: color 0.3s ease; }
+    .btn-ler-mais:hover { color: #ff3b45; }
+
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .video-container iframe, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; object-fit: cover; }
+    .heart-icon { color: #e50914; font-size: 1.2em; margin-left: 10px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+    .site-footer { text-align: center; padding: 40px 20px; margin: 0 4% 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #a0a0a0; font-family: 'Lora', serif; font-style: italic; font-size: 1.1rem; line-height: 1.6; }
+
+    /* ==== MUSIC PLAYER (ESTRUTURA CSS) ==== */
+    .music-player {
+      position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 15px;
+      background: linear-gradient(135deg, #e50914 0%, #83050b 100%); color: white; border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 20px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 2px 5px rgba(255, 255, 255, 0.4);
+      transition: all 0.3s ease; max-width: 300px;
+    }
+
+    /* ==== OTIMIZAÇÕES RESPONSIVAS (CELULARES) ==== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-left { gap: 15px; }
+      .nav-logo { font-size: 26px; }
+
+      .profile-title { font-size: 28px; padding: 0 20px; }
+      .avatar { width: 100px; height: 100px; font-size: 3rem; }
+      .profiles-container { gap: 20px; }
+      .profile-name { font-size: 1.2rem; }
+      .hero-title { font-size: 2.5em; line-height: 1.1; }
+      .btn-play, .btn-info { font-size: 1rem; padding: 8px 16px; width: 100%; margin-bottom: 5px;}
+      .hero-buttons { flex-direction: column; width: 100%; gap: 10px; }
+      
+      .scroll-btn { display: none; }
+      .posters { padding: 10px 0 20px 0; } 
+      .poster { width: 160px; height: 100px; } 
+
+      .modal-content-wrapper { max-width: 100%; max-height: 90vh; }
+      .modal-media { max-height: 90vh; border-radius: 0; }
+      .close-modal { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.6); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
+      .nav-arrow { width: 45px; height: 45px; font-size: 20px; background-color: rgba(0,0,0,0.6); }
+      .prev-arrow { left: 10px; }
+      .next-arrow { right: 10px; }
+
+      .music-player { bottom: 15px; right: 15px; gap: 10px; padding: 8px 15px; max-width: 220px; }
+      #texto-musica { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="profile-screen">
+      <h1 class="profile-title">Deseja entrar na nossa história?</h1>
+      <div class="profiles-container">
+        <div class="profile" id="btn-sim">
+          <div class="avatar avatar-sim">
+            <i class="fas fa-user-friends"></i>
+          </div>
+          <span class="profile-name">Sim</span>
+        </div>
+        <div class="profile" id="btn-nao">
+          <div class="avatar avatar-nao">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="profile-name" id="texto-nao">Não</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="intro-overlay">
+    <div class="custom-logo" id="n-logo-anim">
+      L <span>&</span> F
+    </div>
+  </div>
+
+  <div id="player-musica" class="music-player">
+    <i class="fas fa-step-backward" onclick="mudarMusica(-1)" style="cursor: pointer; font-size: 16px; transition: 0.2s;" onmouseover="this.style.color='#ffb3b3'" onmouseout="this.style.color='white'"></i>
+    <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; background-color: rgba(255, 255, 255, 0.15); border-radius: 50%; cursor: pointer; box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3), 0 2px 5px rgba(0, 0, 0, 0.3);" onclick="pausarTocar()">
+      <i class="fas fa-pause" id="icone-play-pause" style="color: white; font-size: 14px;"></i>
+    </span>
+    <i class="fas fa-step-forward" onclick="mudarMusica(1)" style="cursor: pointer; font-size: 16px; transition: 0.2s;" onmouseover="this.style.color='#ffb3b3'" onmouseout="this.style.color='white'"></i>
+    <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: flex; align-items: center;">
+      <span id="texto-musica" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Carregando...</span>
+    </div>
+  </div>
+
+  <div id="main-content">
+    
+    <nav id="navbar">
+      <div class="nav-left">
+        <a href="#inicio" class="nav-logo">L&F</a>
+        <ul class="nav-links">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#fotos">Fotos</a></li>
+          <li><a href="#historia">Nossa História</a></li>
+          <li><a href="#videos">Vídeos</a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <i class="fas fa-search nav-search"></i>
+        <div class="nav-avatar"><i class="fas fa-user-friends"></i></div>
+      </div>
+    </nav>
+
+    <header class="hero" id="inicio">
+      <h1 class="hero-title">O Filme da Nossa Vida</h1>
+      <p class="hero-subtitle">Desde 14 de Outubro de 2024. Uma produção original cheia de amor e fé em Deus.</p>
+      
+      <div class="hero-buttons">
+        <button class="btn-play" onclick="document.getElementById('videos').scrollIntoView()"><i class="fas fa-play"></i> Assistir</button>
+        <button class="btn-info" onclick="document.getElementById('historia').scrollIntoView()"><i class="fas fa-info-circle"></i> Mais Informações</button>
+      </div>
+
+      <div class="counter-container">
+        <div class="time-block"><div class="time-value" id="years">0</div><div class="time-label">Anos</div></div>
+        <div class="time-block"><div class="time-value" id="months">0</div><div class="time-label">Meses</div></div>
+        <div class="time-block"><div class="time-value" id="days">0</div><div class="time-label">Dias</div></div>
+        <div class="time-block"><div class="time-value" id="hours">0</div><div class="time-label">Horas</div></div>
+        <div class="time-block"><div class="time-value" id="minutes">0</div><div class="time-label">Minutos</div></div>
+        <div class="time-block"><div class="time-value" id="seconds">0</div><div class="time-label">Segundos</div></div>
+      </div>
+    </header>
+
+    <section class="row" id="fotos">
+      <h2>Nossos Melhores Momentos <i class="fas fa-heart heart-icon"></i></h2>
+      
+      <div class="carousel-container" style="margin-bottom: 20px;">
+        <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-1')"><i class="fas fa-chevron-left"></i></button>
+        <div class="posters" id="fotos-row-1">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/chgrv1qrcljvqn98d8l0f/foto1.jpg?rlkey=eqrzm9r8567b48oq10eb7g6xa&st=7cyt1qq1&raw=1" alt="Foto romântica 1" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/pacxqv9y6biimhyybraxm/foto4.webp?rlkey=qg7aa9u8iyb1xgpaykz3iasad&st=qwws3ojr&raw=1" alt="Foto romântica 2" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/0law4rs9xqnaf4l55uyz9/foto2.jpg?rlkey=ta9mtjo1jnj1ytrqnxciw1ewc&st=ni7adwpz&raw=1" alt="Foto romântica 3" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/9nyzvmttsvd0pjqrw83m1/foto5.jpeg?rlkey=k9ubsi3cr0i0blwhzfmbtr8p8&st=zv5y1w5n&raw=1" alt="Foto romântica 4" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/siufwxr1yyp37nf2m20dq/foto6.jpg?rlkey=1wqgr7vhvmbgrw5fz35zyowkj&st=ermgdj3q&raw=1" alt="Foto romântica 5" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/piw0zch24tdid937v2bf4/foto8.jpeg?rlkey=95atiskv9vgvg0wlr8f7a00br&st=w5zctvuh&raw=1" alt="Foto romântica 6" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/ggvbeylde8ctr4il98nb4/foto9.jpeg?rlkey=rxld3f3zbphl7249e1ewzojn6&st=bx8kc2is&raw=1" alt="Foto romântica 7" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/ou3o5153vhyomgn7ath8u/IMG_2945.jpeg?rlkey=w5v9o9fn1hfa88vk16t7r57mn&st=cguau4xi&raw=1" alt="Foto romântica 7" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/uvu08cbc0glx9dp88k3n6/20241014_204013.jpg?rlkey=el61hfo56wcn9by62jcb73fq2&st=phf2w8eh&raw=1" alt="Foto romântica 7" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/pm6r2k8vwzok316kc236k/IMG_1462.jpg?rlkey=jhbh76vcm3a5nruq8x7m7ay2f&st=tkkeuwoe&raw=1" alt="Foto romântica 7" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/073sny3ukq8296apixown/WhatsApp-Image-2026-04-04-at-13.33.44.jpeg?rlkey=eh8z9bm56p17cqp5m0tkmpfib&st=crqkrpx5&raw=1" alt="Foto romântica 7" class="poster gallery-item" data-type="image">
+        </div>
+        <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-1')"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
+      <div class="carousel-container">
+        <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-2')"><i class="fas fa-chevron-left"></i></button>
+        <div class="posters" id="fotos-row-2">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/2ekcakzrpq7fxe17cntsp/foto10.jpeg?rlkey=z9dad4n1rhgbv3bpk0844n2bm&st=0reb88dn&raw=1" alt="Foto romântica 8" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/bv7wozttyk1bt89uv4rej/foto7.jpg?rlkey=u3s4zjh887nbskhjqd4cr8imk&st=hm17w92f&raw=1" alt="Foto romântica 9" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/1wp5q19wvmegoals2xjsy/IMG_0088.jpg?rlkey=lj8g9cw8qq114nzjvsv9b3sw8&st=mnrf06v7&raw=1" alt="Foto romântica 10" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/glvqijz4cxa1vwvixf456/DF211CE5-1088-4715-920A-02FE26AD7421.jpg?rlkey=bv8c49psiwim7qpojdnvhbgus&st=08i9h9h1&raw=1" alt="Foto romântica 11" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/9e8tbsntcbse4jujwdblx/IMG_1449.jpg?rlkey=oplkz43uvvbmd8yn1eipkbse6&st=1fcgk6z7&raw=1" alt="Foto romântica 12" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/syk9dwqbli0pxhatxfn8y/20241123_112611.png?rlkey=091qs9fgxcqczu6n5rhu2sdxc&st=ia3dmdcp&raw=1" alt="Foto romântica 13" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/nihm3eq8qcgwj0knkjme1/2D6C6E60-09C9-4F76-9A4E-D2217CE31E04.png?rlkey=ah7pq9qt43627gdtl4l0gv120&st=jirvkprn&raw=1" alt="Foto romântica 13" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/0ex083atz0p0kidrsnp8x/20241119_212813.jpg?rlkey=9l4ymalsyuhij6n8zl9bat31k&st=mp10kamp&raw=1" alt="Foto romântica 13" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/q4eaw4dfetrp51vbq6odq/d21ec81c-0ec3-445d-baa0-0faccbcb960b.jpg?rlkey=hirxovi5geolt4f9f4dzrfu7q&st=o174zvm1&raw=1" alt="Foto romântica 13" class="poster gallery-item" data-type="image">
+          <img src="https://dl.dropboxusercontent.com/scl/fi/he2rptrin3efdbpz7s5vd/WhatsApp-Image-2026-04-04-at-13.33.44-1.jpeg?rlkey=nkpjlmnkvrj46gfaorlkw7t1v&st=7btdjn0s&raw=1" alt="Foto romântica 13" class="poster gallery-item" data-type="image">
+        </div>
+        <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-2')"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
+    </section>
+
+    <section class="content-section" id="historia">
+      <h2>Nossa História</h2>
+      <div class="message-container">
+        <div class="message" id="texto-historia">
+          Tudo começou em 2024, quando decidi retornar para a igreja. Mas, tenho que admitir, foi Deus que, de alguma forma, tocou no meu coração e disse: "Filho, chegou a hora, larga essa vida do mundo e volta pra mim". Desde então, Ele pegou na minha mão e não soltou mais.
+
+E quando retornei, depois de alguns dias, e vi você, Deus veio e tocou novamente no meu coração e disse: "Sabe aquelas orações que você me pedia? É ela, filho". E desde então, eu soube que seria você. Mas não foi tão fácil; no início, eu cheguei a duvidar do que Deus falou pra mim.
+
+Eu pensei: "Será se é só um sentimento meu, por querer namorar alguém?". Mas, no fundo, eu senti que dessa vez era diferente. Então, eu orei como nunca tinha orado, pedi que Deus me guiasse e, a partir daí, tudo mudou.
+
+Fomos nos conhecendo e nos aproximando, e aí tive certeza que era você. Mas pensei: "Como vou falar pra ela que Deus falou comigo sobre nós? Ela vai me achar doido (kkk, eu pensava isso)". Então, orei novamente e pedi a Deus.
+
+E Deus novamente me mostrou o caminho. Mesmo com medo, segui confiando nos planos Dele, até que chegou o dia do ensaio na igreja. Aquela conversa foi essencial, e foi a partir daquela conversa que hoje estamos aqui. Juntos!
+
+Deus nos uniu e preparou cada detalhe, no tempo certo! No tempo de Deus!
+
+E, por isso, sempre vou dizer: você é a resposta das minhas orações e veio como um presente de Deus na minha vida. Com você, eu aprendi a amar, a ser amado, a acreditar no amor, a perdoar!
+
+Com o tempo, eu entendi que Deus não nos entregou prontos um para o outro, mas dispostos a mudar pelo outro, dispostos a deixar de lado as crenças/costumes que não agregam no relacionamento, dispostos a ser a melhor versão de si para o outro.
+
+Que nosso namoro continue sendo um reflexo do amor de Deus – puro, leve, cheio de amor e com propósito.
+
+Te amo, amor da minha vida! <i class="fas fa-heart" style="color: #e50914;"></i>
+        </div>
+        <div class="fade-overlay" id="fade-texto"></div>
+      </div>
+      <button class="btn-ler-mais" id="btn-ler-mais" onclick="alternarTexto()">
+        Ler mais <i class="fas fa-chevron-down"></i>
+      </button>
+    </section>
+
+    <section class="row" id="videos">
+      <h2>Nossas Memórias em Vídeo <i class="fas fa-video" style="color: #e50914;"></i></h2>
+      <div class="carousel-container">
+        <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'videos-row')"><i class="fas fa-chevron-left"></i></button>
+        <div class="posters" id="videos-row">
+          
+          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/d10do5j977zu5m7lsf1mf/video1.mov?rlkey=zhxupfwhduc8ujftdespy6m77&st=8hj4nq03&raw=1#t=0.001" type="video/mp4">
+          </video>
+
+          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/6z357cmvsg5d30o5aytzo/video2.mp4?rlkey=tt6yo42tgri5b26k6xoos17np&st=hti99d3n&raw=1#t=0.001" type="video/mp4">
+          </video>
+
+          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/4ubhthtxgh7mpa8pf9ed0/Video3.MOV?rlkey=9g68kq025s1vl9sjofxor7ebp&st=9f2vtaen&raw=1#t=0.001" type="video/mp4">
+          </video>
+
+           <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/rlq252xzf1j7z7qavl9vt/copy_0367DA55-75EF-4BC0-BBFE-6EE52390201F.mov?rlkey=p7lfon4mk979ym8yv1k5rjn7t&st=rk4bsnot&raw=1#t=0.001" type="video/mp4">
+          </video>
+
+          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/61fb3xkvs1nn9d61bm2fu/69FDC1CB-BAF4-4A6C-8175-ACFA41FF4BEE.mov?rlkey=z4gg57jro2yxd1xnyk40epo59&st=vscomhub&raw=1#t=0.001" type="video/mp4">
+          </video>
+
+          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/8m6voxpzsjag58tkim79x/20250203_174554.mp4?rlkey=bcnvrreit05nucdvsmik7ilwi&st=2se1apom&raw=1#t=0.001" type="video/mp4">
+          </video>
+
+          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/ilrdpifigx4nwlpowg1ro/IMG_0907.MOV?rlkey=qigo16d35c10qfotisvynijuz&st=9awuxl5s&raw=1#t=0.001" type="video/mp4">
+          </video>
+
+          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+            <source src="https://dl.dropboxusercontent.com/scl/fi/qnh2am25s2486kayg8h5e/20250216_115532.mp4?rlkey=b2v2e0rtttx2a0xg80b85banh&st=na70meot&raw=1#t=0.5" type="video/mp4">
+          </video>
+
+        </div>
+        <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'videos-row')"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2 style="margin-bottom: 20px;">Spoiler...</h2>
+      <div class="video-container">
+        <video id="spoiler-video" controls preload="metadata" playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 8px; object-fit: cover;">
+          <source src="https://dl.dropboxusercontent.com/scl/fi/u4y89lj5goizff7fnt2oe/YTDown.com_YouTube_Media_lL-1mzZnbaQ_001_720p.mp4?rlkey=p01ets6ixb1vpbc4tsw8v2x4q&st=4bdvjxql&raw=1#t=0.001" type="video/mp4">
+          Seu navegador não suporta o elemento de vídeo.
+        </video>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>Uma produção original feita com muito amor e carinho para o amor da minha vida. Esse site foi feito pra você sempre lembrar que eu te amo! Ass: Seu Amor. <i class="fas fa-heart" style="color: #e50914;"></i></p>
+    </footer>
+
+  </div>
+
+  <div id="imageModal" class="image-modal">
+    <div class="modal-content-wrapper">
+      <span class="close-modal" onclick="fecharModal()">&times;</span>
+      <span class="nav-arrow prev-arrow" onclick="mudarMedia(-1)">&#10094;</span>
+      
+      <div id="modal-body"></div>
+
+      <span class="nav-arrow next-arrow" onclick="mudarMedia(1)">&#10095;</span>
+    </div>
+  </div>
+  
+  <audio id="background-music"></audio>
+  <audio id="netflix-sound" src="https://dl.dropboxusercontent.com/scl/fi/y11p7pdt9fg62ijzxas0i/NETFLIX-Sounds-Effect-ROCKY-LAUTA.mp3?rlkey=1b8injsdbs6btbapud934khze&st=42n90toq&raw=1"></audio>
+
+  <script>
+    // ==== A. EFEITO DE SCROLL DA NAVBAR ====
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // ==== 1. LÓGICA DO PLAYER DE MÚSICA ====
+    const playlist = [
+      {
+        url: "https://dl.dropboxusercontent.com/scl/fi/mdwsdrki15osd3oh59b14/PEDRO-VALEN-A-E-GABRIELA-STEHLING-Tantos-Mares-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=qfbm8wgxf4qvkugeltiwn0o2r&st=q70gibif&raw=1",
+        nome: "Tantos Mares - Pedro Valença"
+      },
+      {
+        url: "https://dl.dropboxusercontent.com/scl/fi/6iplh4sw8ilo3js20y982/AMOR-EM-TODO-LUGAR-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider.mp3?rlkey=74j5mr450aooquwrs31mbk3sv&st=4ou6yb8g&raw=1",
+        nome: "Amor em todo o Lugar"
+      },
+      {
+        url: "https://dl.dropboxusercontent.com/scl/fi/ttf1skkeghevx05u3ozck/O-Jeito-Que-Voc-Me-Olha-Daniel-L-dtke.mp3?rlkey=eblgdh3x4wen74i4yl05wk2wp&st=03sp5wij&raw=1",
+        nome: "O Jeito Que Você Me Olha"
+      },
+      {
+        url: "https://dl.dropboxusercontent.com/scl/fi/fl9o7cnaeofzytrf9ds5n/QUE-SORTE-A-MINHA-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider-1.mp3?rlkey=9o18v8womj37t74o7t7lte0ob&st=haisk4xf&raw=1",
+        nome: "Que Sorte a Minha"
+      }
+    ];
+    
+    let musicaAtualIndex = 0;
+    const backgroundMusic = document.getElementById("background-music");
+    const iconePlayPause = document.getElementById("icone-play-pause");
+    const textoMusica = document.getElementById("texto-musica");
+
+    backgroundMusic.addEventListener('ended', () => { mudarMusica(1); });
+
+    function carregarMusica(index) {
+      backgroundMusic.src = playlist[index].url;
+      backgroundMusic.load();
+      textoMusica.textContent = playlist[index].nome;
+    }
+
+    function mudarMusica(direcao) {
+      musicaAtualIndex += direcao;
+      if (musicaAtualIndex >= playlist.length) { musicaAtualIndex = 0; } 
+      else if (musicaAtualIndex < 0) { musicaAtualIndex = playlist.length - 1; }
+      
+      carregarMusica(musicaAtualIndex);
+      
+      backgroundMusic.play().then(() => {
+        iconePlayPause.className = "fas fa-pause";
+        iconePlayPause.style.marginLeft = "0px";
+      }).catch(e => console.log("Aguardando interação.", e));
+    }
+
+    function pausarTocar() {
+      if (backgroundMusic.paused) {
+        backgroundMusic.play();
+        iconePlayPause.className = "fas fa-pause";
+        iconePlayPause.style.marginLeft = "0px";
+      } else {
+        backgroundMusic.pause();
+        iconePlayPause.className = "fas fa-play";
+        iconePlayPause.style.marginLeft = "3px";
+      }
+    }
+
+    // ==== LÓGICA DO VÍDEO SPOILER PAUSAR A MÚSICA ====
+    const spoilerVideo = document.getElementById("spoiler-video");
+    let musicaPausadaPeloSpoiler = false;
+
+    spoilerVideo.addEventListener('play', () => {
+      if (!backgroundMusic.paused) {
+        pausarTocar(); 
+        musicaPausadaPeloSpoiler = true; 
+      }
+    });
+
+    spoilerVideo.addEventListener('pause', () => {
+      if (musicaPausadaPeloSpoiler) {
+        pausarTocar(); 
+        musicaPausadaPeloSpoiler = false;
+      }
+    });
+    
+    spoilerVideo.addEventListener('ended', () => {
+      if (musicaPausadaPeloSpoiler) {
+        pausarTocar(); 
+        musicaPausadaPeloSpoiler = false;
+      }
+    });
+
+
+    // ==== 2. FUNÇÃO DE ROLAR O CARROSSEL (EFEITO INFINITO) ====
+    const carouselLocks = {};
+
+    function scrollCarousel(direction, carouselId) {
+      if (carouselLocks[carouselId]) return;
+      carouselLocks[carouselId] = true;
+
+      const carousel = document.getElementById(carouselId);
+      const itemWidth = carousel.firstElementChild.offsetWidth + 10; 
+
+      if (direction === 1) {
+        carousel.scrollBy({ left: itemWidth, behavior: 'smooth' });
+        setTimeout(() => {
+          carousel.style.scrollBehavior = 'auto'; 
+          carousel.appendChild(carousel.firstElementChild); 
+          carousel.scrollLeft -= itemWidth; 
+          
+          carousel.style.scrollBehavior = 'smooth'; 
+          carouselLocks[carouselId] = false; 
+        }, 500); 
+
+      } else {
+        carousel.style.scrollBehavior = 'auto'; 
+        carousel.prepend(carousel.lastElementChild); 
+        carousel.scrollLeft += itemWidth; 
+        
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            carousel.style.scrollBehavior = 'smooth'; 
+            carousel.scrollBy({ left: -itemWidth, behavior: 'smooth' }); 
+            
+            setTimeout(() => {
+              carouselLocks[carouselId] = false; 
+            }, 500);
+          });
+        });
+      }
+    }
+
+    // ==== 3. LÓGICA DO BOTÃO LER MAIS ====
+    function alternarTexto() {
+      const texto = document.getElementById("texto-historia");
+      const btn = document.getElementById("btn-ler-mais");
+      const fade = document.getElementById("fade-texto");
+
+      if (texto.classList.contains("expandido")) {
+        texto.classList.remove("expandido");
+        fade.classList.remove("oculto");
+        btn.innerHTML = 'Ler mais <i class="fas fa-chevron-down"></i>';
+      } else {
+        texto.classList.add("expandido");
+        fade.classList.add("oculto");
+        btn.innerHTML = 'Ler menos <i class="fas fa-chevron-up"></i>';
+      }
+    }
+
+    // ==== 4. LÓGICA DA TELA DE ENTRADA (BOTÕES SIM E NÃO) ====
+    const preloader = document.getElementById('preloader');
+    const introOverlay = document.getElementById('intro-overlay');
+    const nLogoAnim = document.getElementById('n-logo-anim');
+    const mainContent = document.getElementById('main-content');
+    
+    const btnSim = document.getElementById('btn-sim');
+    const btnNao = document.getElementById('btn-nao');
+    const textoNao = document.getElementById('texto-nao');
+
+    btnSim.addEventListener('click', () => {
+      
+      // O TRUQUE PARA O CELULAR (Mutar e tocar)
+      carregarMusica(0);
+      backgroundMusic.muted = true; // Muta a música
+      backgroundMusic.play().catch(e => console.log("Áudio bloqueado:", e)); // Dá o play mutado na mesma hora
+
+      // Toca o som "Ta-dum" da Netflix
+      const netflixSound = document.getElementById('netflix-sound');
+      netflixSound.volume = 0.6; 
+      netflixSound.play().catch(e => console.log("Áudio bloqueado:", e));
+      
+      preloader.style.transition = 'opacity 0.5s ease';
+      preloader.style.opacity = '0';
+      
+      setTimeout(() => { 
+        preloader.style.display = 'none'; 
+        introOverlay.style.display = 'flex';
+        nLogoAnim.classList.add('animate-intro'); 
+        
+        setTimeout(() => {
+          introOverlay.style.opacity = '0';
+          introOverlay.style.transition = 'opacity 1s ease';
+          
+          setTimeout(() => {
+            introOverlay.style.display = 'none';
+            mainContent.style.display = 'block'; 
+            
+            // === AGORA TIRA O MUDO ===
+            backgroundMusic.currentTime = 0; // Volta a música pro começo
+            backgroundMusic.muted = false;   // Desmuta
+            
+            iconePlayPause.className = "fas fa-pause";
+            iconePlayPause.style.marginLeft = "0px";
+
+          }, 1000); 
+        }, 3500); 
+      }, 500);
+    });
+
+    btnNao.addEventListener('click', () => {
+      btnNao.classList.add('shake');
+      textoNao.textContent = "Opção errada! ❤️";
+      textoNao.style.color = "#e50914"; 
+      
+      setTimeout(() => {
+        btnNao.classList.remove('shake');
+      }, 400);
+    });
+
+    // ==== 5. LÓGICA DA GALERIA INTELIGENTE ====
+    const modal = document.getElementById("imageModal");
+    const modalBody = document.getElementById("modal-body");
+    let currentGalleryGroup = [];
+    let currentIndex = 0;
+
+    document.querySelectorAll(".gallery-item").forEach(item => {
+      item.addEventListener("click", () => {
+        abrirMedia(item);
+      });
+    });
+
+    function abrirMedia(item) {
+      const type = item.getAttribute("data-type");
+      currentGalleryGroup = Array.from(document.querySelectorAll(`.gallery-item[data-type="${type}"]`));
+      currentIndex = currentGalleryGroup.indexOf(item);
+
+      modal.style.display = "flex";
+      modalBody.innerHTML = ""; 
+
+      if (type === "image") {
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.className = "modal-media";
+        modalBody.appendChild(img);
+      } else if (type === "video") {
+        const video = document.createElement("video");
+        video.src = item.querySelector("source").src;
+        video.className = "modal-media";
+        video.controls = true;
+        video.autoplay = true;
+        modalBody.appendChild(video);
+        
+        if(!backgroundMusic.paused){
+           pausarTocar();
+        }
+      }
+    }
+
+    function mudarMedia(dir) {
+      currentIndex += dir;
+      if (currentIndex >= currentGalleryGroup.length) { currentIndex = 0; } 
+      else if (currentIndex < 0) { currentIndex = currentGalleryGroup.length - 1; }
+      abrirMedia(currentGalleryGroup[currentIndex]);
+    }
+
+    function fecharModal() {
+      modal.style.display = "none";
+      modalBody.innerHTML = ""; 
+      if(backgroundMusic.paused){
+          pausarTocar();
+      }
+    }
+
+    modal.addEventListener('click', function(event) {
+      if (event.target === modal || event.target.classList.contains('modal-content-wrapper')) {
+        fecharModal();
+      }
+    });
+
+    // ==== 6. LÓGICA DO CONTADOR DE TEMPO ====
+    const referenceDate = new Date('2024-10-14T00:00:00');
+
+    function updateCounter() {
+      const now = new Date();
+      let seconds = now.getSeconds() - referenceDate.getSeconds();
+      let minutes = now.getMinutes() - referenceDate.getMinutes();
+      let hours = now.getHours() - referenceDate.getHours();
+      let days = now.getDate() - referenceDate.getDate();
+      let months = now.getMonth() - referenceDate.getMonth();
+      let years = now.getFullYear() - referenceDate.getFullYear();
+
+      if (seconds < 0) { seconds += 60; minutes--; }
+      if (minutes < 0) { minutes += 60; hours--; }
+      if (hours < 0) { hours += 24; days--; }
+      if (days < 0) {
+        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += lastMonth.getDate(); months--;
+      }
+      if (months < 0) { months += 12; years--; }
+
+      document.getElementById('years').textContent = years;
+      document.getElementById('months').textContent = months;
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+    updateCounter();
+    setInterval(updateCounter, 1000);
+  </script>
+</body>
+</html>
