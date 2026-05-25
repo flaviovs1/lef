@@ -101,11 +101,34 @@
     }
     .nav-avatar:hover { transform: scale(1.1); }
 
-    /* ==== BANNER PRINCIPAL (HERO) ==== */
+   /* ==== BANNER PRINCIPAL (HERO) COM VÍDEO ==== */
     .hero {
-      background-image: linear-gradient(to top, #141414 0%, rgba(20,20,20,0.3) 100%), url('https://dl.dropboxusercontent.com/scl/fi/h2ycbdowaz2e0nnbpkm3i/IMG_0612.jpg?rlkey=pfztrnrqy6urvc91cwugw9wz8&st=qirnt31f&raw=1');
-      background-size: cover; background-position: center top; height: 90vh;
+      position: relative; /* Segura o vídeo no lugar certo */
+      height: 90vh;
       display: flex; flex-direction: column; justify-content: flex-end; padding: 0 4% 8%;
+      overflow: hidden; /* Não deixa o vídeo vazar das bordas */
+    }
+
+    /* Estilo do vídeo de fundo */
+    .hero-video {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; /* Faz o vídeo preencher a tela inteira, igual foto */
+      z-index: 0;
+    }
+
+    /* O degradê escuro que fica por cima do vídeo para dar leitura ao texto */
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to top, #141414 0%, rgba(20,20,20,0.4) 100%);
+      z-index: 1;
+    }
+
+    /* Traz todos os textos e botões para a frente do vídeo */
+    .hero > *:not(.hero-video):not(.hero-overlay) {
+      position: relative;
+      z-index: 2;
     }
     .hero-title { font-family: 'Playfair Display', serif; font-size: 4em; margin: 0 0 5px 0; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
     .hero-subtitle { font-size: 1.2rem; margin-bottom: 25px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); max-width: 600px; color: #ccc; }
@@ -270,19 +293,13 @@
 
   <div id="preloader">
     <div class="profile-screen">
-      <h1 class="profile-title">Deseja entrar na nossa história?</h1>
+      <h1 class="profile-title">Quem está assistindo?</h1>
       <div class="profiles-container">
         
         <div class="profile" id="btn-sim">
-          <div class="avatar" style="background-image: url('https://dl.dropboxusercontent.com/scl/fi/chgrv1qrcljvqn98d8l0f/foto1.jpg?rlkey=eqrzm9r8567b48oq10eb7g6xa&st=7cyt1qq1&raw=1');"></div>
-          <span class="profile-name">Sim</span>
+          <div class="avatar" style="background-image: url('https://www.dropbox.com/scl/fi/h2ycbdowaz2e0nnbpkm3i/IMG_0612.jpg?rlkey=pfztrnrqy6urvc91cwugw9wz8&st=6rsv9zge&raw=1');"></div>
+          <span class="profile-name">O AMOR DA MINHA VIDA</span><i class="fas fa-heart heart-icon"></i>
         </div>
-        
-        <div class="profile" id="btn-nao">
-          <div class="avatar" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png');"></div>
-          <span class="profile-name" id="texto-nao">Não</span>
-        </div>
-
       </div>
     </div>
   </div>
@@ -323,7 +340,22 @@
     </nav>
 
     <header class="hero" id="inicio">
+      
+      <video class="hero-video" autoplay loop muted playsinline>
+        <source src="https://dl.dropboxusercontent.com/scl/fi/6z357cmvsg5d30o5aytzo/video2.mp4?rlkey=tt6yo42tgri5b26k6xoos17np&st=hti99d3n&raw=1" type="video/mp4">
+      </video>
+      <div class="hero-overlay"></div>
+
       <h1 class="hero-title">O Filme da Nossa Vida</h1>
+      
+      ```
+
+**Como funciona:**
+* `autoplay`: Faz o vídeo tocar sozinho assim que a tela abre.
+* `loop`: Faz o vídeo reiniciar automaticamente quando acabar.
+* `muted`: Garante que não vai ter som (isso é obrigatório para o celular deixar o vídeo tocar sozinho).
+* `playsinline`: Obriga o vídeo a tocar no próprio fundo da página, em vez de abrir em "tela cheia" no celular.
+
       
       <div class="hero-meta">
         <span class="meta-year">2024</span>
@@ -363,6 +395,7 @@
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-1')"><i class="fas fa-chevron-left"></i></button>
         <div class="posters" id="fotos-row-1">
           <img src="https://dl.dropboxusercontent.com/scl/fi/chgrv1qrcljvqn98d8l0f/foto1.jpg?rlkey=eqrzm9r8567b48oq10eb7g6xa&st=7cyt1qq1&raw=1" alt="Foto romântica 1" class="poster gallery-item" data-type="image">
+          <img src="https://www.dropbox.com/scl/fi/h2ycbdowaz2e0nnbpkm3i/IMG_0612.jpg?rlkey=pfztrnrqy6urvc91cwugw9wz8&st=6rsv9zge&raw=1" alt="Foto romântica 1" class="poster gallery-item" data-type="image">
           <img src="https://dl.dropboxusercontent.com/scl/fi/pacxqv9y6biimhyybraxm/foto4.webp?rlkey=qg7aa9u8iyb1xgpaykz3iasad&st=qwws3ojr&raw=1" alt="Foto romântica 2" class="poster gallery-item" data-type="image">
           <img src="https://dl.dropboxusercontent.com/scl/fi/0law4rs9xqnaf4l55uyz9/foto2.jpg?rlkey=ta9mtjo1jnj1ytrqnxciw1ewc&st=ni7adwpz&raw=1" alt="Foto romântica 3" class="poster gallery-item" data-type="image">
           <img src="https://dl.dropboxusercontent.com/scl/fi/9nyzvmttsvd0pjqrw83m1/foto5.jpeg?rlkey=k9ubsi3cr0i0blwhzfmbtr8p8&st=zv5y1w5n&raw=1" alt="Foto romântica 4" class="poster gallery-item" data-type="image">
@@ -377,10 +410,15 @@
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-1')"><i class="fas fa-chevron-right"></i></button>
       </div>
 
-      <div class="carousel-container">
+      <section class="row" id="fotos">
+      <h2>Mais fotos com meu amor <i class="fas fa-heart heart-icon"></i></h2>
+
+      <div class="carousel-container"> 
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-2')"><i class="fas fa-chevron-left"></i></button>
         <div class="posters" id="fotos-row-2">
           <img src="https://dl.dropboxusercontent.com/scl/fi/2ekcakzrpq7fxe17cntsp/foto10.jpeg?rlkey=z9dad4n1rhgbv3bpk0844n2bm&st=0reb88dn&raw=1" alt="Foto romântica 8" class="poster gallery-item" data-type="image">
+          <img src="https://www.dropbox.com/scl/fi/m35hfu4kwn9k58d2w4b27/WhatsApp-Image-2026-05-25-at-20.34.25.jpeg?rlkey=9vhqi7l7aw2hmvnnl575f9w11&st=elglil6d&raw=1" alt="Foto romântica 8" class="poster gallery-item" data-type="image">
+          <img src="https://www.dropbox.com/scl/fi/hd1b60v89x2fctyi4ndyt/WhatsApp-Image-2026-05-25-at-20.34.25-1.jpeg?rlkey=e8a9j4vd3hkg2vdt9z3utzuvo&st=x7s3w4jn&raw=1" alt="Foto romântica 8" class="poster gallery-item" data-type="image">
           <img src="https://dl.dropboxusercontent.com/scl/fi/bv7wozttyk1bt89uv4rej/foto7.jpg?rlkey=u3s4zjh887nbskhjqd4cr8imk&st=hm17w92f&raw=1" alt="Foto romântica 9" class="poster gallery-item" data-type="image">
           <img src="https://dl.dropboxusercontent.com/scl/fi/1wp5q19wvmegoals2xjsy/IMG_0088.jpg?rlkey=lj8g9cw8qq114nzjvsv9b3sw8&st=mnrf06v7&raw=1" alt="Foto romântica 10" class="poster gallery-item" data-type="image">
           <img src="https://dl.dropboxusercontent.com/scl/fi/glvqijz4cxa1vwvixf456/DF211CE5-1088-4715-920A-02FE26AD7421.jpg?rlkey=bv8c49psiwim7qpojdnvhbgus&st=08i9h9h1&raw=1" alt="Foto romântica 11" class="poster gallery-item" data-type="image">
