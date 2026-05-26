@@ -84,7 +84,6 @@
     
     .nav-logo { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: bold; color: #e50914; text-decoration: none; }
     
-    /* Novo estilo centralizado para os menus */
     .nav-links { 
       display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; 
       position: absolute; left: 50%; transform: translateX(-50%);
@@ -101,23 +100,21 @@
     }
     .nav-avatar:hover { transform: scale(1.1); }
 
-   /* ==== BANNER PRINCIPAL (HERO) COM VÍDEO ==== */
+    /* ==== BANNER PRINCIPAL (HERO) COM VÍDEO ==== */
     .hero {
-      position: relative; /* Segura o vídeo no lugar certo */
+      position: relative;
       height: 90vh;
       display: flex; flex-direction: column; justify-content: flex-end; padding: 0 4% 8%;
-      overflow: hidden; /* Não deixa o vídeo vazar das bordas */
+      overflow: hidden;
     }
 
-    /* Estilo do vídeo de fundo */
     .hero-video {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; /* Faz o vídeo preencher a tela inteira, igual foto */
+      object-fit: cover; 
       z-index: 0;
     }
 
-    /* O degradê escuro que fica por cima do vídeo para dar leitura ao texto */
     .hero-overlay {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -125,11 +122,11 @@
       z-index: 1;
     }
 
-    /* Traz todos os textos e botões para a frente do vídeo */
     .hero > *:not(.hero-video):not(.hero-overlay) {
       position: relative;
       z-index: 2;
     }
+
     .hero-title { font-family: 'Playfair Display', serif; font-size: 4em; margin: 0 0 5px 0; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
     .hero-subtitle { font-size: 1.2rem; margin-bottom: 25px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); max-width: 600px; color: #ccc; }
 
@@ -176,7 +173,7 @@
     .carousel-container { position: relative; display: flex; align-items: center; }
     .scroll-btn {
       position: absolute; z-index: 10; background: rgba(0, 0, 0, 0.7); color: white; border: none;
-      height: 300px; /* <-- Aumentamos a altura do botão para acompanhar a foto */
+      height: 300px;
       width: 40px; cursor: pointer; font-size: 24px; transition: background 0.3s, color 0.3s;
       display: flex; align-items: center; justify-content: center;
     }
@@ -191,7 +188,7 @@
     .posters::-webkit-scrollbar { display: none; }
     
     .poster {
-      width: 200px; height: 300px; /* <-- Formato Pôster/Vertical (mais esticado) */
+      width: 200px; height: 300px; 
       object-fit: cover; border-radius: 4px; cursor: pointer;
       transition: transform 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.5); background-color: #222; flex-shrink: 0; 
     }
@@ -226,7 +223,6 @@
     .content-section { margin: 0 4% 50px; background-color: #181818; padding: 30px; border-radius: 8px; }
     .message-container { position: relative; }
     .message { font-size: 1.1rem; line-height: 1.8; white-space: pre-line; color: #d2d2d2; font-family: 'Lora', serif; max-height: 130px; overflow: hidden; transition: max-height 0.5s ease-in-out; }
-    /* Limite alterado para 8000px para consertar o corte do texto no Samsung A14 e afins */
     .message.expandido { max-height: 8000px; }
     .fade-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, #181818); pointer-events: none; transition: opacity 0.3s ease; }
     .fade-overlay.oculto { opacity: 0; }
@@ -250,22 +246,14 @@
 
     /* ==== OTIMIZAÇÕES RESPONSIVAS (CELULARES) ==== */
     @media (max-width: 768px) {
-      /* O menu volta a aparecer, mas menor e mais juntinho */
-      .nav-links { 
-        display: flex; 
-        gap: 12px; 
-        width: max-content;
-      }
-      .nav-links li a { font-size: 0.75rem; } /* Letra menorzinha */
-      
-      /* Diminuímos um pouco a logo e os ícones para dar espaço pro menu */
+      .nav-links { display: flex; gap: 12px; width: max-content; }
+      .nav-links li a { font-size: 0.75rem; } 
       .nav-logo { font-size: 20px; }
       .nav-avatar { width: 28px; height: 28px; }
       .nav-search { font-size: 1rem; }
       .nav-right { gap: 12px; }
 
       .profile-title { font-size: 28px; padding: 0 20px; }
-      /* ... resto do código continua igual ... */
       .avatar { width: 100px; height: 100px; font-size: 3rem; }
       .profiles-container { gap: 20px; }
       .profile-name { font-size: 1.2rem; }
@@ -348,7 +336,6 @@
 
       <h1 class="hero-title">O Filme da Nossa Vida</h1>
       
-      ```
       <div class="hero-meta">
         <span class="meta-year">2024</span>
         <span class="meta-season">1 Temporada</span>
@@ -402,9 +389,7 @@
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-1')"><i class="fas fa-chevron-right"></i></button>
       </div>
 
-      <section class="row" id="fotos">
       <h2>Mais fotos com meu amor <i class="fas fa-heart heart-icon"></i></h2>
-
       <div class="carousel-container"> 
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-2')"><i class="fas fa-chevron-left"></i></button>
         <div class="posters" id="fotos-row-2">
@@ -479,7 +464,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
             <source src="https://dl.dropboxusercontent.com/scl/fi/rlq252xzf1j7z7qavl9vt/copy_0367DA55-75EF-4BC0-BBFE-6EE52390201F.mov?rlkey=p7lfon4mk979ym8yv1k5rjn7t&st=rk4bsnot&raw=1#t=0.001" type="video/mp4">
           </video>
 
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.play();">
             <source src="https://dl.dropboxusercontent.com/scl/fi/61fb3xkvs1nn9d61bm2fu/69FDC1CB-BAF4-4A6C-8175-ACFA41FF4BEE.mov?rlkey=z4gg57jro2yxd1xnyk40epo59&st=vscomhub&raw=1#t=0.001" type="video/mp4">
           </video>
 
@@ -531,7 +516,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
   <audio id="netflix-sound" src="https://dl.dropboxusercontent.com/scl/fi/y11p7pdt9fg62ijzxas0i/NETFLIX-Sounds-Effect-ROCKY-LAUTA.mp3?rlkey=1b8injsdbs6btbapud934khze&st=42n90toq&raw=1"></audio>
 
   <script>
-    // ==== A. EFEITO DE SCROLL DA NAVBAR ====
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
@@ -541,7 +525,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     });
 
-    // ==== 1. LÓGICA DO PLAYER DE MÚSICA ====
     const playlist = [
       {
         url: "https://dl.dropboxusercontent.com/scl/fi/mdwsdrki15osd3oh59b14/PEDRO-VALEN-A-E-GABRIELA-STEHLING-Tantos-Mares-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=qfbm8wgxf4qvkugeltiwn0o2r&st=q70gibif&raw=1",
@@ -599,7 +582,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     }
 
-    // ==== LÓGICA DO VÍDEO SPOILER PAUSAR A MÚSICA ====
     const spoilerVideo = document.getElementById("spoiler-video");
     let musicaPausadaPeloSpoiler = false;
 
@@ -625,7 +607,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     });
 
 
-    // ==== 2. FUNÇÃO DE ROLAR O CARROSSEL (EFEITO INFINITO) ====
     const carouselLocks = {};
 
     function scrollCarousel(direction, carouselId) {
@@ -664,7 +645,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     }
 
-    // ==== 3. LÓGICA DO BOTÃO LER MAIS ====
     function alternarTexto() {
       const texto = document.getElementById("texto-historia");
       const btn = document.getElementById("btn-ler-mais");
@@ -681,7 +661,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     }
 
-    // ==== 4. LÓGICA DA TELA DE ENTRADA (BOTÕES SIM E NÃO E FUNÇÃO VOLTAR) ====
     const preloader = document.getElementById('preloader');
     const introOverlay = document.getElementById('intro-overlay');
     const nLogoAnim = document.getElementById('n-logo-anim');
@@ -693,12 +672,10 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
 
     btnSim.addEventListener('click', () => {
       
-      // O TRUQUE PARA O CELULAR (Mutar e tocar)
       carregarMusica(0);
-      backgroundMusic.muted = true; // Muta a música
-      backgroundMusic.play().catch(e => console.log("Áudio bloqueado:", e)); // Dá o play mutado na mesma hora
+      backgroundMusic.muted = true; 
+      backgroundMusic.play().catch(e => console.log("Áudio bloqueado:", e)); 
 
-      // Toca o som "Ta-dum" da Netflix
       const netflixSound = document.getElementById('netflix-sound');
       netflixSound.volume = 0.6; 
       netflixSound.play().catch(e => console.log("Áudio bloqueado:", e));
@@ -719,9 +696,8 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
             introOverlay.style.display = 'none';
             mainContent.style.display = 'block'; 
             
-            // === AGORA TIRA O MUDO ===
-            backgroundMusic.currentTime = 0; // Volta a música pro começo
-            backgroundMusic.muted = false;   // Desmuta
+            backgroundMusic.currentTime = 0; 
+            backgroundMusic.muted = false; 
             
             iconePlayPause.className = "fas fa-pause";
             iconePlayPause.style.marginLeft = "0px";
@@ -731,45 +707,33 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }, 500);
     });
 
-    btnNao.addEventListener('click', () => {
-      btnNao.classList.add('shake');
-      textoNao.textContent = "Opção errada! ❤️";
-      textoNao.style.color = "#e50914"; 
-      
-      setTimeout(() => {
-        btnNao.classList.remove('shake');
-      }, 400);
-    });
+    // Removida a ação do botão NÃO pois você tirou ele do HTML, mas deixei aqui se quiser voltar depois.
+    if(btnNao){
+      btnNao.addEventListener('click', () => {
+        btnNao.classList.add('shake');
+        textoNao.textContent = "Opção errada! ❤️";
+        textoNao.style.color = "#e50914"; 
+        setTimeout(() => { btnNao.classList.remove('shake'); }, 400);
+      });
+    }
 
-    // Função para voltar para a tela de perfis
     function voltarParaPerfis() {
-      // Pausa a música
       if (!backgroundMusic.paused) {
         backgroundMusic.pause();
         iconePlayPause.className = "fas fa-play";
         iconePlayPause.style.marginLeft = "3px";
       }
 
-      // Esconde o conteúdo principal
       mainContent.style.display = 'none';
-
-      // Volta a tela pro topo silenciosamente
       window.scrollTo(0, 0);
 
-      // Remove a animação do logo L&F para ele poder animar de novo
       nLogoAnim.classList.remove('animate-intro');
-      
-      // === DEVOLVE A COR PARA A TELA PRETA DA ANIMAÇÃO NÃO FICAR INVISÍVEL NA 2ª VEZ ===
       introOverlay.style.opacity = '1';
 
-      // Mostra a tela de perfis novamente com fade-in
       preloader.style.display = 'flex';
-      setTimeout(() => {
-        preloader.style.opacity = '1';
-      }, 50);
+      setTimeout(() => { preloader.style.opacity = '1'; }, 50);
     }
 
-    // ==== 5. LÓGICA DA GALERIA INTELIGENTE ====
     const modal = document.getElementById("imageModal");
     const modalBody = document.getElementById("modal-body");
     let currentGalleryGroup = [];
@@ -829,34 +793,43 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     });
 
-    // ==== 6. LÓGICA DO CONTADOR DE TEMPO ====
-    const referenceDate = new Date('2024-10-14T00:00:00');
-
+    // ==== LÓGICA DO CONTADOR DE TEMPO (CORRIGIDA) ====
     function updateCounter() {
-      const now = new Date();
-      let seconds = now.getSeconds() - referenceDate.getSeconds();
-      let minutes = now.getMinutes() - referenceDate.getMinutes();
-      let hours = now.getHours() - referenceDate.getHours();
-      let days = now.getDate() - referenceDate.getDate();
-      let months = now.getMonth() - referenceDate.getMonth();
-      let years = now.getFullYear() - referenceDate.getFullYear();
+      // Usando números evita o bug do Safari/Samsung! O mês 9 é Outubro no JavaScript.
+      const dataInicio = new Date(2024, 9, 14, 0, 0, 0); 
+      const dataAtual = new Date();
 
-      if (seconds < 0) { seconds += 60; minutes--; }
-      if (minutes < 0) { minutes += 60; hours--; }
-      if (hours < 0) { hours += 24; days--; }
-      if (days < 0) {
-        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-        days += lastMonth.getDate(); months--;
+      let anos = dataAtual.getFullYear() - dataInicio.getFullYear();
+      let meses = dataAtual.getMonth() - dataInicio.getMonth();
+      let dias = dataAtual.getDate() - dataInicio.getDate();
+      let horas = dataAtual.getHours() - dataInicio.getHours();
+      let minutos = dataAtual.getMinutes() - dataInicio.getMinutes();
+      let segundos = dataAtual.getSeconds() - dataInicio.getSeconds();
+
+      // Ajustes quando os números dão negativo
+      if (segundos < 0) { segundos += 60; minutos--; }
+      if (minutos < 0) { minutos += 60; horas--; }
+      if (horas < 0) { horas += 24; dias--; }
+      
+      if (dias < 0) {
+        // Pega quantos dias exatos teve o mês passado para fechar a conta
+        let ultimoDiaMesAnterior = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 0).getDate();
+        dias += ultimoDiaMesAnterior;
+        meses--;
       }
-      if (months < 0) { months += 12; years--; }
+      
+      if (meses < 0) { meses += 12; anos--; }
 
-      document.getElementById('years').textContent = years;
-      document.getElementById('months').textContent = months;
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = hours;
-      document.getElementById('minutes').textContent = minutes;
-      document.getElementById('seconds').textContent = seconds;
+      // Envia os números calculados para a tela
+      document.getElementById('years').innerText = anos;
+      document.getElementById('months').innerText = meses;
+      document.getElementById('days').innerText = dias;
+      document.getElementById('hours').innerText = horas;
+      document.getElementById('minutes').innerText = minutos;
+      document.getElementById('seconds').innerText = segundos;
     }
+
+    // Dispara o contador
     updateCounter();
     setInterval(updateCounter, 1000);
   </script>
