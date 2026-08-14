@@ -5,16 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Nossa História</title>
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👩‍❤️‍👨</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
   
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* ==== ESTILOS GERAIS ==== */
     body {
-      background-color: #141414;
+      background-color: #000;
+      background-image: linear-gradient(to bottom, #091428 0%, #000 500px); 
+      background-repeat: no-repeat;
       color: #fff;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
       min-height: 100vh;
@@ -22,27 +24,47 @@
       scroll-behavior: smooth;
     }
 
-    /* ==== TELA DE ENTRADA (ESTILO NETFLIX) ==== */
+    /* ==== TELA DE ENTRADA ==== */
     #preloader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-color: #141414; z-index: 9999;
-      display: flex; justify-content: center; align-items: center;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
       transition: opacity 0.5s ease;
     }
+    
+    .netflix-logo-top {
+      position: absolute; top: 25px; left: 4%;
+      font-weight: 900; font-size: 32px; color: #e50914; letter-spacing: -2px;
+    }
+
     .profile-screen { display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .profile-title { font-size: 3.5vw; font-weight: 400; color: #fff; margin-bottom: 2em; }
-    .profiles-container { display: flex; gap: 4vw; justify-content: center; }
-    .profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+    .profile-title { font-size: 3.5vw; font-weight: 500; color: #fff; margin-bottom: 2em; }
+    .profiles-container { display: flex; gap: 2vw; justify-content: center; flex-wrap: wrap; }
+    .profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 150px; }
     
     .avatar {
-      width: 10vw; height: 10vw; min-width: 120px; min-height: 120px; max-width: 200px; max-height: 200px;
-      border-radius: 12px; box-sizing: border-box; 
-      transition: transform 0.2s;
+      width: 150px; height: 150px;
+      border-radius: 4px; box-sizing: border-box; 
+      transition: transform 0.2s, border 0.2s;
       background-color: #333; background-size: cover; background-position: center; background-repeat: no-repeat;
+      border: 3px solid transparent;
     }
-    .profile-name { margin-top: 15px; color: #808080; font-size: 1.5rem; transition: color 0.2s; }
-    .profile:hover .avatar { transform: scale(1.05); }
+    
+    .profile-name { margin-top: 15px; color: #808080; font-size: 1.2rem; transition: color 0.2s; }
+    .profile:hover .avatar { border: 3px solid #fff; }
     .profile:hover .profile-name { color: #fff; }
+
+    .btn-add-profile {
+      display: flex; justify-content: center; align-items: center;
+      font-size: 4rem; color: #808080; background-color: #1a1a1a;
+    }
+
+    .manage-profiles {
+      margin-top: 60px; background: transparent; border: 1px solid #808080;
+      color: #808080; padding: 10px 30px; font-size: 1.2rem; cursor: pointer;
+      text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+    }
+    .manage-profiles:hover { color: #fff; border-color: #fff; }
 
     @keyframes shake {
       0% { transform: translateX(0); } 25% { transform: translateX(-10px); }
@@ -50,13 +72,13 @@
     }
     .shake { animation: shake 0.4s ease-in-out; }
 
-    /* ==== ANIMAÇÃO DE INTRODUÇÃO (L & F) ==== */
+    /* ==== ANIMAÇÃO DE INTRODUÇÃO ==== */
     #intro-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000;
       z-index: 9998; display: none; justify-content: center; align-items: center;
     }
     .custom-logo {
-      font-family: 'Playfair Display', serif; font-size: 120px; font-weight: bold; color: #e50914;
+      font-size: 120px; font-weight: 900; color: #e50914; letter-spacing: -5px;
       text-shadow: 0 0 20px rgba(229, 9, 20, 0.8), 0 0 40px rgba(229, 9, 20, 0.5);
       opacity: 0; display: flex; align-items: center; gap: 15px;
     }
@@ -72,171 +94,86 @@
     }
 
     #main-content { display: none; animation: fadeIn 1.5s ease-in-out; width: 100%; }
+    .mobile-only { display: none !important; }
+    .bottom-nav { display: none; }
 
-    /* ==== BARRA DE NAVEGAÇÃO (NAVBAR) ==== */
+    /* ==== BARRA DE NAVEGAÇÃO ==== */
     #navbar {
       position: fixed; top: 0; left: 0; width: 100%;
       display: flex; justify-content: space-between; align-items: center;
       padding: 15px 4%; box-sizing: border-box; z-index: 999;
-      background-color: transparent; transition: background-color 0.4s ease, padding 0.4s ease;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+      transition: background-color 0.4s ease, padding 0.4s ease;
     }
-    #navbar.scrolled { background-color: #141414; box-shadow: 0 2px 10px rgba(0,0,0,0.8); padding: 10px 4%; }
-    
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: bold; color: #e50914; text-decoration: none; }
-    
-    .nav-links { 
-      display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; 
-      position: absolute; left: 50%; transform: translateX(-50%);
-    }
-    
-    .nav-links li a { color: #e5e5e5; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; font-weight: bold;}
+    #navbar.scrolled { background-color: #000; padding: 10px 4%; }
+    .nav-left { display: flex; align-items: center; gap: 40px; }
+    .nav-logo { font-size: 32px; font-weight: 900; color: #e50914; text-decoration: none; margin-right: 10px; letter-spacing: -2px;}
+    .nav-links { display: flex; list-style: none; gap: 20px; margin: 0; padding: 0; }
+    .nav-links li a { color: #e5e5e5; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; font-weight: 500;}
     .nav-links li a:hover { color: #b3b3b3; }
+    .nav-links li a.active { background-color: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; color: #fff; font-weight: 600; }
     .nav-right { display: flex; align-items: center; gap: 20px; }
     .nav-search { color: #fff; font-size: 1.2rem; cursor: pointer; }
-    .nav-avatar { 
-      width: 35px; height: 35px; border-radius: 4px; cursor: pointer;
-      background-color: #333; background-size: cover; background-position: center;
-      transition: transform 0.2s;
-    }
+    .nav-avatar { width: 35px; height: 35px; border-radius: 4px; cursor: pointer; background-color: #333; background-size: cover; background-position: center; transition: transform 0.2s;}
     .nav-avatar:hover { transform: scale(1.1); }
 
-    /* ==== BANNER PRINCIPAL (HERO) COM VÍDEO ==== */
+    /* ==== BANNER PRINCIPAL (HERO) ==== */
     .hero {
-      position: relative;
-      height: 90vh;
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 0 4% 8%;
-      overflow: hidden;
+      position: relative; height: 82vh; margin: 80px 4% 10px 4%; border-radius: 12px; 
+      display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; 
+      padding: 0 4% 5% 4%; overflow: hidden;
     }
-
-    .hero-video {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; 
-      z-index: 0;
-    }
-
+    .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;}
     .hero-overlay {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to top, #141414 0%, rgba(20,20,20,0.4) 100%);
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 40%, transparent 100%), linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 40%);
       z-index: 1;
     }
-
-    .hero > *:not(.hero-video):not(.hero-overlay) {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-title { font-family: 'Playfair Display', serif; font-size: 4em; margin: 0 0 5px 0; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
-    .hero-subtitle { font-size: 1.2rem; margin-bottom: 25px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); max-width: 600px; color: #ccc; }
-
-    /* ==== NOVIDADE: META INFO E TOP 10 DA NETFLIX ==== */
-    .hero-meta {
-      display: flex; align-items: center; gap: 15px; font-size: 1.1rem;
-      font-weight: bold; color: #a3a3a3; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    }
-    .meta-year { color: #fff; font-weight: normal; }
-    .meta-badge { border: 1px solid rgba(255,255,255,0.4); padding: 1px 5px; border-radius: 3px; font-size: 0.8rem; color: #fff; }
-    
-    .hero-top10 {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
-      font-weight: bold; font-size: 1.4rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    }
-    .top10-icon {
-      background-color: #e50914; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 2px 6px; border-radius: 2px; line-height: 1; font-family: 'Arial Black', Impact, sans-serif; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    }
-    .top-text { font-size: 0.6rem; letter-spacing: 1px; }
-    .ten-text { font-size: 1.1rem; }
-
-    /* ==== BOTÕES ESTILO NETFLIX ==== */
-    .hero-buttons { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
-    .btn-play, .btn-info {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 10px 24px; border: none; border-radius: 4px; font-size: 1.2rem; font-weight: bold;
-      cursor: pointer; transition: transform 0.2s, background-color 0.2s, opacity 0.2s;
-    }
+    .hero > *:not(.hero-video):not(.hero-overlay) { position: relative; z-index: 2; }
+    .hero-title { font-size: 4.5vw; margin: 0 0 10px 0; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); line-height: 1; font-weight: 900; letter-spacing: -2px; text-transform: uppercase; max-width: 60%;}
+    .hero-subtitle { font-size: 1.25rem; margin-bottom: 30px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); max-width: 45%; color: #fff; font-weight: 400; line-height: 1.4;}
+    .hero-meta { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
+    .meta-dot { color: #808080; font-size: 0.8rem; }
+    .meta-badge { background-color: #d81f26; border-radius: 2px; padding: 2px 6px; font-size: 0.8rem; color: #fff; font-weight: bold; }
+    .hero-buttons { display: flex; gap: 15px; margin-bottom: 0; flex-wrap: wrap; }
+    .btn-play, .btn-info { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 30px; border: none; border-radius: 6px; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: transform 0.2s, background-color 0.2s, opacity 0.2s;}
     .btn-play { background-color: #fff; color: #000; }
-    .btn-play:hover { opacity: 0.8; }
+    .btn-play:hover { background-color: rgba(255,255,255,0.7); }
     .btn-info { background-color: rgba(109, 109, 110, 0.7); color: #fff; }
     .btn-info:hover { background-color: rgba(109, 109, 110, 0.4); }
 
-    /* Contador */
-    .counter-container { display: flex; flex-wrap: wrap; gap: 15px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
-    .time-block { display: flex; flex-direction: column; align-items: center; background: rgba(0, 0, 0, 0.5); padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
-    .time-value { font-size: 24px; font-weight: bold; }
-    .time-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    /* ==== CONTADOR ==== */
+    .counter-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 25px;}
+    .time-block { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.5); width: 80px; height: 75px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); box-sizing: border-box; }
+    .time-value { font-size: 24px; font-weight: 700; margin-bottom: 2px; }
+    .time-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #a3a3a3;}
 
-    /* ==== FILEIRAS (CARROSSÉIS) ==== */
+    /* ==== FILEIRAS ==== */
     .row { margin: 0 4% 40px; }
-    .row h2 { font-size: 1.5rem; margin-bottom: 15px; color: #e5e5e5; }
+    .row h2 { font-size: 1.3rem; margin-bottom: 15px; color: #e5e5e5; font-weight: 700;}
     .carousel-container { position: relative; display: flex; align-items: center; }
-    .scroll-btn {
-      position: absolute; z-index: 10; background: rgba(0, 0, 0, 0.7); color: white; border: none;
-      height: 300px;
-      width: 40px; cursor: pointer; font-size: 24px; transition: background 0.3s, color 0.3s;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .scroll-btn { position: absolute; z-index: 10; background: rgba(0, 0, 0, 0.7); color: white; border: none; height: 300px; width: 40px; cursor: pointer; font-size: 24px; transition: background 0.3s, color 0.3s; display: flex; align-items: center; justify-content: center;}
     .scroll-btn:hover { background: rgba(0, 0, 0, 0.9); color: #e50914; }
     .left-btn { left: 0; border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
     .right-btn { right: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
-
-    .posters {
-      display: flex; gap: 10px; overflow-x: auto; padding: 10px 45px 20px 45px;
-      scrollbar-width: none; scroll-behavior: smooth; width: 100%;
-    }
+    .posters { display: flex; gap: 10px; overflow-x: auto; padding: 10px 45px 20px 45px; scrollbar-width: none; scroll-behavior: smooth; width: 100%;}
     .posters::-webkit-scrollbar { display: none; }
-    
-    .poster {
-      width: 200px; height: 300px; 
-      object-fit: cover; border-radius: 4px; cursor: pointer;
-      transition: transform 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.5); background-color: #222; flex-shrink: 0; 
-    }
+    .poster { width: 200px; height: 300px; object-fit: cover; border-radius: 6px; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.5); background-color: #222; flex-shrink: 0; }
     .poster:hover { transform: scale(1.08); z-index: 10; border: 2px solid #fff; }
-
-    /* ==== MODAL DE IMAGEM E VÍDEO EXPANDIDO ==== */
-    .image-modal {
-      display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.95); justify-content: center; align-items: center; animation: zoomIn 0.3s ease;
-    }
-    .modal-content-wrapper { position: relative; max-width: 90%; max-height: 80vh; display: flex; justify-content: center; align-items: center; width: 100%; }
-    .modal-media { max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.8); object-fit: contain; }
-    
-    .close-modal {
-      position: fixed; top: 20px; right: 30px; color: #fff; font-size: 45px; font-weight: bold;
-      cursor: pointer; transition: 0.3s; z-index: 10001; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-    }
-    .close-modal:hover { color: #e50914; }
-
-    .nav-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 30px; font-weight: bold;
-      cursor: pointer; z-index: 10002; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%;
-      width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: 0.3s; user-select: none;
-    }
-    .nav-arrow:hover { background-color: #e50914; }
-    .prev-arrow { left: -70px; }
-    .next-arrow { right: -70px; }
-
-    @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
     /* ==== SEÇÕES DE CONTEÚDO ==== */
     .content-section { margin: 0 4% 50px; background-color: #181818; padding: 30px; border-radius: 8px; }
     .message-container { position: relative; }
-    .message { font-size: 1.1rem; line-height: 1.8; white-space: pre-line; color: #d2d2d2; font-family: 'Lora', serif; max-height: 130px; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+    .message { font-size: 1.05rem; line-height: 1.6; white-space: pre-line; color: #d2d2d2; font-family: 'Inter', sans-serif; max-height: 130px; overflow: hidden; transition: max-height 0.5s ease-in-out; }
     .message.expandido { max-height: 8000px; }
     .fade-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, #181818); pointer-events: none; transition: opacity 0.3s ease; }
     .fade-overlay.oculto { opacity: 0; }
-    .btn-ler-mais { background: none; border: none; color: #e50914; font-size: 1rem; font-weight: bold; cursor: pointer; padding: 10px 0 0 0; display: inline-flex; align-items: center; gap: 5px; transition: color 0.3s ease; }
+    .btn-ler-mais { background: none; border: none; color: #e50914; font-size: 0.9rem; font-weight: bold; cursor: pointer; padding: 10px 0 0 0; display: inline-flex; align-items: center; gap: 5px; transition: color 0.3s ease; }
     .btn-ler-mais:hover { color: #ff3b45; }
 
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-    .video-container iframe, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; object-fit: cover; }
-    .heart-icon { color: #e50914; font-size: 1.2em; margin-left: 10px; animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    .site-footer { text-align: center; padding: 40px 20px; margin: 0 4% 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #a0a0a0; font-size: 0.9rem; line-height: 1.6; }
 
-    .site-footer { text-align: center; padding: 40px 20px; margin: 0 4% 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #a0a0a0; font-family: 'Lora', serif; font-style: italic; font-size: 1.1rem; line-height: 1.6; }
-
-    /* ==== MUSIC PLAYER (ESTRUTURA CSS) ==== */
+    /* ==== MUSIC PLAYER ==== */
     .music-player {
       position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 15px;
       background: linear-gradient(135deg, #e50914 0%, #83050b 100%); color: white; border: 1px solid rgba(255, 255, 255, 0.2);
@@ -244,60 +181,190 @@
       transition: all 0.3s ease; max-width: 300px;
     }
 
-    /* ==== OTIMIZAÇÕES RESPONSIVAS (CELULARES) ==== */
-    @media (max-width: 768px) {
-      .nav-links { display: flex; gap: 12px; width: max-content; }
-      .nav-links li a { font-size: 0.75rem; } 
-      .nav-logo { font-size: 20px; }
-      .nav-avatar { width: 28px; height: 28px; }
-      .nav-search { font-size: 1rem; }
-      .nav-right { gap: 12px; }
+    /* =======================================================
+       ==== MODAL (GALERIA) E CUSTOM PLAYER (NETFLIX)      ===
+       ======================================================= */
+    .image-modal {
+      display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%;
+      background-color: #000; justify-content: center; align-items: center; 
+      animation: zoomIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Quando for FOTO (Galeria) */
+    .modal-content-wrapper.image-mode { max-width: 90%; max-height: 80vh; position: relative; }
+    .modal-media { max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.8); object-fit: contain; }
 
-      .profile-title { font-size: 28px; padding: 0 20px; }
-      .avatar { width: 100px; height: 100px; font-size: 3rem; }
-      .profiles-container { gap: 20px; }
-      .profile-name { font-size: 1.2rem; }
-      .hero-title { font-size: 2.5em; line-height: 1.1; }
-      .btn-play, .btn-info { font-size: 1rem; padding: 8px 16px; width: 100%; margin-bottom: 5px;}
-      .hero-buttons { flex-direction: column; width: 100%; gap: 10px; }
+    /* Quando for VÍDEO (Player Cinematico 100% da tela) */
+    .custom-player-container {
+      position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: #000;
+      display: flex; justify-content: center; align-items: center; overflow: hidden;
+    }
+    .custom-video { width: 100%; height: 100%; object-fit: contain; cursor: none; }
+    .custom-video.cursor-active { cursor: default; }
+
+    /* Overlay do Player (Fundo preto com gradiente) */
+    .player-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: opacity 0.5s ease; opacity: 1; z-index: 10;
+    }
+    .player-overlay.idle-hidden { opacity: 0; pointer-events: none; }
+
+    /* TOPO: Seta voltar e Título Principal (Centralizado igual ao Print) */
+    .player-header {
+      padding: 30px 40px; display: flex; align-items: flex-start; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
+      position: relative; /* Para centralização absoluta do título */
+    }
+    .btn-back { background: none; border: none; color: white; font-size: 35px; cursor: pointer; transition: 0.2s; z-index: 2;}
+    .btn-back:hover { transform: scale(1.1); color: #e5e5e5; }
+    
+    .player-title-top {
+      position: absolute; left: 50%; transform: translateX(-50%); top: 40px;
+      font-size: 1.6rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+      white-space: nowrap;
+    }
+
+    /* BASE: Fundo Escuro para dar contraste aos botões */
+    .player-controls-bg {
+      padding: 0 40px 30px 40px;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+      display: flex; flex-direction: column; gap: 15px;
+    }
+
+    /* BARRA DE PROGRESSO + TEMPO (Mesma linha igual ao print) */
+    .timeline-row { display: flex; align-items: center; gap: 20px; width: 100%; }
+    .progress-container {
+      flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;
+      cursor: pointer; position: relative; transition: height 0.2s; display: flex; align-items: center;
+    }
+    .progress-container:hover { height: 8px; }
+    .progress-filled { height: 100%; background: #e50914; border-radius: 2px; width: 0%; position: relative; pointer-events: none; }
+    .progress-thumb {
+      position: absolute; right: -8px; top: 50%; transform: translateY(-50%) scale(0);
+      width: 18px; height: 18px; background: #e50914; border-radius: 50%; transition: transform 0.2s;
+    }
+    .progress-container:hover .progress-thumb { transform: translateY(-50%) scale(1); }
+    .time-display { font-size: 1rem; font-weight: 600; color: #fff; font-family: 'Inter', sans-serif; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+
+    /* BOTÕES DA BASE */
+    .controls-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .controls-left, .controls-right { display: flex; align-items: center; gap: 35px; }
+    .controls-center { flex: 1; text-align: center; font-size: 1.1rem; font-weight: 700; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
+    
+    .player-btn { background: none; border: none; color: white; font-size: 32px; cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center;}
+    .player-btn:hover { transform: scale(1.15); }
+    
+    /* Trick: Número 10 dentro do ícone de Voltar/Avançar */
+    .btn-10s { position: relative; font-size: 36px; }
+    .btn-10s .text-10 { position: absolute; font-size: 11px; font-weight: 800; font-family: 'Inter', sans-serif; top: 56%; left: 50%; transform: translate(-50%, -50%); }
+
+    /* Setas da Galeria de Fotos */
+    .close-modal-img { position: fixed; top: 20px; right: 30px; color: #fff; font-size: 45px; font-weight: bold; cursor: pointer; transition: 0.3s; z-index: 10001; text-shadow: 0 2px 10px rgba(0,0,0,0.8); display: none;}
+    .close-modal-img:hover { color: #e50914; }
+    .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 30px; font-weight: bold; cursor: pointer; z-index: 10002; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: 0.3s; user-select: none; display: none;}
+    .nav-arrow:hover { background-color: #e50914; }
+    .prev-arrow { left: -70px; }
+    .next-arrow { right: -70px; }
+
+    @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* =======================================================
+       ==== OTIMIZAÇÕES RESPONSIVAS (MOBILE)               ===
+       ======================================================= */
+    @media (max-width: 768px) {
+      .mobile-only { display: flex !important; }
+      .desktop-only { display: none !important; }
+
+      #navbar { padding: 15px 4% 10px; background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%); }
+      .nav-left { width: 100%; justify-content: flex-start; align-items: center; gap: 10px;}
+      .nav-logo { font-size: 26px; margin-right: 5px; letter-spacing: -1.5px;}
+      .mobile-page-title { font-size: 1.3rem; font-weight: 700; color: #fff; margin-right: auto;}
+      .nav-right.mobile-only { gap: 20px; font-size: 1.3rem; color: #fff; align-items: center;}
+
+      .mobile-categories { position: absolute; top: 60px; left: 0; width: 100%; padding: 5px 4%; gap: 10px; display: flex; justify-content: center; align-items: center; overflow-x: auto; box-sizing: border-box; scrollbar-width: none;}
+      .mobile-categories::-webkit-scrollbar { display: none; }
+      .mobile-categories button { background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; border-radius: 10px; padding: 8px 18px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; cursor: pointer; font-family: 'Inter', sans-serif; outline: none; letter-spacing: 0.3px; backdrop-filter: blur(8px); }
+
+      .hero { width: 92%; margin: 110px auto 20px auto; height: 65vh; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); padding: 0 4% 4%; background-color: #000; align-items: center; box-sizing: border-box; }
+      .hero-video { border-radius: 12px; width: calc(100% + 2px); height: calc(100% + 2px); top: -1px; left: -1px; }
+      .hero-overlay { border-radius: 12px; background: linear-gradient(to top, rgba(15,15,20,1) 0%, rgba(15,15,20,0) 80%); width: calc(100% + 2px); height: calc(100% + 2px); top: -1px; left: -1px; }
+      .hero-title { font-size: 2.5em; text-align: center; max-width: 100%; font-weight: 900;}
+      .hero-subtitle { display: none; } 
+      .hero-meta { justify-content: center; text-align: center; font-size: 0.8rem; width: 100%; flex-wrap: wrap; margin-bottom: 20px; color: #d2d2d2;}
+      
+      .hero-buttons { justify-content: space-between; gap: 8px; margin-bottom: 0; flex-wrap: nowrap; width: 100%;}
+      .btn-play, .btn-info { flex: 1; padding: 10px 2px; font-size: 0.85rem; gap: 5px; border-radius: 6px; white-space: nowrap; }
+      .btn-info { background-color: #333; color: #fff; } 
+
+      .counter-container { justify-content: center; width: 100%; margin-top: 15px; gap: 8px;}
+      .time-block { width: 70px; height: 65px; padding: 0; } 
+      .time-value { font-size: 18px; margin-bottom: 2px; }
+      .time-label { font-size: 10px; }
+
+      .bottom-nav { display: flex; position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 92%; background: rgba(30, 30, 30, 0.95); backdrop-filter: blur(10px); border-radius: 30px; justify-content: space-around; align-items: center; padding: 10px 5px; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.8);}
+      .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: #808080; text-decoration: none; font-size: 0.65rem; gap: 4px; font-weight: 500; transition: 0.3s;}
+      .bottom-nav-item.active { color: #fff; }
+      .bottom-nav-item i { font-size: 1.3rem; margin-bottom: 2px;}
+      .bottom-nav-avatar { width: 24px; height: 24px; border-radius: 4px; background-size: cover; background-position: center; border: 1px solid transparent; margin-bottom: 2px;}
+      .bottom-nav-item.active .bottom-nav-avatar { border-color: #fff; }
+
+      .profile-title { font-size: 32px; padding: 0 20px; margin-top: 50px; }
+      .avatar { width: 100px; height: 100px; }
+      .profile { width: 110px; }
+      .profiles-container { gap: 15px; }
+      .profile-name { font-size: 1rem; }
       
       .scroll-btn { display: none; }
       .posters { padding: 10px 0 20px 0; } 
-      .poster { width: 130px; height: 210px; } 
+      .poster { width: 130px; height: 210px; border-radius: 6px;} 
+      .row h2 { font-size: 1.1rem; }
 
-      .modal-content-wrapper { max-width: 100%; max-height: 90vh; }
+      .modal-content-wrapper.image-mode { max-width: 100%; max-height: 90vh; }
       .modal-media { max-height: 90vh; border-radius: 0; }
-      .close-modal { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.6); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
-      .nav-arrow { width: 45px; height: 45px; font-size: 20px; background-color: rgba(0,0,0,0.6); }
+      .close-modal-img { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.6); border-radius: 50%; width: 45px; height: 45px; justify-content: center; align-items: center; }
+      .nav-arrow { width: 45px; height: 45px; font-size: 20px; background: rgba(0,0,0,0.6); }
       .prev-arrow { left: 10px; }
       .next-arrow { right: 10px; }
 
-      .music-player { bottom: 15px; right: 15px; gap: 10px; padding: 8px 15px; max-width: 220px; }
+      /* Ajustes Player Mobile */
+      .player-header { padding: 15px 20px; }
+      .player-title-top { top: 20px; font-size: 1.2rem; }
+      .btn-back { font-size: 28px; }
+      .player-controls-bg { padding: 0 20px 20px 20px; }
+      .timeline-row { gap: 10px; }
+      .time-display { font-size: 0.85rem; }
+      .player-btn { font-size: 24px; }
+      .btn-10s { font-size: 28px; }
+      .controls-left, .controls-right { gap: 20px; }
+      .controls-center { display: none; } /* Oculta texto central no celular pra não espremer */
+
+      .music-player { bottom: 90px; right: 4%; gap: 10px; padding: 8px 15px; max-width: 200px; }
       #texto-musica { font-size: 12px; }
+      .site-footer { padding-bottom: 90px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- TELA DE LOGIN -->
   <div id="preloader">
+    <div class="netflix-logo-top">L&F</div>
     <div class="profile-screen">
       <h1 class="profile-title">Quem está assistindo?</h1>
       <div class="profiles-container">
-        
-        <div class="profile" id="btn-sim">
-          <div class="avatar" style="background-image: url('assets/foto3.jpg');"></div>
-          <span class="profile-name">O AMOR DA MINHA VIDA</span><i class="fas fa-heart heart-icon"></i>
-        </div>
+        <div class="profile btn-entrar"><div class="avatar" style="background-image: url('assets/sonic.png');"></div><span class="profile-name">Flavio de Leticia</span></div>
+        <div class="profile btn-entrar"><div class="avatar" style="background-image: url('assets/silhueta.png');"></div><span class="profile-name">Leticia de Flavio</span></div>
+        <div class="profile" id="btn-errado-1"><div class="avatar" style="background-image: url('assets/infantil.png');"></div><span class="profile-name">Convidado</span></div>
+        <div class="profile" id="btn-errado-2"><div class="avatar btn-add-profile"><i class="fas fa-plus"></i></div><span class="profile-name">Adicionar perfil</span></div>
       </div>
+      <button class="manage-profiles">Gerenciar perfis</button>
     </div>
   </div>
 
-  <div id="intro-overlay">
-    <div class="custom-logo" id="n-logo-anim">
-      L <span>&</span> F
-    </div>
-  </div>
+  <div id="intro-overlay"><div class="custom-logo" id="n-logo-anim">L <span>&</span> F</div></div>
 
+  <!-- MUSIC PLAYER -->
   <div id="player-musica" class="music-player">
     <i class="fas fa-step-backward" onclick="mudarMusica(-1)" style="cursor: pointer; font-size: 16px; transition: 0.2s;" onmouseover="this.style.color='#ffb3b3'" onmouseout="this.style.color='white'"></i>
     <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; background-color: rgba(255, 255, 255, 0.15); border-radius: 50%; cursor: pointer; box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3), 0 2px 5px rgba(0, 0, 0, 0.3);" onclick="pausarTocar()">
@@ -305,122 +372,133 @@
     </span>
     <i class="fas fa-step-forward" onclick="mudarMusica(1)" style="cursor: pointer; font-size: 16px; transition: 0.2s;" onmouseover="this.style.color='#ffb3b3'" onmouseout="this.style.color='white'"></i>
     <div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: flex; align-items: center;">
-      <span id="texto-musica" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Carregando...</span>
+      <span id="texto-musica">Carregando...</span>
     </div>
   </div>
 
   <div id="main-content">
     
+    <!-- NAVBAR -->
     <nav id="navbar">
-      <a href="#inicio" class="nav-logo">L&F</a>
-      
-      <ul class="nav-links">
-        <li><a href="#inicio">Início</a></li>
-        <li><a href="#fotos">Fotos</a></li>
-        <li><a href="#historia">Nossa História</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-      </ul>
-
-      <div class="nav-right">
+      <div class="nav-left">
+        <a href="#inicio" class="nav-logo">L&F</a>
+        <span class="mobile-page-title mobile-only">Letícia e Flávio</span>
+        <ul class="nav-links desktop-only">
+          <li><a href="#inicio" class="active">Início</a></li>
+          <li><a href="#fotos">Fotos</a></li>
+          <li><a href="#historia">História</a></li>
+          <li><a href="#videos">Vídeos</a></li>
+        </ul>
+      </div>
+      <div class="nav-right desktop-only">
         <i class="fas fa-search nav-search"></i>
+        <i class="fas fa-bell nav-search" style="margin: 0 10px;"></i>
         <div class="nav-avatar" style="background-image: url('assets/foto3.jpg');" onclick="voltarParaPerfis()"></div>
       </div>
+      <div class="nav-right mobile-only">
+        <i class="fas fa-download"></i>
+        <i class="fas fa-bell"></i>
+      </div>
     </nav>
+    
+    <div class="mobile-categories mobile-only">
+      <button onclick="document.getElementById('fotos').scrollIntoView()">Fotos</button>
+      <button onclick="document.getElementById('historia').scrollIntoView()">História</button>
+      <button onclick="document.getElementById('videos').scrollIntoView()">Vídeos</button>
+    </div>
 
+    <!-- BANNER -->
     <header class="hero" id="inicio">
-      
       <video class="hero-video" autoplay loop muted playsinline>
-        <source src="https://dl.dropboxusercontent.com/scl/fi/6z357cmvsg5d30o5aytzo/video2.mp4?rlkey=tt6yo42tgri5b26k6xoos17np&st=hti99d3n&raw=1" type="video/mp4">
+        <source src="https://www.dropbox.com/scl/fi/qsvxlohe6dhyybcrvio7o/InShot_20260813_235817048.mp4?rlkey=kucg97evcrcl3mgflekydhgfh&st=h0a6825e&raw=1" type="video/mp4">
       </video>
       <div class="hero-overlay"></div>
 
       <h1 class="hero-title">O Filme da Nossa Vida</h1>
-      
       <div class="hero-meta">
-        <span class="meta-year">2024</span>
-        <span class="meta-season">1 Temporada</span>
-        <span class="meta-badge">HD</span>
+        <span>Série</span><span class="meta-dot">•</span><span>Romance</span><span class="meta-dot">•</span>
+        <span class="meta-year">2024</span><span class="meta-dot">•</span><span>1 Temporada</span><span class="meta-dot">•</span>
+        <span class="meta-badge">L</span>
       </div>
-
-      <div class="hero-top10">
-        <div class="top10-icon">
-          <span class="top-text">TOP</span>
-          <span class="ten-text">10</span>
-        </div>
-        <span class="top10-text">Nº 1 em Filmes Hoje</span>
-      </div>
-
-      <p class="hero-subtitle">Desde 14 de Outubro de 2024. Uma produção original cheia de amor e fé em Deus.</p>
+      <p class="hero-subtitle">Desde 14 de Outubro de 2024. Uma produção original cheia de amor e fé em Deus. Quando os caminhos se cruzam no tempo certo, uma história inesquecível começa a ser escrita.</p>
       
       <div class="hero-buttons">
-        <button class="btn-play" onclick="document.getElementById('videos').scrollIntoView()"><i class="fas fa-play"></i> Assistir</button>
-        <button class="btn-info" onclick="document.getElementById('historia').scrollIntoView()"><i class="fas fa-info-circle"></i> Mais Informações</button>
+        <button class="btn-play" onclick="assistirFilmeOficial()"><i class="fas fa-play"></i> Assistir</button>
+        <button class="btn-info" onclick="document.getElementById('historia').scrollIntoView()"><i class="fas fa-info-circle"></i> Mais informações</button>
       </div>
 
       <div class="counter-container">
-        <div class="time-block"><div class="time-value" id="years">0</div><div class="time-label">Anos</div></div>
-        <div class="time-block"><div class="time-value" id="months">0</div><div class="time-label">Meses</div></div>
-        <div class="time-block"><div class="time-value" id="days">0</div><div class="time-label">Dias</div></div>
-        <div class="time-block"><div class="time-value" id="hours">0</div><div class="time-label">Horas</div></div>
-        <div class="time-block"><div class="time-value" id="minutes">0</div><div class="time-label">Minutos</div></div>
-        <div class="time-block"><div class="time-value" id="seconds">0</div><div class="time-label">Segundos</div></div>
+        <div class="time-block"><div class="time-value" id="years">0</div><div class="time-label" id="label-years">Ano</div></div>
+        <div class="time-block"><div class="time-value" id="months">0</div><div class="time-label" id="label-months">Meses</div></div>
+        <div class="time-block"><div class="time-value" id="days">0</div><div class="time-label" id="label-days">Dias</div></div>
+        <div class="time-block desktop-only"><div class="time-value" id="hours">0</div><div class="time-label" id="label-hours">Horas</div></div>
+        <div class="time-block desktop-only"><div class="time-value" id="minutes">0</div><div class="time-label" id="label-minutes">Minutos</div></div>
+        <div class="time-block desktop-only"><div class="time-value" id="seconds">0</div><div class="time-label" id="label-seconds">Segundos</div></div>
       </div>
     </header>
 
+    <!-- BOTTOM NAV MOBILE -->
+    <div class="bottom-nav">
+      <a href="#inicio" class="bottom-nav-item active" onclick="ativarBottomNav(this)"><i class="fas fa-home"></i><span>Início</span></a>
+      <a href="#videos" class="bottom-nav-item" onclick="ativarBottomNav(this)"><i class="far fa-play-circle"></i><span>Vídeos</span></a>
+      <a href="#fotos" class="bottom-nav-item" onclick="ativarBottomNav(this)"><i class="fas fa-images"></i><span>Fotos</span></a>
+      <a href="#" class="bottom-nav-item" onclick="voltarParaPerfis()"><div class="bottom-nav-avatar" style="background-image: url('assets/foto3.jpg');"></div><span>Perfil L&F</span></a>
+    </div>
+
+    <!-- CARROSSEL FOTOS -->
     <section class="row" id="fotos">
-      <h2>Nossos Melhores Momentos <i class="fas fa-heart heart-icon"></i></h2>
-      
+      <h2>Nossas Memórias em Fotos <i class="fas fa-images"></i></h2>
       <div class="carousel-container" style="margin-bottom: 20px;">
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-1')"><i class="fas fa-chevron-left"></i></button>
         <div class="posters" id="fotos-row-1">
-          <img src="assets/foto1.jpg" alt="Foto romântica 1" class="poster gallery-item" data-type="image">
-          <img src="assets/foto2.jpg" alt="Foto romântica 2" class="poster gallery-item" data-type="image">
-          <img src="assets/foto3.jpg" alt="Foto romântica 3" class="poster gallery-item" data-type="image">
-          <img src="assets/foto4.jpg" alt="Foto romântica 4" class="poster gallery-item" data-type="image">
-          <img src="assets/foto5.jpeg" alt="Foto romântica 5" class="poster gallery-item" data-type="image">
-          <img src="assets/foto6.jpg" alt="Foto romântica 6" class="poster gallery-item" data-type="image">
-          <img src="assets/foto7.jpg" alt="Foto romântica 7" class="poster gallery-item" data-type="image">
-          <img src="assets/foto8.jpeg" alt="Foto romântica 8" class="poster gallery-item" data-type="image">
-          <img src="assets/foto9.jpeg" alt="Foto romântica 9" class="poster gallery-item" data-type="image">
-          <img src="assets/foto10.jpeg" alt="Foto romântica 10" class="poster gallery-item" data-type="image">
-          <img src="assets/foto11.jpg" alt="Foto romântica 11" class="poster gallery-item" data-type="image">
-          <img src="assets/foto12.jpeg" alt="Foto romântica 12" class="poster gallery-item" data-type="image">
-          <img src="assets/foto13.jpg" alt="Foto romântica 13" class="poster gallery-item" data-type="image">
-          <img src="assets/foto14.jpeg" alt="Foto romântica 14" class="poster gallery-item" data-type="image">
-          <img src="assets/foto15.jpg" alt="Foto romântica 15" class="poster gallery-item" data-type="image">
-          <img src="assets/foto16.jpg" alt="Foto romântica 16" class="poster gallery-item" data-type="image">
-          <img src="assets/foto17.jpg" alt="Foto romântica 17" class="poster gallery-item" data-type="image">
-          <img src="assets/foto18.jpg" alt="Foto romântica 18" class="poster gallery-item" data-type="image">
+          <img src="assets/foto1.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto2.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto3.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto4.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto5.jpeg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto6.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto7.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto8.jpeg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto9.jpeg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto10.jpeg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto11.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto12.jpeg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto13.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto14.jpeg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto15.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto16.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto17.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto18.jpg" class="poster gallery-item" data-type="image">
         </div>
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-1')"><i class="fas fa-chevron-right"></i></button>
       </div>
 
-      <h2>Mais fotos com meu amor <i class="fas fa-heart heart-icon"></i></h2>
+      <h2>Sugestões que você vai adorar <i class="fas fa-images"></i></h2>
       <div class="carousel-container"> 
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-2')"><i class="fas fa-chevron-left"></i></button>
         <div class="posters" id="fotos-row-2">
-          <img src="assets/foto19.jpg" alt="Foto romântica 19" class="poster gallery-item" data-type="image">
-          <img src="assets/foto20.jpg" alt="Foto romântica 20" class="poster gallery-item" data-type="image">
-          <img src="assets/foto21.jpg" alt="Foto romântica 21" class="poster gallery-item" data-type="image">
-          <img src="assets/foto22.jpg" alt="Foto romântica 22" class="poster gallery-item" data-type="image">
-          <img src="assets/foto23.jpg" alt="Foto romântica 23" class="poster gallery-item" data-type="image">
-          <img src="assets/foto24.jpg" alt="Foto romântica 24" class="poster gallery-item" data-type="image">
-          <img src="assets/foto25.jpg" alt="Foto romântica 25" class="poster gallery-item" data-type="image">
-          <img src="assets/foto26.jpg" alt="Foto romântica 26" class="poster gallery-item" data-type="image">
-          <img src="assets/foto27.jpg" alt="Foto romântica 27" class="poster gallery-item" data-type="image">
-          <img src="assets/foto28.jpg" alt="Foto romântica 28" class="poster gallery-item" data-type="image">
-          <img src="assets/foto29.jpeg" alt="Foto romântica 29" class="poster gallery-item" data-type="image">
-          <img src="assets/foto30.jpg" alt="Foto romântica 30" class="poster gallery-item" data-type="image">
-          <img src="assets/foto31.jpg" alt="Foto romântica 31" class="poster gallery-item" data-type="image">
-          <img src="assets/foto32.jpg" alt="Foto romântica 32" class="poster gallery-item" data-type="image">
-          <img src="assets/foto33.jpeg" alt="Foto romântica 33" class="poster gallery-item" data-type="image">
-          <img src="assets/foto34.jpeg" alt="Foto romântica 34" class="poster gallery-item" data-type="image">
+          <img src="assets/foto19.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto20.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto21.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto22.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto23.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto24.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto25.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto26.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto27.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto28.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto29.jpeg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto30.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto31.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto32.jpg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto33.jpeg" class="poster gallery-item" data-type="image">
+          <img src="assets/foto34.jpeg" class="poster gallery-item" data-type="image">
         </div>
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-2')"><i class="fas fa-chevron-right"></i></button>
       </div>
-
     </section>
 
+    <!-- HISTORIA -->
     <section class="content-section" id="historia">
       <h2>Nossa História</h2>
       <div class="message-container">
@@ -447,69 +525,47 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         </div>
         <div class="fade-overlay" id="fade-texto"></div>
       </div>
-      <button class="btn-ler-mais" id="btn-ler-mais" onclick="alternarTexto()">
-        Ler mais <i class="fas fa-chevron-down"></i>
-      </button>
+      <button class="btn-ler-mais" id="btn-ler-mais" onclick="alternarTexto()">Ler mais <i class="fas fa-chevron-down"></i></button>
     </section>
 
+    <!-- CARROSSEL VÍDEOS -->
     <section class="row" id="videos">
       <h2>Nossas Memórias em Vídeo <i class="fas fa-video" style="color: #e50914;"></i></h2>
       <div class="carousel-container">
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'videos-row')"><i class="fas fa-chevron-left"></i></button>
         <div class="posters" id="videos-row">
-          
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://dl.dropboxusercontent.com/scl/fi/d10do5j977zu5m7lsf1mf/video1.mov?rlkey=zhxupfwhduc8ujftdespy6m77&st=8hj4nq03&raw=1#t=0.001" type="video/mp4">
           </video>
-
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://www.dropbox.com/scl/fi/03ax7lnbdrzuiy5v8gzuq/WhatsApp-Video-2026-05-22-at-19.22.34.mp4?rlkey=b2ebsdmsba6z9mrr797nbgil3&st=9g29mx12&raw=1#t=0.001" type="video/mp4">
           </video>
-
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://www.dropbox.com/scl/fi/02rnz5g1l8stu79je7dgv/WhatsApp-Video-2026-05-24-at-07.48.11.mp4?rlkey=h6zet3o9icmqzxnd17qh12rty&st=dhf16m44&raw=1#t=0.001" type="video/mp4">
           </video>
-
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://dl.dropboxusercontent.com/scl/fi/6z357cmvsg5d30o5aytzo/video2.mp4?rlkey=tt6yo42tgri5b26k6xoos17np&st=hti99d3n&raw=1#t=0.001" type="video/mp4">
           </video>
-
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://dl.dropboxusercontent.com/scl/fi/4ubhthtxgh7mpa8pf9ed0/Video3.MOV?rlkey=9g68kq025s1vl9sjofxor7ebp&st=9f2vtaen&raw=1#t=0.001" type="video/mp4">
           </video>
-
-           <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+           <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://dl.dropboxusercontent.com/scl/fi/rlq252xzf1j7z7qavl9vt/copy_0367DA55-75EF-4BC0-BBFE-6EE52390201F.mov?rlkey=p7lfon4mk979ym8yv1k5rjn7t&st=rk4bsnot&raw=1#t=0.001" type="video/mp4">
           </video>
-
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.play();">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.play();">
             <source src="https://dl.dropboxusercontent.com/scl/fi/61fb3xkvs1nn9d61bm2fu/69FDC1CB-BAF4-4A6C-8175-ACFA41FF4BEE.mov?rlkey=z4gg57jro2yxd1xnyk40epo59&st=vscomhub&raw=1#t=0.001" type="video/mp4">
           </video>
-
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://dl.dropboxusercontent.com/scl/fi/8m6voxpzsjag58tkim79x/20250203_174554.mp4?rlkey=bcnvrreit05nucdvsmik7ilwi&st=2se1apom&raw=1#t=0.001" type="video/mp4">
           </video>
-
-          <video class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://dl.dropboxusercontent.com/scl/fi/ilrdpifigx4nwlpowg1ro/IMG_0907.MOV?rlkey=qigo16d35c10qfotisvynijuz&st=9awuxl5s&raw=1#t=0.001" type="video/mp4">
           </video>
-
-          <video poster="https://drive.google.com/uc?export=view&id=1JQmS-xo6dTGiT5_d9jQK52hhDJFTIdXn" class="poster gallery-item" data-type="video" muted loop playsinline preload="metadata" onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
+          <video poster="https://drive.google.com/uc?export=view&id=1JQmS-xo6dTGiT5_d9jQK52hhDJFTIdXn" class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
             <source src="https://dl.dropboxusercontent.com/scl/fi/qnh2am25s2486kayg8h5e/20250216_115532.mp4?rlkey=b2v2e0rtttx2a0xg80b85banh&st=na70meot&raw=1" type="video/mp4">
           </video>
-
         </div>
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'videos-row')"><i class="fas fa-chevron-right"></i></button>
-      </div>
-    </section>
-
-    <section class="content-section">
-      <h2 style="margin-bottom: 20px;">Spoiler...</h2>
-      <div class="video-container">
-        <video id="spoiler-video" poster="https://drive.google.com/uc?export=view&id=1JQmS-xo6dTGiT5_d9jQK52hhDJFTIdXn" controls preload="metadata" playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 8px; object-fit: cover;">
-          <source src="https://dl.dropboxusercontent.com/scl/fi/u4y89lj5goizff7fnt2oe/YTDown.com_YouTube_Media_lL-1mzZnbaQ_001_720p.mp4?rlkey=p01ets6ixb1vpbc4tsw8v2x4q&st=4bdvjxql&raw=1#t=0.001" type="video/mp4">
-          Seu navegador não suporta o elemento de vídeo.
-        </video>
       </div>
     </section>
 
@@ -519,14 +575,19 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
 
   </div>
 
+  <!-- ==========================================
+       NOVO MODAL (COM PLAYER ESTILO NETFLIX) 
+       ========================================== -->
   <div id="imageModal" class="image-modal">
-    <div class="modal-content-wrapper">
-      <span class="close-modal" onclick="fecharModal()">&times;</span>
-      <span class="nav-arrow prev-arrow" onclick="mudarMedia(-1)">&#10094;</span>
+    <div class="modal-content-wrapper" id="modal-wrapper">
+      
+      <!-- Controle Padrão para Fotos -->
+      <span class="close-modal-img" id="close-img" onclick="fecharModal()">&times;</span>
+      <span class="nav-arrow prev-arrow" id="prev-btn" onclick="mudarMedia(-1)">&#10094;</span>
+      <span class="nav-arrow next-arrow" id="next-btn" onclick="mudarMedia(1)">&#10095;</span>
       
       <div id="modal-body"></div>
 
-      <span class="nav-arrow next-arrow" onclick="mudarMedia(1)">&#10095;</span>
     </div>
   </div>
   
@@ -534,45 +595,30 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
   <audio id="netflix-sound" src="https://dl.dropboxusercontent.com/scl/fi/y11p7pdt9fg62ijzxas0i/NETFLIX-Sounds-Effect-ROCKY-LAUTA.mp3?rlkey=1b8injsdbs6btbapud934khze&st=42n90toq&raw=1"></audio>
 
   <script>
+    // Controle da Navbar
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
     });
 
+    function ativarBottomNav(elemento) {
+      const itens = document.querySelectorAll('.bottom-nav-item');
+      itens.forEach(item => item.classList.remove('active'));
+      elemento.classList.add('active');
+    }
+
+    // ==== MÚSICA DE FUNDO ====
     const playlist = [          
-      {
-        url: "https://www.dropbox.com/scl/fi/ici2ibx9jdlgeefl6c4wb/Verde-Lil-s-Margem-Norte-Margem-Norte.mp3?rlkey=xovdns82kikdntug7kpuzosej&st=51ltaehl&raw=1",
-        nome: "Verde lilás - Margem norte"
-      },
-
-      {
-        url: "https://www.dropbox.com/scl/fi/lxusci3z8yqnnb8ruabvd/Encontro-das-Mar-s-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=0wcqfsee1sokk9ckc1blehmkm&st=kmqg9wan&raw=1",
-        nome: "Encontro de mares - Pedro Valença"
-      },
-
-      {
-        url: "https://dl.dropboxusercontent.com/scl/fi/mdwsdrki15osd3oh59b14/PEDRO-VALEN-A-E-GABRIELA-STEHLING-Tantos-Mares-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=qfbm8wgxf4qvkugeltiwn0o2r&st=q70gibif&raw=1",
-        nome: "Tantos Mares - Pedro Valença"
-      },
-      
-      {
-        url: "https://dl.dropboxusercontent.com/scl/fi/6iplh4sw8ilo3js20y982/AMOR-EM-TODO-LUGAR-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider.mp3?rlkey=74j5mr450aooquwrs31mbk3sv&st=4ou6yb8g&raw=1",
-        nome: "Amor em todo o Lugar"
-      },
-      {
-        url: "https://dl.dropboxusercontent.com/scl/fi/ttf1skkeghevx05u3ozck/O-Jeito-Que-Voc-Me-Olha-Daniel-L-dtke.mp3?rlkey=eblgdh3x4wen74i4yl05wk2wp&st=03sp5wij&raw=1",
-        nome: "O Jeito Que Você Me Olha"
-      },
-      {
-        url: "https://dl.dropboxusercontent.com/scl/fi/fl9o7cnaeofzytrf9ds5n/QUE-SORTE-A-MINHA-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider-1.mp3?rlkey=9o18v8womj37t74o7t7lte0ob&st=haisk4xf&raw=1",
-        nome: "Que Sorte a Minha"
-      }
+      { url: "https://www.dropbox.com/scl/fi/b1wjla1jcpsq8jcf41gyi/ISSO-AMOR-Paulo-C-sar-Baruk-ft.-Rebeca-Nemer-Baruk-TV.mp3?rlkey=w95520pypui5awtqquei8rjcm&st=9a9jrsr9&raw=1", nome: "Isso é Amor - Paulo Cesar" },
+      { url: "https://www.dropbox.com/scl/fi/g5fc0cbecgrj8hn3375fu/Melim-Ouvi-Dizer-Letra-Mundo-Das-Letras-Mundo-Das-Letras.mp3?rlkey=bwuyfd4dgz0yqfrsq56cuabs3&st=q9vyzbbs&raw=1", nome: "Ouvi Dizer - Merlim" },
+      { url: "https://www.dropbox.com/scl/fi/ici2ibx9jdlgeefl6c4wb/Verde-Lil-s-Margem-Norte-Margem-Norte.mp3?rlkey=xovdns82kikdntug7kpuzosej&st=51ltaehl&raw=1", nome: "Verde lilás - Margem norte" },
+      { url: "https://www.dropbox.com/scl/fi/lxusci3z8yqnnb8ruabvd/Encontro-das-Mar-s-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=0wcqfsee1sokk9ckc1blehmkm&st=kmqg9wan&raw=1", nome: "Encontro de mares - Pedro Valença" },
+      { url: "https://dl.dropboxusercontent.com/scl/fi/mdwsdrki15osd3oh59b14/PEDRO-VALEN-A-E-GABRIELA-STEHLING-Tantos-Mares-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=qfbm8wgxf4qvkugeltiwn0o2r&st=q70gibif&raw=1", nome: "Tantos Mares - Pedro Valença" },
+      { url: "https://dl.dropboxusercontent.com/scl/fi/6iplh4sw8ilo3js20y982/AMOR-EM-TODO-LUGAR-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider.mp3?rlkey=74j5mr450aooquwrs31mbk3sv&st=4ou6yb8g&raw=1", nome: "Amor em todo o Lugar" },
+      { url: "https://dl.dropboxusercontent.com/scl/fi/ttf1skkeghevx05u3ozck/O-Jeito-Que-Voc-Me-Olha-Daniel-L-dtke.mp3?rlkey=eblgdh3x4wen74i4yl05wk2wp&st=03sp5wij&raw=1", nome: "O Jeito Que Você Me Olha" },
+      { url: "https://dl.dropboxusercontent.com/scl/fi/fl9o7cnaeofzytrf9ds5n/QUE-SORTE-A-MINHA-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider-1.mp3?rlkey=9o18v8womj37t74o7t7lte0ob&st=haisk4xf&raw=1", nome: "Que Sorte a Minha" }
     ];
-    
     let musicaAtualIndex = 0;
     const backgroundMusic = document.getElementById("background-music");
     const iconePlayPause = document.getElementById("icone-play-pause");
@@ -588,11 +634,9 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
 
     function mudarMusica(direcao) {
       musicaAtualIndex += direcao;
-      if (musicaAtualIndex >= playlist.length) { musicaAtualIndex = 0; } 
-      else if (musicaAtualIndex < 0) { musicaAtualIndex = playlist.length - 1; }
-      
+      if (musicaAtualIndex >= playlist.length) musicaAtualIndex = 0; 
+      else if (musicaAtualIndex < 0) musicaAtualIndex = playlist.length - 1; 
       carregarMusica(musicaAtualIndex);
-      
       backgroundMusic.play().then(() => {
         iconePlayPause.className = "fas fa-pause";
         iconePlayPause.style.marginLeft = "0px";
@@ -611,64 +655,92 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     }
 
-    const spoilerVideo = document.getElementById("spoiler-video");
-    let musicaPausadaPeloSpoiler = false;
-
-    spoilerVideo.addEventListener('play', () => {
-      if (!backgroundMusic.paused) {
-        pausarTocar(); 
-        musicaPausadaPeloSpoiler = true; 
-      }
-    });
-
-    spoilerVideo.addEventListener('pause', () => {
-      if (musicaPausadaPeloSpoiler) {
-        pausarTocar(); 
-        musicaPausadaPeloSpoiler = false;
-      }
-    });
+    // ==== ENTRADA (LOGIN) ====
+    const preloader = document.getElementById('preloader');
+    const introOverlay = document.getElementById('intro-overlay');
+    const nLogoAnim = document.getElementById('n-logo-anim');
+    const mainContent = document.getElementById('main-content');
     
-    spoilerVideo.addEventListener('ended', () => {
-      if (musicaPausadaPeloSpoiler) {
-        pausarTocar(); 
-        musicaPausadaPeloSpoiler = false;
-      }
+    document.querySelectorAll('.btn-entrar').forEach(btn => {
+      btn.addEventListener('click', () => {
+        carregarMusica(0);
+        backgroundMusic.muted = true; 
+        backgroundMusic.play().catch(e => console.log("Áudio bloqueado:", e)); 
+        const netflixSound = document.getElementById('netflix-sound');
+        netflixSound.volume = 0.6; 
+        netflixSound.play().catch(e => console.log("Áudio bloqueado:", e));
+        
+        preloader.style.transition = 'opacity 0.5s ease';
+        preloader.style.opacity = '0';
+        setTimeout(() => { 
+          preloader.style.display = 'none'; 
+          introOverlay.style.display = 'flex';
+          nLogoAnim.classList.add('animate-intro'); 
+          setTimeout(() => {
+            introOverlay.style.opacity = '0';
+            introOverlay.style.transition = 'opacity 1s ease';
+            setTimeout(() => {
+              introOverlay.style.display = 'none';
+              mainContent.style.display = 'block'; 
+              backgroundMusic.currentTime = 0; 
+              backgroundMusic.muted = false; 
+              iconePlayPause.className = "fas fa-pause";
+            }, 1000); 
+          }, 3500); 
+        }, 500);
+      });
     });
 
+    document.querySelectorAll('#btn-errado-1, #btn-errado-2').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.add('shake');
+        const textSpan = btn.querySelector('.profile-name');
+        const originalText = textSpan.textContent;
+        textSpan.textContent = "Opção errada!";
+        textSpan.style.color = "#e50914"; 
+        setTimeout(() => { 
+          btn.classList.remove('shake'); 
+          textSpan.textContent = originalText;
+          textSpan.style.color = "#808080"; 
+        }, 1500);
+      });
+    });
 
+    function voltarParaPerfis() {
+      if (!backgroundMusic.paused) pausarTocar();
+      mainContent.style.display = 'none';
+      window.scrollTo(0, 0);
+      nLogoAnim.classList.remove('animate-intro');
+      introOverlay.style.opacity = '1';
+      preloader.style.display = 'flex';
+      setTimeout(() => { preloader.style.opacity = '1'; }, 50);
+    }
+
+    // ==== CARROSSEL E TEXTO ====
     const carouselLocks = {};
-
     function scrollCarousel(direction, carouselId) {
       if (carouselLocks[carouselId]) return;
       carouselLocks[carouselId] = true;
-
       const carousel = document.getElementById(carouselId);
       const itemWidth = carousel.firstElementChild.offsetWidth + 10; 
-
       if (direction === 1) {
         carousel.scrollBy({ left: itemWidth, behavior: 'smooth' });
         setTimeout(() => {
           carousel.style.scrollBehavior = 'auto'; 
           carousel.appendChild(carousel.firstElementChild); 
           carousel.scrollLeft -= itemWidth; 
-          
           carousel.style.scrollBehavior = 'smooth'; 
           carouselLocks[carouselId] = false; 
         }, 500); 
-
       } else {
         carousel.style.scrollBehavior = 'auto'; 
         carousel.prepend(carousel.lastElementChild); 
         carousel.scrollLeft += itemWidth; 
-        
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             carousel.style.scrollBehavior = 'smooth'; 
             carousel.scrollBy({ left: -itemWidth, behavior: 'smooth' }); 
-            
-            setTimeout(() => {
-              carouselLocks[carouselId] = false; 
-            }, 500);
+            setTimeout(() => { carouselLocks[carouselId] = false; }, 500);
           });
         });
       }
@@ -678,7 +750,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       const texto = document.getElementById("texto-historia");
       const btn = document.getElementById("btn-ler-mais");
       const fade = document.getElementById("fade-texto");
-
       if (texto.classList.contains("expandido")) {
         texto.classList.remove("expandido");
         fade.classList.remove("oculto");
@@ -690,89 +761,170 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     }
 
-    const preloader = document.getElementById('preloader');
-    const introOverlay = document.getElementById('intro-overlay');
-    const nLogoAnim = document.getElementById('n-logo-anim');
-    const mainContent = document.getElementById('main-content');
-    
-    const btnSim = document.getElementById('btn-sim');
-    const btnNao = document.getElementById('btn-nao');
-    const textoNao = document.getElementById('texto-nao');
-
-    btnSim.addEventListener('click', () => {
-      
-      carregarMusica(0);
-      backgroundMusic.muted = true; 
-      backgroundMusic.play().catch(e => console.log("Áudio bloqueado:", e)); 
-
-      const netflixSound = document.getElementById('netflix-sound');
-      netflixSound.volume = 0.6; 
-      netflixSound.play().catch(e => console.log("Áudio bloqueado:", e));
-      
-      preloader.style.transition = 'opacity 0.5s ease';
-      preloader.style.opacity = '0';
-      
-      setTimeout(() => { 
-        preloader.style.display = 'none'; 
-        introOverlay.style.display = 'flex';
-        nLogoAnim.classList.add('animate-intro'); 
-        
-        setTimeout(() => {
-          introOverlay.style.opacity = '0';
-          introOverlay.style.transition = 'opacity 1s ease';
-          
-          setTimeout(() => {
-            introOverlay.style.display = 'none';
-            mainContent.style.display = 'block'; 
-            
-            backgroundMusic.currentTime = 0; 
-            backgroundMusic.muted = false; 
-            
-            iconePlayPause.className = "fas fa-pause";
-            iconePlayPause.style.marginLeft = "0px";
-
-          }, 1000); 
-        }, 3500); 
-      }, 500);
-    });
-
-    // Removida a ação do botão NÃO pois você tirou ele do HTML, mas deixei aqui se quiser voltar depois.
-    if(btnNao){
-      btnNao.addEventListener('click', () => {
-        btnNao.classList.add('shake');
-        textoNao.textContent = "Opção errada! ❤️";
-        textoNao.style.color = "#e50914"; 
-        setTimeout(() => { btnNao.classList.remove('shake'); }, 400);
-      });
-    }
-
-    function voltarParaPerfis() {
-      if (!backgroundMusic.paused) {
-        backgroundMusic.pause();
-        iconePlayPause.className = "fas fa-play";
-        iconePlayPause.style.marginLeft = "3px";
-      }
-
-      mainContent.style.display = 'none';
-      window.scrollTo(0, 0);
-
-      nLogoAnim.classList.remove('animate-intro');
-      introOverlay.style.opacity = '1';
-
-      preloader.style.display = 'flex';
-      setTimeout(() => { preloader.style.opacity = '1'; }, 50);
-    }
-
+    // ==== MODAL E PLAYER ESTILO NETFLIX ====
     const modal = document.getElementById("imageModal");
+    const modalWrapper = document.getElementById("modal-wrapper");
     const modalBody = document.getElementById("modal-body");
+    const closeImgBtn = document.getElementById("close-img");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+
     let currentGalleryGroup = [];
     let currentIndex = 0;
+    let customVideoElement = null;
+    let playerHideTimer;
 
     document.querySelectorAll(".gallery-item").forEach(item => {
-      item.addEventListener("click", () => {
-        abrirMedia(item);
-      });
+      item.addEventListener("click", () => { abrirMedia(item); });
     });
+
+    // Função que formata o tempo (00:00)
+    function formatTime(seconds) {
+      if (isNaN(seconds)) return "00:00";
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+    }
+
+    // Injeta a interface do Player Netflix (Layout Exato Computador/Celular)
+    function renderCustomPlayer(src, tituloTop = "O Filme da Nossa Vida", tituloCentro = "Nossa História <span style='font-weight:400; color:#ccc;'>Desde 14 de Outubro</span>") {
+      return `
+        <div class="custom-player-container" id="player-container">
+          <video class="custom-video" id="c-video" src="${src}" playsinline autoplay></video>
+          
+          <div class="player-overlay" id="player-overlay">
+            
+            <div class="player-header">
+              <button class="btn-back" onclick="fecharModal()"><i class="fas fa-arrow-left"></i></button>
+              <div class="player-title-top">${tituloTop}</div>
+              <div style="width: 40px;" class="desktop-only"></div> <!-- Espaçador para manter simetria -->
+            </div>
+            
+            <div class="player-controls-bg">
+              <div class="timeline-row">
+                <div class="progress-container" id="c-progress-container">
+                  <div class="progress-filled" id="c-progress-filled">
+                    <div class="progress-thumb"></div>
+                  </div>
+                </div>
+                <span class="time-display" id="c-time">00:00</span>
+              </div>
+              
+              <div class="controls-main">
+                <div class="controls-left">
+                  <button class="player-btn" id="c-play"><i class="fas fa-pause"></i></button>
+                  <button class="player-btn btn-10s" id="c-rewind">
+                    <i class="fas fa-undo"></i><span class="text-10">10</span>
+                  </button>
+                  <button class="player-btn btn-10s" id="c-forward">
+                    <i class="fas fa-redo"></i><span class="text-10">10</span>
+                  </button>
+                  <button class="player-btn" id="c-mute"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <div class="controls-center">
+                  ${tituloCentro}
+                </div>
+                
+                <div class="controls-right">
+                  <button class="player-btn desktop-only"><i class="fas fa-step-forward"></i></button>
+                  <button class="player-btn desktop-only"><i class="far fa-clone"></i></button> 
+                  <button class="player-btn desktop-only"><i class="far fa-comment-alt"></i></button>
+                  <button class="player-btn desktop-only"><i class="fas fa-tachometer-alt"></i></button>
+                  <button class="player-btn" id="c-fullscreen"><i class="fas fa-expand"></i></button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      `;
+    }
+
+    // Configura os eventos dos botões do Player
+    function bindPlayerEvents() {
+      customVideoElement = document.getElementById("c-video");
+      const overlay = document.getElementById("player-overlay");
+      const container = document.getElementById("player-container");
+      
+      const playBtn = document.getElementById("c-play");
+      const rewindBtn = document.getElementById("c-rewind");
+      const forwardBtn = document.getElementById("c-forward");
+      const muteBtn = document.getElementById("c-mute");
+      const fullscreenBtn = document.getElementById("c-fullscreen");
+      
+      const progressContainer = document.getElementById("c-progress-container");
+      const progressFilled = document.getElementById("c-progress-filled");
+      const timeDisplay = document.getElementById("c-time");
+
+      // Ocultar controles quando o mouse parar (Efeito Netflix)
+      function resetHideTimer() {
+        overlay.classList.remove('idle-hidden');
+        customVideoElement.classList.remove('cursor-active');
+        clearTimeout(playerHideTimer);
+        playerHideTimer = setTimeout(() => {
+          if (!customVideoElement.paused) {
+            overlay.classList.add('idle-hidden');
+            customVideoElement.classList.add('cursor-active');
+          }
+        }, 3000);
+      }
+
+      container.addEventListener('mousemove', resetHideTimer);
+      container.addEventListener('touchstart', resetHideTimer);
+      container.addEventListener('click', resetHideTimer);
+
+      // Play / Pause
+      function togglePlay() {
+        if (customVideoElement.paused) {
+          customVideoElement.play();
+          playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+          customVideoElement.pause();
+          playBtn.innerHTML = '<i class="fas fa-play"></i>';
+          overlay.classList.remove('idle-hidden'); 
+        }
+      }
+      playBtn.addEventListener('click', togglePlay);
+      customVideoElement.addEventListener('click', togglePlay);
+
+      // Tempo e Barra de Progresso
+      customVideoElement.addEventListener('timeupdate', () => {
+        const percent = (customVideoElement.currentTime / customVideoElement.duration) * 100;
+        progressFilled.style.width = `${percent}%`;
+        
+        const remaining = customVideoElement.duration - customVideoElement.currentTime;
+        timeDisplay.textContent = formatTime(remaining);
+      });
+
+      // Clicar na barra para pular o vídeo
+      progressContainer.addEventListener('click', (e) => {
+        const rect = progressContainer.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        customVideoElement.currentTime = pos * customVideoElement.duration;
+      });
+
+      // Avançar e Voltar 10s
+      rewindBtn.addEventListener('click', () => { customVideoElement.currentTime -= 10; });
+      forwardBtn.addEventListener('click', () => { customVideoElement.currentTime += 10; });
+
+      // Mute
+      muteBtn.addEventListener('click', () => {
+        customVideoElement.muted = !customVideoElement.muted;
+        muteBtn.innerHTML = customVideoElement.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+      });
+
+      // Tela Cheia
+      fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          container.requestFullscreen().catch(err => { console.log("Erro fullscreen", err); });
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      
+      resetHideTimer();
+    }
 
     function abrirMedia(item) {
       const type = item.getAttribute("data-type");
@@ -782,49 +934,70 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       modal.style.display = "flex";
       modalBody.innerHTML = ""; 
 
+      if(!backgroundMusic.paused) pausarTocar(); // Pausa a música sempre que abre a galeria
+
       if (type === "image") {
+        modalWrapper.className = "modal-content-wrapper image-mode";
+        closeImgBtn.style.display = "flex";
+        prevBtn.style.display = "flex";
+        nextBtn.style.display = "flex";
+        
         const img = document.createElement("img");
         img.src = item.src;
         img.className = "modal-media";
         modalBody.appendChild(img);
-      } else if (type === "video") {
-        const video = document.createElement("video");
-        video.src = item.querySelector("source").src;
-        video.className = "modal-media";
-        video.controls = true;
-        video.autoplay = true;
-        modalBody.appendChild(video);
         
-        if(!backgroundMusic.paused){
-           pausarTocar();
-        }
+      } else if (type === "video") {
+        // Modo Vídeo (Abre usando o novo Player Cinematico)
+        modalWrapper.className = "modal-content-wrapper video-mode";
+        closeImgBtn.style.display = "none";
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+        
+        const videoSrc = item.querySelector("source").src;
+        modalBody.innerHTML = renderCustomPlayer(videoSrc, "Nossas Memórias", "Clipes da nossa galeria");
+        bindPlayerEvents();
       }
+    }
+
+    // Usado pelo botão "Assistir" do Banner
+    function assistirFilmeOficial() {
+      modal.style.display = "flex";
+      modalWrapper.className = "modal-content-wrapper video-mode";
+      closeImgBtn.style.display = "none";
+      prevBtn.style.display = "none";
+      nextBtn.style.display = "none";
+      
+      if(!backgroundMusic.paused) pausarTocar();
+      
+      const linkOficial = "https://www.dropbox.com/scl/fi/qsvxlohe6dhyybcrvio7o/InShot_20260813_235817048.mp4?rlkey=kucg97evcrcl3mgflekydhgfh&st=xnj6pjn2&raw=1";
+      modalBody.innerHTML = renderCustomPlayer(linkOficial, "O Filme da Nossa Vida", "S1:E1 A Promessa de Deus"); 
+      bindPlayerEvents();
     }
 
     function mudarMedia(dir) {
       currentIndex += dir;
-      if (currentIndex >= currentGalleryGroup.length) { currentIndex = 0; } 
-      else if (currentIndex < 0) { currentIndex = currentGalleryGroup.length - 1; }
+      if (currentIndex >= currentGalleryGroup.length) currentIndex = 0; 
+      else if (currentIndex < 0) currentIndex = currentGalleryGroup.length - 1; 
       abrirMedia(currentGalleryGroup[currentIndex]);
     }
 
     function fecharModal() {
       modal.style.display = "none";
       modalBody.innerHTML = ""; 
-      if(backgroundMusic.paused){
-          pausarTocar();
-      }
+      customVideoElement = null;
+      clearTimeout(playerHideTimer);
+      if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
     }
 
     modal.addEventListener('click', function(event) {
-      if (event.target === modal || event.target.classList.contains('modal-content-wrapper')) {
+      if (event.target === modal && modalWrapper.classList.contains('image-mode')) {
         fecharModal();
       }
     });
 
-    // ==== LÓGICA DO CONTADOR DE TEMPO (CORRIGIDA) ====
+    // ==== LÓGICA DO CONTADOR DE TEMPO ====
     function updateCounter() {
-      // Usando números evita o bug do Safari/Samsung! O mês 9 é Outubro no JavaScript.
       const dataInicio = new Date(2024, 9, 14, 0, 0, 0); 
       const dataAtual = new Date();
 
@@ -835,13 +1008,11 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       let minutos = dataAtual.getMinutes() - dataInicio.getMinutes();
       let segundos = dataAtual.getSeconds() - dataInicio.getSeconds();
 
-      // Ajustes quando os números dão negativo
       if (segundos < 0) { segundos += 60; minutos--; }
       if (minutos < 0) { minutos += 60; horas--; }
       if (horas < 0) { horas += 24; dias--; }
       
       if (dias < 0) {
-        // Pega quantos dias exatos teve o mês passado para fechar a conta
         let ultimoDiaMesAnterior = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 0).getDate();
         dias += ultimoDiaMesAnterior;
         meses--;
@@ -849,16 +1020,21 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       
       if (meses < 0) { meses += 12; anos--; }
 
-      // Envia os números calculados para a tela
       document.getElementById('years').innerText = anos;
       document.getElementById('months').innerText = meses;
       document.getElementById('days').innerText = dias;
       document.getElementById('hours').innerText = horas;
       document.getElementById('minutes').innerText = minutos;
       document.getElementById('seconds').innerText = segundos;
+
+      document.getElementById('label-years').innerText = anos === 1 ? 'Ano' : 'Anos';
+      document.getElementById('label-months').innerText = meses === 1 ? 'Mês' : 'Meses';
+      document.getElementById('label-days').innerText = dias === 1 ? 'Dia' : 'Dias';
+      document.getElementById('label-hours').innerText = horas === 1 ? 'Hora' : 'Horas';
+      document.getElementById('label-minutes').innerText = minutos === 1 ? 'Minuto' : 'Minutos';
+      document.getElementById('label-seconds').innerText = segundos === 1 ? 'Segundo' : 'Segundos';
     }
 
-    // Dispara o contador
     updateCounter();
     setInterval(updateCounter, 1000);
   </script>
