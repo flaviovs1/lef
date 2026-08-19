@@ -182,19 +182,55 @@
     }
 
     /* =======================================================
-       ==== MODAL (GALERIA) E CUSTOM PLAYER (NETFLIX)      ===
+       ==== NOVA PÁGINA: GALERIA COMPLETA DE FOTOS         ===
        ======================================================= */
+    .gallery-page {
+      display: none; /* Escondido por padrão */
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #141414; /* Fundo escuro Netflix */
+      z-index: 9995; /* Fica em cima de tudo, mas abaixo do modal de imagem (10000) */
+      overflow-y: auto;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .gallery-header {
+      position: sticky; top: 0;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px 4%;
+      display: flex; align-items: center; gap: 20px;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .gallery-header .btn-back {
+      background: none; border: none; color: white; font-size: 28px; cursor: pointer; transition: 0.2s;
+    }
+    .gallery-header .btn-back:hover { transform: scale(1.1); color: #e5e5e5; }
+    .gallery-header h2 { margin: 0; font-size: 1.5rem; font-weight: 700; color: #fff;}
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      padding: 25px 4% 120px 4%; /* Respiro extra no final para o menu inferior não cobrir as fotos */
+    }
+    .gallery-grid img {
+      width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 8px; cursor: pointer; 
+      transition: transform 0.3s; background-color: #222;
+    }
+    .gallery-grid img:hover { transform: scale(1.05); border: 2px solid #fff; z-index: 2; position: relative;}
+
+
+    /* ==== MODAL (GALERIA) E CUSTOM PLAYER (NETFLIX) ==== */
     .image-modal {
       display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%;
       background-color: #000; justify-content: center; align-items: center; 
       animation: zoomIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    /* Quando for FOTO (Galeria) */
     .modal-content-wrapper.image-mode { max-width: 90%; max-height: 80vh; position: relative; }
     .modal-media { max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.8); object-fit: contain; }
 
-    /* Quando for VÍDEO (Player Cinematico 100% da tela) */
     .custom-player-container {
       position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: #000;
       display: flex; justify-content: center; align-items: center; overflow: hidden;
@@ -202,7 +238,6 @@
     .custom-video { width: 100%; height: 100%; object-fit: contain; cursor: none; }
     .custom-video.cursor-active { cursor: default; }
 
-    /* Overlay do Player (Fundo preto com gradiente) */
     .player-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       display: flex; flex-direction: column; justify-content: space-between;
@@ -210,14 +245,13 @@
     }
     .player-overlay.idle-hidden { opacity: 0; pointer-events: none; }
 
-    /* TOPO: Seta voltar e Título Principal (Centralizado igual ao Print) */
     .player-header {
       padding: 30px 40px; display: flex; align-items: flex-start; justify-content: space-between;
       background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
-      position: relative; /* Para centralização absoluta do título */
+      position: relative; 
     }
-    .btn-back { background: none; border: none; color: white; font-size: 35px; cursor: pointer; transition: 0.2s; z-index: 2;}
-    .btn-back:hover { transform: scale(1.1); color: #e5e5e5; }
+    .player-header .btn-back { background: none; border: none; color: white; font-size: 35px; cursor: pointer; transition: 0.2s; z-index: 2;}
+    .player-header .btn-back:hover { transform: scale(1.1); color: #e5e5e5; }
     
     .player-title-top {
       position: absolute; left: 50%; transform: translateX(-50%); top: 40px;
@@ -225,14 +259,12 @@
       white-space: nowrap;
     }
 
-    /* BASE: Fundo Escuro para dar contraste aos botões */
     .player-controls-bg {
       padding: 0 40px 30px 40px;
       background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
       display: flex; flex-direction: column; gap: 15px;
     }
 
-    /* BARRA DE PROGRESSO + TEMPO (Mesma linha igual ao print) */
     .timeline-row { display: flex; align-items: center; gap: 20px; width: 100%; }
     .progress-container {
       flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;
@@ -247,7 +279,6 @@
     .progress-container:hover .progress-thumb { transform: translateY(-50%) scale(1); }
     .time-display { font-size: 1rem; font-weight: 600; color: #fff; font-family: 'Inter', sans-serif; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
-    /* BOTÕES DA BASE */
     .controls-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .controls-left, .controls-right { display: flex; align-items: center; gap: 35px; }
     .controls-center { flex: 1; text-align: center; font-size: 1.1rem; font-weight: 700; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
@@ -255,11 +286,9 @@
     .player-btn { background: none; border: none; color: white; font-size: 32px; cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center;}
     .player-btn:hover { transform: scale(1.15); }
     
-    /* Trick: Número 10 dentro do ícone de Voltar/Avançar */
     .btn-10s { position: relative; font-size: 36px; }
     .btn-10s .text-10 { position: absolute; font-size: 11px; font-weight: 800; font-family: 'Inter', sans-serif; top: 56%; left: 50%; transform: translate(-50%, -50%); }
 
-    /* Setas da Galeria de Fotos */
     .close-modal-img { position: fixed; top: 20px; right: 30px; color: #fff; font-size: 45px; font-weight: bold; cursor: pointer; transition: 0.3s; z-index: 10001; text-shadow: 0 2px 10px rgba(0,0,0,0.8); display: none;}
     .close-modal-img:hover { color: #e50914; }
     .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 30px; font-weight: bold; cursor: pointer; z-index: 10002; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: 0.3s; user-select: none; display: none;}
@@ -269,9 +298,7 @@
 
     @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-    /* =======================================================
-       ==== OTIMIZAÇÕES RESPONSIVAS (MOBILE)               ===
-       ======================================================= */
+    /* ==== OTIMIZAÇÕES RESPONSIVAS (MOBILE) ==== */
     @media (max-width: 768px) {
       .mobile-only { display: flex !important; }
       .desktop-only { display: none !important; }
@@ -320,6 +347,11 @@
       .poster { width: 130px; height: 210px; border-radius: 6px;} 
       .row h2 { font-size: 1.1rem; }
 
+      /* Responsividade da Página de Galeria */
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; padding: 15px 4% 120px 4%; }
+      .gallery-header { padding: 15px 4%; }
+      .gallery-header h2 { font-size: 1.2rem; }
+
       .modal-content-wrapper.image-mode { max-width: 100%; max-height: 90vh; }
       .modal-media { max-height: 90vh; border-radius: 0; }
       .close-modal-img { top: 15px; right: 15px; font-size: 40px; background: rgba(0,0,0,0.6); border-radius: 50%; width: 45px; height: 45px; justify-content: center; align-items: center; }
@@ -327,17 +359,16 @@
       .prev-arrow { left: 10px; }
       .next-arrow { right: 10px; }
 
-      /* Ajustes Player Mobile */
       .player-header { padding: 15px 20px; }
       .player-title-top { top: 20px; font-size: 1.2rem; }
-      .btn-back { font-size: 28px; }
+      .player-header .btn-back { font-size: 28px; }
       .player-controls-bg { padding: 0 20px 20px 20px; }
       .timeline-row { gap: 10px; }
       .time-display { font-size: 0.85rem; }
       .player-btn { font-size: 24px; }
       .btn-10s { font-size: 28px; }
       .controls-left, .controls-right { gap: 20px; }
-      .controls-center { display: none; } /* Oculta texto central no celular pra não espremer */
+      .controls-center { display: none; } 
 
       .music-player { bottom: 90px; right: 4%; gap: 10px; padding: 8px 15px; max-width: 200px; }
       #texto-musica { font-size: 12px; }
@@ -378,22 +409,23 @@
 
   <div id="main-content">
     
-    <!-- NAVBAR -->
+    <!-- NAVBAR (Com link de Fotos atualizado) -->
     <nav id="navbar">
       <div class="nav-left">
-        <a href="#inicio" class="nav-logo">L&F</a>
+        <a href="#inicio" class="nav-logo" onclick="fecharGaleria()">L&F</a>
         <span class="mobile-page-title mobile-only">Letícia e Flávio</span>
         <ul class="nav-links desktop-only">
-          <li><a href="#inicio" class="active">Início</a></li>
-          <li><a href="#fotos">Fotos</a></li>
-          <li><a href="#historia">História</a></li>
-          <li><a href="#videos">Vídeos</a></li>
+          <li><a href="#inicio" class="active" onclick="fecharGaleria()">Início</a></li>
+          <!-- AQUI O LINK "FOTOS" CHAMA A GALERIA COMPLETA -->
+          <li><a href="#" onclick="abrirGaleriaCompleta(); return false;">Fotos</a></li>
+          <li><a href="#historia" onclick="fecharGaleria()">História</a></li>
+          <li><a href="#videos" onclick="fecharGaleria()">Vídeos</a></li>
         </ul>
       </div>
       <div class="nav-right desktop-only">
         <i class="fas fa-search nav-search"></i>
         <i class="fas fa-bell nav-search" style="margin: 0 10px;"></i>
-        <div class="nav-avatar" style="background-image: url('assets/foto3.jpg');" onclick="voltarParaPerfis()"></div>
+        <div class="nav-avatar" style="background-image: url('assets/foto3.jpg');" onclick="voltarParaPerfis(); fecharGaleria();"></div>
       </div>
       <div class="nav-right mobile-only">
         <i class="fas fa-download"></i>
@@ -401,10 +433,11 @@
       </div>
     </nav>
     
+    <!-- CATEGORIAS MOBILE (Com link de Fotos atualizado) -->
     <div class="mobile-categories mobile-only">
-      <button onclick="document.getElementById('fotos').scrollIntoView()">Fotos</button>
-      <button onclick="document.getElementById('historia').scrollIntoView()">História</button>
-      <button onclick="document.getElementById('videos').scrollIntoView()">Vídeos</button>
+      <button onclick="abrirGaleriaCompleta()">Fotos</button>
+      <button onclick="document.getElementById('historia').scrollIntoView(); fecharGaleria();">História</button>
+      <button onclick="document.getElementById('videos').scrollIntoView(); fecharGaleria();">Vídeos</button>
     </div>
 
     <!-- BANNER -->
@@ -437,68 +470,28 @@
       </div>
     </header>
 
-    <!-- BOTTOM NAV MOBILE -->
+    <!-- BOTTOM NAV MOBILE (Com comportamento Inteligente da Galeria) -->
     <div class="bottom-nav">
-      <a href="#inicio" class="bottom-nav-item active" onclick="ativarBottomNav(this)"><i class="fas fa-home"></i><span>Início</span></a>
-      <a href="#videos" class="bottom-nav-item" onclick="ativarBottomNav(this)"><i class="far fa-play-circle"></i><span>Vídeos</span></a>
-      <a href="#fotos" class="bottom-nav-item" onclick="ativarBottomNav(this)"><i class="fas fa-images"></i><span>Fotos</span></a>
-      <a href="#" class="bottom-nav-item" onclick="voltarParaPerfis()"><div class="bottom-nav-avatar" style="background-image: url('assets/foto3.jpg');"></div><span>Perfil L&F</span></a>
+      <a href="#inicio" class="bottom-nav-item active" onclick="ativarBottomNav(this); fecharGaleria();"><i class="fas fa-home"></i><span>Início</span></a>
+      <a href="#videos" class="bottom-nav-item" onclick="ativarBottomNav(this); fecharGaleria();"><i class="far fa-play-circle"></i><span>Vídeos</span></a>
+      <a href="#" class="bottom-nav-item" onclick="ativarBottomNav(this); abrirGaleriaCompleta(); return false;"><i class="fas fa-images"></i><span>Fotos</span></a>
+      <a href="#" class="bottom-nav-item" onclick="voltarParaPerfis(); fecharGaleria();"><div class="bottom-nav-avatar" style="background-image: url('assets/foto3.jpg');"></div><span>Perfil L&F</span></a>
     </div>
 
-    <!-- CARROSSEL FOTOS -->
+    <!-- CARROSSEL FOTOS 1 -->
     <section class="row" id="fotos">
       <h2>Nossas Memórias em Fotos <i class="fas fa-images"></i></h2>
       <div class="carousel-container" style="margin-bottom: 20px;">
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-1')"><i class="fas fa-chevron-left"></i></button>
-        <div class="posters" id="fotos-row-1">
-          <img src="assets/foto35.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto36.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto37.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto38.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto39.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto1.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto2.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto3.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto4.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto5.jpeg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto6.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto7.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto8.jpeg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto9.jpeg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto10.jpeg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto11.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto12.jpeg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto13.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto14.jpeg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto15.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto16.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto17.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto18.jpg" class="poster gallery-item" data-type="image">
-        </div>
+        <div class="posters" id="fotos-row-1"></div>
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-1')"><i class="fas fa-chevron-right"></i></button>
       </div>
 
+      <!-- CARROSSEL FOTOS 2 -->
       <h2>Sugestões que você vai adorar <i class="fas fa-images"></i></h2>
       <div class="carousel-container"> 
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-2')"><i class="fas fa-chevron-left"></i></button>
-        <div class="posters" id="fotos-row-2">
-          <img src="assets/foto19.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto20.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto21.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto22.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto23.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto24.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto25.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto26.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto27.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto28.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto29.jpeg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto30.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto31.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto32.jpg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto33.jpeg" class="poster gallery-item" data-type="image">
-          <img src="assets/foto34.jpeg" class="poster gallery-item" data-type="image">
-        </div>
+        <div class="posters" id="fotos-row-2"></div>
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-2')"><i class="fas fa-chevron-right"></i></button>
       </div>
     </section>
@@ -538,38 +531,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       <h2>Nossas Memórias em Vídeo <i class="fas fa-video" style="color: #e50914;"></i></h2>
       <div class="carousel-container">
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'videos-row')"><i class="fas fa-chevron-left"></i></button>
-        <div class="posters" id="videos-row">
-          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://dl.dropboxusercontent.com/scl/fi/d10do5j977zu5m7lsf1mf/video1.mov?rlkey=zhxupfwhduc8ujftdespy6m77&st=8hj4nq03&raw=1#t=0.001" type="video/mp4">
-          </video>
-          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://www.dropbox.com/scl/fi/03ax7lnbdrzuiy5v8gzuq/WhatsApp-Video-2026-05-22-at-19.22.34.mp4?rlkey=b2ebsdmsba6z9mrr797nbgil3&st=9g29mx12&raw=1#t=0.001" type="video/mp4">
-          </video>
-          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://www.dropbox.com/scl/fi/02rnz5g1l8stu79je7dgv/WhatsApp-Video-2026-05-24-at-07.48.11.mp4?rlkey=h6zet3o9icmqzxnd17qh12rty&st=dhf16m44&raw=1#t=0.001" type="video/mp4">
-          </video>
-          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://dl.dropboxusercontent.com/scl/fi/6z357cmvsg5d30o5aytzo/video2.mp4?rlkey=tt6yo42tgri5b26k6xoos17np&st=hti99d3n&raw=1#t=0.001" type="video/mp4">
-          </video>
-          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://dl.dropboxusercontent.com/scl/fi/4ubhthtxgh7mpa8pf9ed0/Video3.MOV?rlkey=9g68kq025s1vl9sjofxor7ebp&st=9f2vtaen&raw=1#t=0.001" type="video/mp4">
-          </video>
-           <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://dl.dropboxusercontent.com/scl/fi/rlq252xzf1j7z7qavl9vt/copy_0367DA55-75EF-4BC0-BBFE-6EE52390201F.mov?rlkey=p7lfon4mk979ym8yv1k5rjn7t&st=rk4bsnot&raw=1#t=0.001" type="video/mp4">
-          </video>
-          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.play();">
-            <source src="https://dl.dropboxusercontent.com/scl/fi/61fb3xkvs1nn9d61bm2fu/69FDC1CB-BAF4-4A6C-8175-ACFA41FF4BEE.mov?rlkey=z4gg57jro2yxd1xnyk40epo59&st=vscomhub&raw=1#t=0.001" type="video/mp4">
-          </video>
-          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://dl.dropboxusercontent.com/scl/fi/8m6voxpzsjag58tkim79x/20250203_174554.mp4?rlkey=bcnvrreit05nucdvsmik7ilwi&st=2se1apom&raw=1#t=0.001" type="video/mp4">
-          </video>
-          <video class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://dl.dropboxusercontent.com/scl/fi/ilrdpifigx4nwlpowg1ro/IMG_0907.MOV?rlkey=qigo16d35c10qfotisvynijuz&st=9awuxl5s&raw=1#t=0.001" type="video/mp4">
-          </video>
-          <video poster="https://drive.google.com/uc?export=view&id=1JQmS-xo6dTGiT5_d9jQK52hhDJFTIdXn" class="poster gallery-item" data-type="video" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;">
-            <source src="https://dl.dropboxusercontent.com/scl/fi/qnh2am25s2486kayg8h5e/20250216_115532.mp4?rlkey=b2v2e0rtttx2a0xg80b85banh&st=na70meot&raw=1" type="video/mp4">
-          </video>
-        </div>
+        <div class="posters" id="videos-row"></div>
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'videos-row')"><i class="fas fa-chevron-right"></i></button>
       </div>
     </section>
@@ -578,21 +540,31 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       <p>Uma produção original feita com muito amor e carinho para o amor da minha vida. Esse site foi feito pra você sempre lembrar que eu te amo! Ass: Seu Amor. <i class="fas fa-heart" style="color: #e50914;"></i></p>
     </footer>
 
-  </div>
+  </div> <!-- FIM MAIN CONTENT -->
 
   <!-- ==========================================
-       NOVO MODAL (COM PLAYER ESTILO NETFLIX) 
+       NOVA PÁGINA: GALERIA COMPLETA DE FOTOS
+       ========================================== -->
+  <div id="pagina-galeria" class="gallery-page">
+    <div class="gallery-header">
+      <button class="btn-back" onclick="fecharGaleria()"><i class="fas fa-arrow-left"></i></button>
+      <h2>Todas as Fotos</h2>
+    </div>
+    
+    <!-- Grid Automático preenchido pelo JavaScript -->
+    <div class="gallery-grid" id="grid-de-fotos"></div>
+  </div>
+
+
+  <!-- ==========================================
+       MODAL DE ZOOM E PLAYER ESTILO NETFLIX
        ========================================== -->
   <div id="imageModal" class="image-modal">
     <div class="modal-content-wrapper" id="modal-wrapper">
-      
-      <!-- Controle Padrão para Fotos -->
       <span class="close-modal-img" id="close-img" onclick="fecharModal()">&times;</span>
       <span class="nav-arrow prev-arrow" id="prev-btn" onclick="mudarMedia(-1)">&#10094;</span>
       <span class="nav-arrow next-arrow" id="next-btn" onclick="mudarMedia(1)">&#10095;</span>
-      
       <div id="modal-body"></div>
-
     </div>
   </div>
   
@@ -721,7 +693,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       setTimeout(() => { preloader.style.opacity = '1'; }, 50);
     }
 
-    // ==== CARROSSEL E TEXTO ====
+    // ==== CARROSSEL DE MÍDIAS ====
     const carouselLocks = {};
     function scrollCarousel(direction, carouselId) {
       if (carouselLocks[carouselId]) return;
@@ -779,11 +751,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     let customVideoElement = null;
     let playerHideTimer;
 
-    document.querySelectorAll(".gallery-item").forEach(item => {
-      item.addEventListener("click", () => { abrirMedia(item); });
-    });
-
-    // Função que formata o tempo (00:00)
     function formatTime(seconds) {
       if (isNaN(seconds)) return "00:00";
       const m = Math.floor(seconds / 60);
@@ -791,26 +758,22 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
     }
 
-    // Injeta a interface do Player Netflix (Layout Exato Computador/Celular)
     function renderCustomPlayer(src, tituloTop = "O Filme da Nossa Vida", tituloCentro = "Nossa História <span style='font-weight:400; color:#ccc;'>Desde 14 de Outubro</span>") {
       return `
         <div class="custom-player-container" id="player-container">
           <video class="custom-video" id="c-video" src="${src}" playsinline autoplay></video>
           
           <div class="player-overlay" id="player-overlay">
-            
             <div class="player-header">
               <button class="btn-back" onclick="fecharModal()"><i class="fas fa-arrow-left"></i></button>
               <div class="player-title-top">${tituloTop}</div>
-              <div style="width: 40px;" class="desktop-only"></div> <!-- Espaçador para manter simetria -->
+              <div style="width: 40px;" class="desktop-only"></div>
             </div>
             
             <div class="player-controls-bg">
               <div class="timeline-row">
                 <div class="progress-container" id="c-progress-container">
-                  <div class="progress-filled" id="c-progress-filled">
-                    <div class="progress-thumb"></div>
-                  </div>
+                  <div class="progress-filled" id="c-progress-filled"><div class="progress-thumb"></div></div>
                 </div>
                 <span class="time-display" id="c-time">00:00</span>
               </div>
@@ -818,19 +781,11 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
               <div class="controls-main">
                 <div class="controls-left">
                   <button class="player-btn" id="c-play"><i class="fas fa-pause"></i></button>
-                  <button class="player-btn btn-10s" id="c-rewind">
-                    <i class="fas fa-undo"></i><span class="text-10">10</span>
-                  </button>
-                  <button class="player-btn btn-10s" id="c-forward">
-                    <i class="fas fa-redo"></i><span class="text-10">10</span>
-                  </button>
+                  <button class="player-btn btn-10s" id="c-rewind"><i class="fas fa-undo"></i><span class="text-10">10</span></button>
+                  <button class="player-btn btn-10s" id="c-forward"><i class="fas fa-redo"></i><span class="text-10">10</span></button>
                   <button class="player-btn" id="c-mute"><i class="fas fa-volume-up"></i></button>
                 </div>
-                
-                <div class="controls-center">
-                  ${tituloCentro}
-                </div>
-                
+                <div class="controls-center">${tituloCentro}</div>
                 <div class="controls-right">
                   <button class="player-btn desktop-only"><i class="fas fa-step-forward"></i></button>
                   <button class="player-btn desktop-only"><i class="far fa-clone"></i></button> 
@@ -840,13 +795,11 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       `;
     }
 
-    // Configura os eventos dos botões do Player
     function bindPlayerEvents() {
       customVideoElement = document.getElementById("c-video");
       const overlay = document.getElementById("player-overlay");
@@ -862,7 +815,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       const progressFilled = document.getElementById("c-progress-filled");
       const timeDisplay = document.getElementById("c-time");
 
-      // Ocultar controles quando o mouse parar (Efeito Netflix)
       function resetHideTimer() {
         overlay.classList.remove('idle-hidden');
         customVideoElement.classList.remove('cursor-active');
@@ -879,7 +831,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       container.addEventListener('touchstart', resetHideTimer);
       container.addEventListener('click', resetHideTimer);
 
-      // Play / Pause
       function togglePlay() {
         if (customVideoElement.paused) {
           customVideoElement.play();
@@ -893,33 +844,27 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       playBtn.addEventListener('click', togglePlay);
       customVideoElement.addEventListener('click', togglePlay);
 
-      // Tempo e Barra de Progresso
       customVideoElement.addEventListener('timeupdate', () => {
         const percent = (customVideoElement.currentTime / customVideoElement.duration) * 100;
         progressFilled.style.width = `${percent}%`;
-        
         const remaining = customVideoElement.duration - customVideoElement.currentTime;
         timeDisplay.textContent = formatTime(remaining);
       });
 
-      // Clicar na barra para pular o vídeo
       progressContainer.addEventListener('click', (e) => {
         const rect = progressContainer.getBoundingClientRect();
         const pos = (e.clientX - rect.left) / rect.width;
         customVideoElement.currentTime = pos * customVideoElement.duration;
       });
 
-      // Avançar e Voltar 10s
       rewindBtn.addEventListener('click', () => { customVideoElement.currentTime -= 10; });
       forwardBtn.addEventListener('click', () => { customVideoElement.currentTime += 10; });
 
-      // Mute
       muteBtn.addEventListener('click', () => {
         customVideoElement.muted = !customVideoElement.muted;
         muteBtn.innerHTML = customVideoElement.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
       });
 
-      // Tela Cheia
       fullscreenBtn.addEventListener('click', () => {
         if (!document.fullscreenElement) {
           container.requestFullscreen().catch(err => { console.log("Erro fullscreen", err); });
@@ -939,7 +884,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       modal.style.display = "flex";
       modalBody.innerHTML = ""; 
 
-      if(!backgroundMusic.paused) pausarTocar(); // Pausa a música sempre que abre a galeria
+      if(!backgroundMusic.paused) pausarTocar(); 
 
       if (type === "image") {
         modalWrapper.className = "modal-content-wrapper image-mode";
@@ -953,7 +898,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         modalBody.appendChild(img);
         
       } else if (type === "video") {
-        // Modo Vídeo (Abre usando o novo Player Cinematico)
         modalWrapper.className = "modal-content-wrapper video-mode";
         closeImgBtn.style.display = "none";
         prevBtn.style.display = "none";
@@ -965,7 +909,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     }
 
-    // Usado pelo botão "Assistir" do Banner
     function assistirFilmeOficial() {
       modal.style.display = "flex";
       modalWrapper.className = "modal-content-wrapper video-mode";
@@ -1000,6 +943,121 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         fecharModal();
       }
     });
+
+    // ==== BANCO DE DADOS DA GALERIA ====
+    
+    // Lista de Fotos 1 (Adicione novos nomes de arquivos aqui dentro)
+    const fotosFileira1 = [
+      "foto35.jpg", "foto36.jpg", "foto37.jpg", "foto38.jpg", "foto39.jpg",
+      "foto1.jpg", "foto2.jpg", "foto3.jpg", "foto4.jpg", "foto5.jpeg",
+      "foto6.jpg", "foto7.jpg", "foto8.jpeg", "foto9.jpeg", "foto10.jpeg",
+      "foto11.jpg", "foto12.jpeg", "foto13.jpg", "foto14.jpeg", "foto15.jpg",
+      "foto16.jpg", "foto17.jpg", "foto18.jpg"
+    ];
+
+    // Lista de Fotos 2
+    const fotosFileira2 = [
+      "foto19.jpg", "foto20.jpg", "foto21.jpg", "foto22.jpg", "foto23.jpg",
+      "foto24.jpg", "foto25.jpg", "foto26.jpg", "foto27.jpg", "foto28.jpg",
+      "foto29.jpeg", "foto30.jpg", "foto31.jpg", "foto32.jpg", "foto33.jpeg",
+      "foto34.jpeg"
+    ];
+
+    // Lista de Vídeos
+    const videosCarrossel = [
+      { src: "https://dl.dropboxusercontent.com/scl/fi/d10do5j977zu5m7lsf1mf/video1.mov?rlkey=zhxupfwhduc8ujftdespy6m77&st=8hj4nq03&raw=1#t=0.001" },
+      { src: "https://www.dropbox.com/scl/fi/03ax7lnbdrzuiy5v8gzuq/WhatsApp-Video-2026-05-22-at-19.22.34.mp4?rlkey=b2ebsdmsba6z9mrr797nbgil3&st=9g29mx12&raw=1#t=0.001" },
+      { src: "https://www.dropbox.com/scl/fi/02rnz5g1l8stu79je7dgv/WhatsApp-Video-2026-05-24-at-07.48.11.mp4?rlkey=h6zet3o9icmqzxnd17qh12rty&st=dhf16m44&raw=1#t=0.001" },
+      { src: "https://dl.dropboxusercontent.com/scl/fi/6z357cmvsg5d30o5aytzo/video2.mp4?rlkey=tt6yo42tgri5b26k6xoos17np&st=hti99d3n&raw=1#t=0.001" },
+      { src: "https://dl.dropboxusercontent.com/scl/fi/4ubhthtxgh7mpa8pf9ed0/Video3.MOV?rlkey=9g68kq025s1vl9sjofxor7ebp&st=9f2vtaen&raw=1#t=0.001" },
+      { src: "https://dl.dropboxusercontent.com/scl/fi/rlq252xzf1j7z7qavl9vt/copy_0367DA55-75EF-4BC0-BBFE-6EE52390201F.mov?rlkey=p7lfon4mk979ym8yv1k5rjn7t&st=rk4bsnot&raw=1#t=0.001" },
+      { src: "https://dl.dropboxusercontent.com/scl/fi/61fb3xkvs1nn9d61bm2fu/69FDC1CB-BAF4-4A6C-8175-ACFA41FF4BEE.mov?rlkey=z4gg57jro2yxd1xnyk40epo59&st=vscomhub&raw=1#t=0.001" },
+      { src: "https://dl.dropboxusercontent.com/scl/fi/8m6voxpzsjag58tkim79x/20250203_174554.mp4?rlkey=bcnvrreit05nucdvsmik7ilwi&st=2se1apom&raw=1#t=0.001" },
+      { src: "https://dl.dropboxusercontent.com/scl/fi/ilrdpifigx4nwlpowg1ro/IMG_0907.MOV?rlkey=qigo16d35c10qfotisvynijuz&st=9awuxl5s&raw=1#t=0.001" },
+      { src: "https://dl.dropboxusercontent.com/scl/fi/qnh2am25s2486kayg8h5e/20250216_115532.mp4?rlkey=b2v2e0rtttx2a0xg80b85banh&st=na70meot&raw=1", poster: "https://drive.google.com/uc?export=view&id=1JQmS-xo6dTGiT5_d9jQK52hhDJFTIdXn" }
+    ];
+
+    // Construtor automático da Galeria Inicial
+    function popularCarrossel() {
+      const container1 = document.getElementById('fotos-row-1');
+      const container2 = document.getElementById('fotos-row-2');
+      const containerV = document.getElementById('videos-row');
+
+      container1.innerHTML = '';
+      container2.innerHTML = '';
+      containerV.innerHTML = '';
+
+      fotosFileira1.forEach(foto => {
+        const img = document.createElement('img');
+        img.src = `assets/${foto}`;
+        img.className = 'poster gallery-item';
+        img.setAttribute('data-type', 'image');
+        img.addEventListener('click', () => abrirMedia(img));
+        container1.appendChild(img);
+      });
+
+      fotosFileira2.forEach(foto => {
+        const img = document.createElement('img');
+        img.src = `assets/${foto}`;
+        img.className = 'poster gallery-item';
+        img.setAttribute('data-type', 'image');
+        img.addEventListener('click', () => abrirMedia(img));
+        container2.appendChild(img);
+      });
+
+      videosCarrossel.forEach(videoObj => {
+        const video = document.createElement('video');
+        video.className = 'poster gallery-item';
+        video.setAttribute('data-type', 'video');
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        if(videoObj.poster) { video.setAttribute('poster', videoObj.poster); }
+        
+        const source = document.createElement('source');
+        source.src = videoObj.src;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+
+        video.addEventListener('mouseover', function() { this.play(); });
+        video.addEventListener('mouseout', function() { this.pause(); this.currentTime = 0; });
+        video.addEventListener('click', () => abrirMedia(video));
+        containerV.appendChild(video);
+      });
+    }
+
+    popularCarrossel();
+
+    // ==== LÓGICA DA PÁGINA "TODAS AS FOTOS" ====
+    function abrirGaleriaCompleta() {
+      const paginaGaleria = document.getElementById('pagina-galeria');
+      const gridFotos = document.getElementById('grid-de-fotos');
+      
+      gridFotos.innerHTML = ''; // Limpa pra não duplicar
+
+      // Junta as duas fileiras em uma única lista e remove fotos repetidas (se houver)
+      const todasFotos = [...new Set([...fotosFileira1, ...fotosFileira2])];
+
+      todasFotos.forEach(foto => {
+        const img = document.createElement('img');
+        img.src = `assets/${foto}`;
+        img.className = 'gallery-item'; // Reutiliza a classe para o modal escuro funcionar
+        img.setAttribute('data-type', 'image');
+        img.addEventListener('click', () => abrirMedia(img));
+        gridFotos.appendChild(img);
+      });
+
+      paginaGaleria.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // Trava o scroll da página de fundo
+    }
+
+    function fecharGaleria() {
+      const paginaGaleria = document.getElementById('pagina-galeria');
+      if(paginaGaleria) {
+        paginaGaleria.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Destrava o scroll
+      }
+    }
 
     // ==== LÓGICA DO CONTADOR DE TEMPO ====
     function updateCounter() {
