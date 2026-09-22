@@ -42,13 +42,20 @@
     .profiles-container { display: flex; gap: 2vw; justify-content: center; flex-wrap: wrap; }
     .profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 150px; }
     
+    /* === CORREÇÃO: AVATAR DA TELA DE LOGIN SEM BORDA CINZA === */
     .avatar {
       width: 150px; height: 150px;
       border-radius: 4px; box-sizing: border-box; 
       transition: transform 0.2s, border 0.2s;
-      background-color: #333; background-size: cover; background-position: center; background-repeat: no-repeat;
+      /* Removido o background-color: #333 para tirar o fundo cinza que vazava */
+      background-color: transparent; 
+      background-size: cover; background-position: center; background-repeat: no-repeat;
       border: 3px solid transparent;
+      overflow: hidden; /* Garante que a foto não vaze das bordas arredondadas */
     }
+    
+    /* Avatar especial do botão "Adicionar Perfil" pra manter a caixinha escura */
+    .btn-add-profile.avatar { background-color: #1a1a1a; }
     
     .profile-name { margin-top: 15px; color: #808080; font-size: 1.2rem; transition: color 0.2s; }
     .profile:hover .avatar { border: 3px solid #fff; }
@@ -56,7 +63,7 @@
 
     .btn-add-profile {
       display: flex; justify-content: center; align-items: center;
-      font-size: 4rem; color: #808080; background-color: #1a1a1a;
+      font-size: 4rem; color: #808080; 
     }
 
     .manage-profiles {
@@ -181,101 +188,47 @@
       transition: all 0.3s ease; max-width: 300px;
     }
 
-    /* =======================================================
-       ==== NOVA PÁGINA: GALERIA COMPLETA DE FOTOS         ===
-       ======================================================= */
+    /* ==== NOVA PÁGINA: GALERIA COMPLETA DE FOTOS ==== */
     .gallery-page {
-      display: none; /* Escondido por padrão */
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-color: #141414; /* Fundo escuro Netflix */
-      z-index: 9995; /* Fica em cima de tudo, mas abaixo do modal de imagem (10000) */
-      overflow-y: auto;
-      flex-direction: column;
-      animation: fadeIn 0.3s ease-in-out;
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #141414; z-index: 9995; overflow-y: auto; flex-direction: column; animation: fadeIn 0.3s ease-in-out;
     }
     .gallery-header {
-      position: sticky; top: 0;
-      background: rgba(20, 20, 20, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 20px 4%;
-      display: flex; align-items: center; gap: 20px;
-      z-index: 10;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: sticky; top: 0; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px);
+      padding: 20px 4%; display: flex; align-items: center; gap: 20px; z-index: 10; border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    .gallery-header .btn-back {
-      background: none; border: none; color: white; font-size: 28px; cursor: pointer; transition: 0.2s;
-    }
+    .gallery-header .btn-back { background: none; border: none; color: white; font-size: 28px; cursor: pointer; transition: 0.2s; }
     .gallery-header .btn-back:hover { transform: scale(1.1); color: #e5e5e5; }
     .gallery-header h2 { margin: 0; font-size: 1.5rem; font-weight: 700; color: #fff;}
     
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 15px;
-      padding: 25px 4% 120px 4%; /* Respiro extra no final para o menu inferior não cobrir as fotos */
-    }
-    .gallery-grid img {
-      width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 8px; cursor: pointer; 
-      transition: transform 0.3s; background-color: #222;
-    }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 25px 4% 120px 4%; }
+    .gallery-grid img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; background-color: #222;}
     .gallery-grid img:hover { transform: scale(1.05); border: 2px solid #fff; z-index: 2; position: relative;}
 
-
-    /* ==== MODAL (GALERIA) E CUSTOM PLAYER (NETFLIX) ==== */
-    .image-modal {
-      display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%;
-      background-color: #000; justify-content: center; align-items: center; 
-      animation: zoomIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
+    /* ==== MODAL (GALERIA DE ZOOM) E CUSTOM PLAYER (NETFLIX) ==== */
+    .image-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: #000; justify-content: center; align-items: center; animation: zoomIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);}
     .modal-content-wrapper.image-mode { max-width: 90%; max-height: 80vh; position: relative; }
     .modal-media { max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.8); object-fit: contain; }
 
-    .custom-player-container {
-      position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: #000;
-      display: flex; justify-content: center; align-items: center; overflow: hidden;
-    }
+    .custom-player-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden;}
     .custom-video { width: 100%; height: 100%; object-fit: contain; cursor: none; }
     .custom-video.cursor-active { cursor: default; }
 
-    .player-overlay {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      display: flex; flex-direction: column; justify-content: space-between;
-      transition: opacity 0.5s ease; opacity: 1; z-index: 10;
-    }
+    .player-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; transition: opacity 0.5s ease; opacity: 1; z-index: 10;}
     .player-overlay.idle-hidden { opacity: 0; pointer-events: none; }
 
-    .player-header {
-      padding: 30px 40px; display: flex; align-items: flex-start; justify-content: space-between;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
-      position: relative; 
-    }
+    .player-header { padding: 30px 40px; display: flex; align-items: flex-start; justify-content: space-between; background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%); position: relative; }
     .player-header .btn-back { background: none; border: none; color: white; font-size: 35px; cursor: pointer; transition: 0.2s; z-index: 2;}
     .player-header .btn-back:hover { transform: scale(1.1); color: #e5e5e5; }
     
-    .player-title-top {
-      position: absolute; left: 50%; transform: translateX(-50%); top: 40px;
-      font-size: 1.6rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-      white-space: nowrap;
-    }
+    .player-title-top { position: absolute; left: 50%; transform: translateX(-50%); top: 40px; font-size: 1.6rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); white-space: nowrap;}
 
-    .player-controls-bg {
-      padding: 0 40px 30px 40px;
-      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
-      display: flex; flex-direction: column; gap: 15px;
-    }
-
+    .player-controls-bg { padding: 0 40px 30px 40px; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%); display: flex; flex-direction: column; gap: 15px;}
     .timeline-row { display: flex; align-items: center; gap: 20px; width: 100%; }
-    .progress-container {
-      flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;
-      cursor: pointer; position: relative; transition: height 0.2s; display: flex; align-items: center;
-    }
+    .progress-container { flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; cursor: pointer; position: relative; transition: height 0.2s; display: flex; align-items: center;}
     .progress-container:hover { height: 8px; }
     .progress-filled { height: 100%; background: #e50914; border-radius: 2px; width: 0%; position: relative; pointer-events: none; }
-    .progress-thumb {
-      position: absolute; right: -8px; top: 50%; transform: translateY(-50%) scale(0);
-      width: 18px; height: 18px; background: #e50914; border-radius: 50%; transition: transform 0.2s;
-    }
+    .progress-thumb { position: absolute; right: -8px; top: 50%; transform: translateY(-50%) scale(0); width: 18px; height: 18px; background: #e50914; border-radius: 50%; transition: transform 0.2s;}
     .progress-container:hover .progress-thumb { transform: translateY(-50%) scale(1); }
     .time-display { font-size: 1rem; font-weight: 600; color: #fff; font-family: 'Inter', sans-serif; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
@@ -347,7 +300,6 @@
       .poster { width: 130px; height: 210px; border-radius: 6px;} 
       .row h2 { font-size: 1.1rem; }
 
-      /* Responsividade da Página de Galeria */
       .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; padding: 15px 4% 120px 4%; }
       .gallery-header { padding: 15px 4%; }
       .gallery-header h2 { font-size: 1.2rem; }
@@ -416,7 +368,6 @@
         <span class="mobile-page-title mobile-only">Letícia e Flávio</span>
         <ul class="nav-links desktop-only">
           <li><a href="#inicio" class="active" onclick="fecharGaleria()">Início</a></li>
-          <!-- AQUI O LINK "FOTOS" CHAMA A GALERIA COMPLETA -->
           <li><a href="#" onclick="abrirGaleriaCompleta(); return false;">Fotos</a></li>
           <li><a href="#historia" onclick="fecharGaleria()">História</a></li>
           <li><a href="#videos" onclick="fecharGaleria()">Vídeos</a></li>
@@ -470,7 +421,7 @@
       </div>
     </header>
 
-    <!-- BOTTOM NAV MOBILE (Com comportamento Inteligente da Galeria) -->
+    <!-- BOTTOM NAV MOBILE -->
     <div class="bottom-nav">
       <a href="#inicio" class="bottom-nav-item active" onclick="ativarBottomNav(this); fecharGaleria();"><i class="fas fa-home"></i><span>Início</span></a>
       <a href="#videos" class="bottom-nav-item" onclick="ativarBottomNav(this); fecharGaleria();"><i class="far fa-play-circle"></i><span>Vídeos</span></a>
@@ -750,6 +701,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     let currentIndex = 0;
     let customVideoElement = null;
     let playerHideTimer;
+    let isMusicPausedForVideo = false; // FLAG para saber se a música pausou pelo vídeo
 
     function formatTime(seconds) {
       if (isNaN(seconds)) return "00:00";
@@ -884,8 +836,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       modal.style.display = "flex";
       modalBody.innerHTML = ""; 
 
-      if(!backgroundMusic.paused) pausarTocar(); 
-
       if (type === "image") {
         modalWrapper.className = "modal-content-wrapper image-mode";
         closeImgBtn.style.display = "flex";
@@ -898,6 +848,12 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         modalBody.appendChild(img);
         
       } else if (type === "video") {
+        // === CORREÇÃO: PAUSA A MÚSICA APENAS SE FOR VÍDEO ===
+        if(!backgroundMusic.paused) {
+            pausarTocar(); 
+            isMusicPausedForVideo = true; // Registra que a música foi pausada pelo vídeo
+        }
+
         modalWrapper.className = "modal-content-wrapper video-mode";
         closeImgBtn.style.display = "none";
         prevBtn.style.display = "none";
@@ -916,7 +872,11 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       prevBtn.style.display = "none";
       nextBtn.style.display = "none";
       
-      if(!backgroundMusic.paused) pausarTocar();
+      // === CORREÇÃO: PAUSA A MÚSICA APENAS SE FOR VÍDEO ===
+      if(!backgroundMusic.paused) {
+          pausarTocar();
+          isMusicPausedForVideo = true; // Registra que a música foi pausada pelo vídeo
+      }
       
       const linkOficial = "https://www.dropbox.com/scl/fi/qsvxlohe6dhyybcrvio7o/InShot_20260813_235817048.mp4?rlkey=kucg97evcrcl3mgflekydhgfh&st=xnj6pjn2&raw=1";
       modalBody.innerHTML = renderCustomPlayer(linkOficial, "O Filme da Nossa Vida", "S1:E1 A Promessa de Deus"); 
@@ -936,6 +896,12 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       customVideoElement = null;
       clearTimeout(playerHideTimer);
       if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+
+      // === CORREÇÃO: DEVOLVE O PLAY NA MÚSICA SE ELA FOI PAUSADA PELO VÍDEO ===
+      if(isMusicPausedForVideo) {
+          pausarTocar(); 
+          isMusicPausedForVideo = false; // Reseta a flag
+      }
     }
 
     modal.addEventListener('click', function(event) {
@@ -946,7 +912,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
 
     // ==== BANCO DE DADOS DA GALERIA ====
     
-    // Lista de Fotos 1 (Adicione novos nomes de arquivos aqui dentro)
+    // Lista de Fotos 1
     const fotosFileira1 = [
       "foto35.jpg", "foto36.jpg", "foto37.jpg", "foto38.jpg", "foto39.jpg",
       "foto1.jpg", "foto2.jpg", "foto3.jpg", "foto4.jpg", "foto5.jpeg",
