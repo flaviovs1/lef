@@ -10,7 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ==== ESTILOS GERAIS ==== */
+    /* ==== ESTILOS GERAIS (Otimizados para PC e Mobile) ==== */
+    *, *::before, *::after { box-sizing: border-box; } /* Proteção extra contra quebra de layout */
+    
     body {
       background-color: #000;
       background-image: linear-gradient(to bottom, #091428 0%, #000 500px); 
@@ -37,34 +39,43 @@
       font-weight: 900; font-size: 32px; color: #e50914; letter-spacing: -2px;
     }
 
-    .profile-screen { display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .profile-title { font-size: 3.5vw; font-weight: 500; color: #fff; margin-bottom: 2em; }
-    .profiles-container { display: flex; gap: 2vw; justify-content: center; flex-wrap: wrap; }
+    .profile-screen { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; padding: 0 20px;}
+    .profile-title { font-size: 3.5vw; font-weight: 500; color: #fff; margin-bottom: 2em; text-align: center; }
+    .profiles-container { display: flex; gap: 2.5vw; justify-content: center; flex-wrap: wrap; max-width: 1000px;}
     .profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 150px; }
     
-    /* === CORREÇÃO: AVATAR DA TELA DE LOGIN SEM BORDA CINZA === */
+    /* === PERFIS MAIS ARREDONDADOS E MODERNOS === */
     .avatar {
       width: 150px; height: 150px;
-      border-radius: 4px; box-sizing: border-box; 
-      transition: transform 0.2s, border 0.2s;
-      /* Removido o background-color: #333 para tirar o fundo cinza que vazava */
+      border-radius: 20px; /* Borda bem mais arredondada */
+      transition: transform 0.2s, border 0.2s, box-shadow 0.2s;
       background-color: transparent; 
       background-size: cover; background-position: center; background-repeat: no-repeat;
       border: 3px solid transparent;
-      overflow: hidden; /* Garante que a foto não vaze das bordas arredondadas */
+      overflow: hidden; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5); /* Sombra para destacar do fundo */
     }
     
-    /* Avatar especial do botão "Adicionar Perfil" pra manter a caixinha escura */
     .btn-add-profile.avatar { background-color: #1a1a1a; }
     
-    .profile-name { margin-top: 15px; color: #808080; font-size: 1.2rem; transition: color 0.2s; }
-    .profile:hover .avatar { border: 3px solid #fff; }
+    .profile-name { margin-top: 15px; color: #808080; font-size: 1.2rem; transition: color 0.2s; text-align: center;}
+    .profile:hover .avatar { border: 3px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.8); transform: scale(1.05);}
     .profile:hover .profile-name { color: #fff; }
 
-    .btn-add-profile {
-      display: flex; justify-content: center; align-items: center;
-      font-size: 4rem; color: #808080; 
+    /* ==== CAIXA DE PRESENTE (PERFIL 2) ==== */
+    .avatar-presente {
+      background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      animation: pulseGift 2s infinite;
     }
+    @keyframes pulseGift {
+      0% { box-shadow: 0 0 0 0 rgba(255, 8, 68, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 8, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 8, 68, 0); }
+    }
+
+    .btn-add-profile { display: flex; justify-content: center; align-items: center; font-size: 4rem; color: #808080; }
 
     .manage-profiles {
       margin-top: 60px; background: transparent; border: 1px solid #808080;
@@ -108,7 +119,7 @@
     #navbar {
       position: fixed; top: 0; left: 0; width: 100%;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 15px 4%; box-sizing: border-box; z-index: 999;
+      padding: 15px 4%; z-index: 999;
       background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
       transition: background-color 0.4s ease, padding 0.4s ease;
     }
@@ -121,7 +132,9 @@
     .nav-links li a.active { background-color: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; color: #fff; font-weight: 600; }
     .nav-right { display: flex; align-items: center; gap: 20px; }
     .nav-search { color: #fff; font-size: 1.2rem; cursor: pointer; }
-    .nav-avatar { width: 35px; height: 35px; border-radius: 4px; cursor: pointer; background-color: #333; background-size: cover; background-position: center; transition: transform 0.2s;}
+    
+    /* Avatar do menu também mais redondinho */
+    .nav-avatar { width: 35px; height: 35px; border-radius: 10px; cursor: pointer; background-color: #333; background-size: cover; background-position: center; transition: transform 0.2s;}
     .nav-avatar:hover { transform: scale(1.1); }
 
     /* ==== BANNER PRINCIPAL (HERO) ==== */
@@ -137,9 +150,9 @@
       z-index: 1;
     }
     .hero > *:not(.hero-video):not(.hero-overlay) { position: relative; z-index: 2; }
-    .hero-title { font-size: 4.5vw; margin: 0 0 10px 0; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); line-height: 1; font-weight: 900; letter-spacing: -2px; text-transform: uppercase; max-width: 60%;}
+    .hero-title { font-size: 4.5vw; margin: 0 0 10px 0; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); line-height: 1; font-weight: 900; letter-spacing: -2px; text-transform: uppercase; max-width: 60%; word-wrap: break-word;}
     .hero-subtitle { font-size: 1.25rem; margin-bottom: 30px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); max-width: 45%; color: #fff; font-weight: 400; line-height: 1.4;}
-    .hero-meta { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
+    .hero-meta { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); flex-wrap: wrap;}
     .meta-dot { color: #808080; font-size: 0.8rem; }
     .meta-badge { background-color: #d81f26; border-radius: 2px; padding: 2px 6px; font-size: 0.8rem; color: #fff; font-weight: bold; }
     .hero-buttons { display: flex; gap: 15px; margin-bottom: 0; flex-wrap: wrap; }
@@ -188,7 +201,64 @@
       transition: all 0.3s ease; max-width: 300px;
     }
 
-    /* ==== NOVA PÁGINA: GALERIA COMPLETA DE FOTOS ==== */
+    /* =======================================================
+       ==== NOVA PÁGINA: ANIVERSÁRIO DA LETÍCIA (DIA 23)   ===
+       ======================================================= */
+    #birthday-content {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85)), url('assets/foto29.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      z-index: 9995; overflow-y: auto; overflow-x: hidden; color: #fff;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    
+    .bday-header-nav {
+      position: sticky; top: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(10px);
+      padding: 15px 4%; display: flex; align-items: center; justify-content: space-between; z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .bday-logo { font-size: 24px; font-weight: 900; color: #ff0844; }
+    
+    .bday-nav-buttons { display: flex; gap: 15px; align-items: center;}
+    
+    .btn-main-page {
+      background: #e50914; border: none; color: white; padding: 8px 18px; border-radius: 4px; 
+      cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 1rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .btn-main-page:hover { background: #b20710; transform: scale(1.05); }
+
+    .bday-header-nav .btn-back { 
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); 
+      color: #fff; padding: 8px 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; 
+      font-size: 1rem; font-weight: bold; display: flex; align-items: center; gap: 8px;
+    }
+    .bday-header-nav .btn-back:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
+
+    .bday-hero { text-align: center; padding: 60px 4% 40px; position: relative; z-index: 2;}
+    .bday-hero h1 { font-size: 3.5rem; color: #fff; margin: 0 0 10px 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); font-family: 'Inter', sans-serif;}
+    .bday-hero .bday-date { font-size: 1.2rem; color: #ccc; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);}
+    
+    .bday-card {
+      background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      max-width: 800px; margin: 0 auto 40px; padding: 40px;
+      border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;
+      position: relative; z-index: 2; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .bday-card p { font-size: 1.15rem; line-height: 1.8; color: #fff; margin-bottom: 20px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);}
+    .bday-heart { font-size: 3rem; color: #ff0844; animation: pulseGift 1.5s infinite; margin-top: 20px; text-shadow: 0 0 20px rgba(255,8,68,0.6);}
+
+    .bday-gallery { padding: 0 4% 60px; position: relative; z-index: 2;}
+    .bday-gallery h2 { color: #fff; font-size: 2rem; margin-bottom: 20px; text-align: center; text-shadow: 1px 1px 5px rgba(0,0,0,0.8);}
+    
+    .confetti { position: fixed; top: -10px; width: 10px; height: 20px; z-index: 9991; animation: fall linear forwards; pointer-events: none;}
+    @keyframes fall { to { transform: translateY(105vh) rotate(720deg); } }
+
+    /* =======================================================
+       ==== PÁGINA: GALERIA COMPLETA DE FOTOS              ===
+       ======================================================= */
     .gallery-page {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-color: #141414; z-index: 9995; overflow-y: auto; flex-direction: column; animation: fadeIn 0.3s ease-in-out;
@@ -205,30 +275,36 @@
     .gallery-grid img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; background-color: #222;}
     .gallery-grid img:hover { transform: scale(1.05); border: 2px solid #fff; z-index: 2; position: relative;}
 
-    /* ==== MODAL (GALERIA DE ZOOM) E CUSTOM PLAYER (NETFLIX) ==== */
-    .image-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: #000; justify-content: center; align-items: center; animation: zoomIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);}
+    /* ==== MODAL (GALERIA DE ZOOM) E CUSTOM PLAYER ==== */
+    .image-modal {
+      display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.98); justify-content: center; align-items: center; 
+      animation: zoomIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
     .modal-content-wrapper.image-mode { max-width: 90%; max-height: 80vh; position: relative; }
     .modal-media { max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.8); object-fit: contain; }
 
-    .custom-player-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden;}
+    .custom-player-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
     .custom-video { width: 100%; height: 100%; object-fit: contain; cursor: none; }
     .custom-video.cursor-active { cursor: default; }
 
-    .player-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; transition: opacity 0.5s ease; opacity: 1; z-index: 10;}
+    .player-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; transition: opacity 0.5s ease; opacity: 1; z-index: 10; }
     .player-overlay.idle-hidden { opacity: 0; pointer-events: none; }
 
     .player-header { padding: 30px 40px; display: flex; align-items: flex-start; justify-content: space-between; background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%); position: relative; }
     .player-header .btn-back { background: none; border: none; color: white; font-size: 35px; cursor: pointer; transition: 0.2s; z-index: 2;}
     .player-header .btn-back:hover { transform: scale(1.1); color: #e5e5e5; }
     
-    .player-title-top { position: absolute; left: 50%; transform: translateX(-50%); top: 40px; font-size: 1.6rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); white-space: nowrap;}
+    .player-title-top { position: absolute; left: 50%; transform: translateX(-50%); top: 40px; font-size: 1.6rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); white-space: nowrap; color: #fff; }
 
-    .player-controls-bg { padding: 0 40px 30px 40px; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%); display: flex; flex-direction: column; gap: 15px;}
+    .player-controls-bg { padding: 0 40px 30px 40px; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%); display: flex; flex-direction: column; gap: 15px; }
+
     .timeline-row { display: flex; align-items: center; gap: 20px; width: 100%; }
-    .progress-container { flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; cursor: pointer; position: relative; transition: height 0.2s; display: flex; align-items: center;}
+    .progress-container { flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; cursor: pointer; position: relative; transition: height 0.2s; display: flex; align-items: center; }
     .progress-container:hover { height: 8px; }
     .progress-filled { height: 100%; background: #e50914; border-radius: 2px; width: 0%; position: relative; pointer-events: none; }
-    .progress-thumb { position: absolute; right: -8px; top: 50%; transform: translateY(-50%) scale(0); width: 18px; height: 18px; background: #e50914; border-radius: 50%; transition: transform 0.2s;}
+    .progress-thumb { position: absolute; right: -8px; top: 50%; transform: translateY(-50%) scale(0); width: 18px; height: 18px; background: #e50914; border-radius: 50%; transition: transform 0.2s; }
     .progress-container:hover .progress-thumb { transform: translateY(-50%) scale(1); }
     .time-display { font-size: 1rem; font-weight: 600; color: #fff; font-family: 'Inter', sans-serif; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
@@ -240,7 +316,7 @@
     .player-btn:hover { transform: scale(1.15); }
     
     .btn-10s { position: relative; font-size: 36px; }
-    .btn-10s .text-10 { position: absolute; font-size: 11px; font-weight: 800; font-family: 'Inter', sans-serif; top: 56%; left: 50%; transform: translate(-50%, -50%); }
+    .btn-10s .text-10 { position: absolute; font-size: 11px; font-weight: 800; font-family: 'Inter', sans-serif; top: 56%; left: 50%; transform: translate(-50%, -50%); color: #fff;}
 
     .close-modal-img { position: fixed; top: 20px; right: 30px; color: #fff; font-size: 45px; font-weight: bold; cursor: pointer; transition: 0.3s; z-index: 10001; text-shadow: 0 2px 10px rgba(0,0,0,0.8); display: none;}
     .close-modal-img:hover { color: #e50914; }
@@ -262,14 +338,14 @@
       .mobile-page-title { font-size: 1.3rem; font-weight: 700; color: #fff; margin-right: auto;}
       .nav-right.mobile-only { gap: 20px; font-size: 1.3rem; color: #fff; align-items: center;}
 
-      .mobile-categories { position: absolute; top: 60px; left: 0; width: 100%; padding: 5px 4%; gap: 10px; display: flex; justify-content: center; align-items: center; overflow-x: auto; box-sizing: border-box; scrollbar-width: none;}
+      .mobile-categories { position: absolute; top: 60px; left: 0; width: 100%; padding: 5px 4%; gap: 10px; display: flex; justify-content: center; align-items: center; overflow-x: auto; scrollbar-width: none;}
       .mobile-categories::-webkit-scrollbar { display: none; }
       .mobile-categories button { background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; border-radius: 10px; padding: 8px 18px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; cursor: pointer; font-family: 'Inter', sans-serif; outline: none; letter-spacing: 0.3px; backdrop-filter: blur(8px); }
 
-      .hero { width: 92%; margin: 110px auto 20px auto; height: 65vh; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); padding: 0 4% 4%; background-color: #000; align-items: center; box-sizing: border-box; }
+      .hero { width: 92%; margin: 110px auto 20px auto; height: 65vh; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); padding: 0 4% 4%; background-color: #000; align-items: center;}
       .hero-video { border-radius: 12px; width: calc(100% + 2px); height: calc(100% + 2px); top: -1px; left: -1px; }
       .hero-overlay { border-radius: 12px; background: linear-gradient(to top, rgba(15,15,20,1) 0%, rgba(15,15,20,0) 80%); width: calc(100% + 2px); height: calc(100% + 2px); top: -1px; left: -1px; }
-      .hero-title { font-size: 2.5em; text-align: center; max-width: 100%; font-weight: 900;}
+      .hero-title { font-size: 2.2em; text-align: center; max-width: 100%; font-weight: 900;}
       .hero-subtitle { display: none; } 
       .hero-meta { justify-content: center; text-align: center; font-size: 0.8rem; width: 100%; flex-wrap: wrap; margin-bottom: 20px; color: #d2d2d2;}
       
@@ -289,8 +365,10 @@
       .bottom-nav-avatar { width: 24px; height: 24px; border-radius: 4px; background-size: cover; background-position: center; border: 1px solid transparent; margin-bottom: 2px;}
       .bottom-nav-item.active .bottom-nav-avatar { border-color: #fff; }
 
+      /* Ajustes Perfis Celular */
       .profile-title { font-size: 32px; padding: 0 20px; margin-top: 50px; }
-      .avatar { width: 100px; height: 100px; }
+      .avatar { width: 100px; height: 100px; border-radius: 16px;}
+      .avatar-presente { font-size: 3.5rem; }
       .profile { width: 110px; }
       .profiles-container { gap: 15px; }
       .profile-name { font-size: 1rem; }
@@ -325,6 +403,14 @@
       .music-player { bottom: 90px; right: 4%; gap: 10px; padding: 8px 15px; max-width: 200px; }
       #texto-musica { font-size: 12px; }
       .site-footer { padding-bottom: 90px; }
+      
+      /* Ajuste Bug iOS Background Fixed */
+      #birthday-content { background-attachment: scroll; }
+      .bday-hero h1 { font-size: 2.2rem; }
+      .bday-card { padding: 25px; margin: 0 4% 40px; }
+      .bday-card p { font-size: 1rem; }
+      .bday-nav-buttons { gap: 8px; }
+      .btn-main-page, .bday-header-nav .btn-back { font-size: 0.8rem; padding: 6px 10px; }
     }
   </style>
 </head>
@@ -336,10 +422,23 @@
     <div class="profile-screen">
       <h1 class="profile-title">Quem está assistindo?</h1>
       <div class="profiles-container">
-        <div class="profile btn-entrar"><div class="avatar" style="background-image: url('assets/foto35.jpg');"></div><span class="profile-name">Flavio de Leticia</span></div>
-        <div class="profile btn-entrar"><div class="avatar" style="background-image: url('assets/foto37.jpg');"></div><span class="profile-name">Leticia de Flavio</span></div>
         
-        <div class="profile" id="btn-errado-2"><div class="avatar btn-add-profile"><i class="fas fa-plus"></i></div><span class="profile-name">Adicionar perfil</span></div>
+        <!-- Perfil Normal -->
+        <div class="profile btn-entrar">
+          <div class="avatar" style="background-image: url('assets/foto35.jpg');"></div>
+          <span class="profile-name">Flavio de Leticia</span>
+        </div>
+        
+        <!-- PERFIL SURPRESA DE ANIVERSÁRIO -->
+        <div class="profile btn-aniversario">
+          <div class="avatar avatar-presente">🎁</div>
+          <span class="profile-name">Para o meu amor ❤️</span>
+        </div>
+        
+        <div class="profile" id="btn-errado-2">
+          <div class="avatar btn-add-profile"><i class="fas fa-plus"></i></div>
+          <span class="profile-name">Adicionar perfil</span>
+        </div>
       </div>
       <button class="manage-profiles">Gerenciar perfis</button>
     </div>
@@ -347,7 +446,7 @@
 
   <div id="intro-overlay"><div class="custom-logo" id="n-logo-anim">L <span>&</span> F</div></div>
 
-  <!-- MUSIC PLAYER -->
+  <!-- MUSIC PLAYER (Página Principal) -->
   <div id="player-musica" class="music-player">
     <i class="fas fa-step-backward" onclick="mudarMusica(-1)" style="cursor: pointer; font-size: 16px; transition: 0.2s;" onmouseover="this.style.color='#ffb3b3'" onmouseout="this.style.color='white'"></i>
     <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; background-color: rgba(255, 255, 255, 0.15); border-radius: 50%; cursor: pointer; box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3), 0 2px 5px rgba(0, 0, 0, 0.3);" onclick="pausarTocar()">
@@ -359,9 +458,11 @@
     </div>
   </div>
 
+  <!-- ==========================================
+       TELA PRINCIPAL (NETFLIX)
+       ========================================== -->
   <div id="main-content">
     
-    <!-- NAVBAR (Com link de Fotos atualizado) -->
     <nav id="navbar">
       <div class="nav-left">
         <a href="#inicio" class="nav-logo" onclick="fecharGaleria()">L&F</a>
@@ -384,14 +485,12 @@
       </div>
     </nav>
     
-    <!-- CATEGORIAS MOBILE (Com link de Fotos atualizado) -->
     <div class="mobile-categories mobile-only">
       <button onclick="abrirGaleriaCompleta()">Fotos</button>
       <button onclick="document.getElementById('historia').scrollIntoView(); fecharGaleria();">História</button>
       <button onclick="document.getElementById('videos').scrollIntoView(); fecharGaleria();">Vídeos</button>
     </div>
 
-    <!-- BANNER -->
     <header class="hero" id="inicio">
       <video class="hero-video" autoplay loop muted playsinline>
         <source src="https://www.dropbox.com/scl/fi/qsvxlohe6dhyybcrvio7o/InShot_20260813_235817048.mp4?rlkey=kucg97evcrcl3mgflekydhgfh&st=h0a6825e&raw=1" type="video/mp4">
@@ -421,7 +520,6 @@
       </div>
     </header>
 
-    <!-- BOTTOM NAV MOBILE -->
     <div class="bottom-nav">
       <a href="#inicio" class="bottom-nav-item active" onclick="ativarBottomNav(this); fecharGaleria();"><i class="fas fa-home"></i><span>Início</span></a>
       <a href="#videos" class="bottom-nav-item" onclick="ativarBottomNav(this); fecharGaleria();"><i class="far fa-play-circle"></i><span>Vídeos</span></a>
@@ -429,7 +527,6 @@
       <a href="#" class="bottom-nav-item" onclick="voltarParaPerfis(); fecharGaleria();"><div class="bottom-nav-avatar" style="background-image: url('assets/foto3.jpg');"></div><span>Perfil L&F</span></a>
     </div>
 
-    <!-- CARROSSEL FOTOS 1 -->
     <section class="row" id="fotos">
       <h2>Nossas Memórias em Fotos <i class="fas fa-images"></i></h2>
       <div class="carousel-container" style="margin-bottom: 20px;">
@@ -438,7 +535,6 @@
         <button class="scroll-btn right-btn" onclick="scrollCarousel(1, 'fotos-row-1')"><i class="fas fa-chevron-right"></i></button>
       </div>
 
-      <!-- CARROSSEL FOTOS 2 -->
       <h2>Sugestões que você vai adorar <i class="fas fa-images"></i></h2>
       <div class="carousel-container"> 
         <button class="scroll-btn left-btn" onclick="scrollCarousel(-1, 'fotos-row-2')"><i class="fas fa-chevron-left"></i></button>
@@ -447,7 +543,6 @@
       </div>
     </section>
 
-    <!-- HISTORIA -->
     <section class="content-section" id="historia">
       <h2>Nossa História</h2>
       <div class="message-container">
@@ -477,7 +572,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       <button class="btn-ler-mais" id="btn-ler-mais" onclick="alternarTexto()">Ler mais <i class="fas fa-chevron-down"></i></button>
     </section>
 
-    <!-- CARROSSEL VÍDEOS -->
     <section class="row" id="videos">
       <h2>Nossas Memórias em Vídeo <i class="fas fa-video" style="color: #e50914;"></i></h2>
       <div class="carousel-container">
@@ -490,19 +584,55 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     <footer class="site-footer">
       <p>Uma produção original feita com muito amor e carinho para o amor da minha vida. Esse site foi feito pra você sempre lembrar que eu te amo! Ass: Seu Amor. <i class="fas fa-heart" style="color: #e50914;"></i></p>
     </footer>
-
   </div> <!-- FIM MAIN CONTENT -->
 
   <!-- ==========================================
-       NOVA PÁGINA: GALERIA COMPLETA DE FOTOS
+       NOVA TELA: ANIVERSÁRIO DA LETÍCIA (DIA 23)
+       ========================================== -->
+  <div id="birthday-content">
+    <div class="bday-header-nav">
+      <div class="bday-logo">L&F</div>
+      <div class="bday-nav-buttons">
+        <button class="btn-main-page" onclick="irParaPaginaPrincipal()"><i class="fas fa-home"></i> Ir para o Site</button>
+        <button class="btn-back" onclick="voltarParaPerfisDeAniversario()"><i class="fas fa-times"></i> Fechar Presente</button>
+      </div>
+    </div>
+
+    <!-- Div para a chuva de confetes -->
+    <div id="confetti-container"></div>
+
+    <div class="bday-hero">
+      <h1>Feliz Aniversário, Amor da Minha Vida! 🎉</h1>
+      <div class="bday-date">23 de Setembro de 2026</div>
+    </div>
+
+    <div class="bday-card">
+      <p>Meu amor, hoje o dia é todo seu!</p>
+      <p>Preparei esse espaço secreto aqui do nosso site só para te lembrar o quanto você é especial para mim e o quanto eu sou grato a Deus por ter você na minha vida.</p>
+      <p>Que o seu dia seja tão iluminado e lindo quanto o seu sorriso. Que Deus continue abençoando seus passos, guiando os nossos caminhos juntos e realizando todos os desejos do seu coração.</p>
+      <p>Aproveite o seu dia, minha princesa. Eu te amo mais do que as palavras podem expressar, minha futura esposa!</p>
+      <div class="bday-heart">❤️</div>
+    </div>
+
+    <div class="bday-gallery">
+      <h2>Nossos Melhores Momentos 📸</h2>
+      <div class="posters" id="bday-posters-container" style="display: flex; gap: 15px; overflow-x: auto; padding: 10px 0 20px; scrollbar-width: none;">
+        <!-- Preenchido pelo JavaScript automaticamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Áudio Especial de Aniversário -->
+  <audio id="bday-music" src="https://www.dropbox.com/scl/fi/qhg5faor050wlr4hjkn4y/0922-1.mp3?rlkey=uw2xd0jcdr3pn0f5za6wp4wyr&st=1olvq4fh&raw=1" loop></audio>
+
+  <!-- ==========================================
+       PÁGINA: GALERIA COMPLETA DE FOTOS
        ========================================== -->
   <div id="pagina-galeria" class="gallery-page">
     <div class="gallery-header">
       <button class="btn-back" onclick="fecharGaleria()"><i class="fas fa-arrow-left"></i></button>
       <h2>Todas as Fotos</h2>
     </div>
-    
-    <!-- Grid Automático preenchido pelo JavaScript -->
     <div class="gallery-grid" id="grid-de-fotos"></div>
   </div>
 
@@ -523,7 +653,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
   <audio id="netflix-sound" src="https://dl.dropboxusercontent.com/scl/fi/y11p7pdt9fg62ijzxas0i/NETFLIX-Sounds-Effect-ROCKY-LAUTA.mp3?rlkey=1b8injsdbs6btbapud934khze&st=42n90toq&raw=1"></audio>
 
   <script>
-    // Controle da Navbar
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) navbar.classList.add('scrolled');
@@ -533,10 +662,10 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     function ativarBottomNav(elemento) {
       const itens = document.querySelectorAll('.bottom-nav-item');
       itens.forEach(item => item.classList.remove('active'));
-      elemento.classList.add('active');
+      if(elemento) elemento.classList.add('active');
     }
 
-    // ==== MÚSICA DE FUNDO ====
+    // ==== MÚSICA DE FUNDO PRINCIPAL ====
     const playlist = [          
       { url: "https://www.dropbox.com/scl/fi/b1wjla1jcpsq8jcf41gyi/ISSO-AMOR-Paulo-C-sar-Baruk-ft.-Rebeca-Nemer-Baruk-TV.mp3?rlkey=w95520pypui5awtqquei8rjcm&st=9a9jrsr9&raw=1", nome: "Isso é Amor - Paulo Cesar" },
       { url: "https://www.dropbox.com/scl/fi/g5fc0cbecgrj8hn3375fu/Melim-Ouvi-Dizer-Letra-Mundo-Das-Letras-Mundo-Das-Letras.mp3?rlkey=bwuyfd4dgz0yqfrsq56cuabs3&st=q9vyzbbs&raw=1", nome: "Ouvi Dizer - Merlim" },
@@ -551,6 +680,8 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     const backgroundMusic = document.getElementById("background-music");
     const iconePlayPause = document.getElementById("icone-play-pause");
     const textoMusica = document.getElementById("texto-musica");
+    
+    const bdayMusic = document.getElementById("bday-music");
 
     backgroundMusic.addEventListener('ended', () => { mudarMusica(1); });
 
@@ -583,12 +714,14 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       }
     }
 
-    // ==== ENTRADA (LOGIN) ====
+    // ==== ENTRADA (LOGIN NORMAL E ANIVERSÁRIO) ====
     const preloader = document.getElementById('preloader');
     const introOverlay = document.getElementById('intro-overlay');
     const nLogoAnim = document.getElementById('n-logo-anim');
     const mainContent = document.getElementById('main-content');
+    const birthdayContent = document.getElementById('birthday-content');
     
+    // 1. Lógica do Perfil Normal
     document.querySelectorAll('.btn-entrar').forEach(btn => {
       btn.addEventListener('click', () => {
         carregarMusica(0);
@@ -619,20 +752,54 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       });
     });
 
-    document.querySelectorAll('#btn-errado-1, #btn-errado-2').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.add('shake');
-        const textSpan = btn.querySelector('.profile-name');
-        const originalText = textSpan.textContent;
-        textSpan.textContent = "Opção errada!";
-        textSpan.style.color = "#e50914"; 
+    // 2. Lógica do Perfil SURPRESA DE ANIVERSÁRIO
+    document.querySelector('.btn-aniversario').addEventListener('click', () => {
+        bdayMusic.play().catch(e => console.log("Áudio bloqueado:", e));
+        
+        preloader.style.transition = 'opacity 0.5s ease';
+        preloader.style.opacity = '0';
         setTimeout(() => { 
-          btn.classList.remove('shake'); 
-          textSpan.textContent = originalText;
-          textSpan.style.color = "#808080"; 
-        }, 1500);
-      });
+          preloader.style.display = 'none'; 
+          birthdayContent.style.display = 'block';
+          gerarConfetes();
+        }, 500);
     });
+
+    // Função NOVA: Vai direto para o site principal fechando o presente
+    function irParaPaginaPrincipal() {
+      bdayMusic.pause();
+      bdayMusic.currentTime = 0;
+      birthdayContent.style.display = 'none';
+      
+      // Carrega e toca a música principal
+      carregarMusica(0);
+      backgroundMusic.muted = false;
+      backgroundMusic.play().catch(e => console.log(e));
+      iconePlayPause.className = "fas fa-pause";
+      
+      mainContent.style.display = 'block';
+      window.scrollTo(0, 0);
+      
+      // Reseta navegação do celular pro "Início"
+      ativarBottomNav(document.querySelector('.bottom-nav-item.active'));
+    }
+
+    // Gerador de Confetes
+    function gerarConfetes() {
+      const container = document.getElementById('confetti-container');
+      container.innerHTML = ''; 
+      const cores = ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#f9bec7'];
+      
+      for(let i = 0; i < 70; i++) {
+        const confete = document.createElement('div');
+        confete.classList.add('confetti');
+        confete.style.left = Math.random() * 100 + 'vw';
+        confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+        confete.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        confete.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(confete);
+      }
+    }
 
     function voltarParaPerfis() {
       if (!backgroundMusic.paused) pausarTocar();
@@ -643,8 +810,17 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       preloader.style.display = 'flex';
       setTimeout(() => { preloader.style.opacity = '1'; }, 50);
     }
+    
+    function voltarParaPerfisDeAniversario() {
+      bdayMusic.pause();
+      bdayMusic.currentTime = 0;
+      birthdayContent.style.display = 'none';
+      window.scrollTo(0, 0);
+      preloader.style.display = 'flex';
+      setTimeout(() => { preloader.style.opacity = '1'; }, 50);
+    }
 
-    // ==== CARROSSEL DE MÍDIAS ====
+    // ==== CARROSSEL DE MÍDIAS (Netflix) ====
     const carouselLocks = {};
     function scrollCarousel(direction, carouselId) {
       if (carouselLocks[carouselId]) return;
@@ -701,7 +877,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     let currentIndex = 0;
     let customVideoElement = null;
     let playerHideTimer;
-    let isMusicPausedForVideo = false; // FLAG para saber se a música pausou pelo vídeo
+    let isMusicPausedForVideo = false;
 
     function formatTime(seconds) {
       if (isNaN(seconds)) return "00:00";
@@ -848,11 +1024,8 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         modalBody.appendChild(img);
         
       } else if (type === "video") {
-        // === CORREÇÃO: PAUSA A MÚSICA APENAS SE FOR VÍDEO ===
-        if(!backgroundMusic.paused) {
-            pausarTocar(); 
-            isMusicPausedForVideo = true; // Registra que a música foi pausada pelo vídeo
-        }
+        if(!backgroundMusic.paused) { pausarTocar(); isMusicPausedForVideo = true; }
+        if(!bdayMusic.paused) { bdayMusic.pause(); isMusicPausedForVideo = true; }
 
         modalWrapper.className = "modal-content-wrapper video-mode";
         closeImgBtn.style.display = "none";
@@ -872,11 +1045,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       prevBtn.style.display = "none";
       nextBtn.style.display = "none";
       
-      // === CORREÇÃO: PAUSA A MÚSICA APENAS SE FOR VÍDEO ===
-      if(!backgroundMusic.paused) {
-          pausarTocar();
-          isMusicPausedForVideo = true; // Registra que a música foi pausada pelo vídeo
-      }
+      if(!backgroundMusic.paused) { pausarTocar(); isMusicPausedForVideo = true; }
       
       const linkOficial = "https://www.dropbox.com/scl/fi/qsvxlohe6dhyybcrvio7o/InShot_20260813_235817048.mp4?rlkey=kucg97evcrcl3mgflekydhgfh&st=xnj6pjn2&raw=1";
       modalBody.innerHTML = renderCustomPlayer(linkOficial, "O Filme da Nossa Vida", "S1:E1 A Promessa de Deus"); 
@@ -897,10 +1066,13 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       clearTimeout(playerHideTimer);
       if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
 
-      // === CORREÇÃO: DEVOLVE O PLAY NA MÚSICA SE ELA FOI PAUSADA PELO VÍDEO ===
       if(isMusicPausedForVideo) {
-          pausarTocar(); 
-          isMusicPausedForVideo = false; // Reseta a flag
+          if (birthdayContent.style.display === 'block') {
+            bdayMusic.play(); 
+          } else {
+            pausarTocar(); 
+          }
+          isMusicPausedForVideo = false;
       }
     }
 
@@ -912,7 +1084,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
 
     // ==== BANCO DE DADOS DA GALERIA ====
     
-    // Lista de Fotos 1
     const fotosFileira1 = [
       "foto35.jpg", "foto36.jpg", "foto37.jpg", "foto38.jpg", "foto39.jpg",
       "foto1.jpg", "foto2.jpg", "foto3.jpg", "foto4.jpg", "foto5.jpeg",
@@ -923,7 +1094,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       "foto49.jpg", "foto50.jpg", "foto51.jpg"
     ];
 
-    // Lista de Fotos 2
     const fotosFileira2 = [
       "foto19.jpg", "foto20.jpg", 
       "foto21.jpg", "foto22.jpg", "foto23.jpg",
@@ -932,7 +1102,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       "foto34.jpeg"
     ];
 
-    // Lista de Vídeos
     const videosCarrossel = [
       { src: "https://dl.dropboxusercontent.com/scl/fi/d10do5j977zu5m7lsf1mf/video1.mov?rlkey=zhxupfwhduc8ujftdespy6m77&st=8hj4nq03&raw=1#t=0.001" },
       { src: "https://www.dropbox.com/scl/fi/03ax7lnbdrzuiy5v8gzuq/WhatsApp-Video-2026-05-22-at-19.22.34.mp4?rlkey=b2ebsdmsba6z9mrr797nbgil3&st=9g29mx12&raw=1#t=0.001" },
@@ -946,23 +1115,30 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       { src: "https://dl.dropboxusercontent.com/scl/fi/qnh2am25s2486kayg8h5e/20250216_115532.mp4?rlkey=b2v2e0rtttx2a0xg80b85banh&st=na70meot&raw=1", poster: "https://drive.google.com/uc?export=view&id=1JQmS-xo6dTGiT5_d9jQK52hhDJFTIdXn" }
     ];
 
-    // Construtor automático da Galeria Inicial
     function popularCarrossel() {
       const container1 = document.getElementById('fotos-row-1');
       const container2 = document.getElementById('fotos-row-2');
       const containerV = document.getElementById('videos-row');
+      const containerBday = document.getElementById('bday-posters-container');
 
       container1.innerHTML = '';
       container2.innerHTML = '';
       containerV.innerHTML = '';
+      if(containerBday) containerBday.innerHTML = '';
 
-      fotosFileira1.forEach(foto => {
+      fotosFileira1.forEach((foto, index) => {
         const img = document.createElement('img');
         img.src = `assets/${foto}`;
         img.className = 'poster gallery-item';
         img.setAttribute('data-type', 'image');
         img.addEventListener('click', () => abrirMedia(img));
         container1.appendChild(img);
+        
+        if(index < 5 && containerBday) {
+          const imgClone = img.cloneNode(true);
+          imgClone.addEventListener('click', () => abrirMedia(imgClone));
+          containerBday.appendChild(imgClone);
+        }
       });
 
       fotosFileira2.forEach(foto => {
@@ -974,7 +1150,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         container2.appendChild(img);
       });
 
-      videosCarrossel.forEach(videoObj => {
+      videosCarrossel.forEach((videoObj, index) => {
         const video = document.createElement('video');
         video.className = 'poster gallery-item';
         video.setAttribute('data-type', 'video');
@@ -992,6 +1168,14 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         video.addEventListener('mouseout', function() { this.pause(); this.currentTime = 0; });
         video.addEventListener('click', () => abrirMedia(video));
         containerV.appendChild(video);
+
+        if(index < 2 && containerBday) {
+          const videoClone = video.cloneNode(true);
+          videoClone.addEventListener('mouseover', function() { this.play(); });
+          videoClone.addEventListener('mouseout', function() { this.pause(); this.currentTime = 0; });
+          videoClone.addEventListener('click', () => abrirMedia(videoClone));
+          containerBday.appendChild(videoClone);
+        }
       });
     }
 
@@ -1002,29 +1186,27 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       const paginaGaleria = document.getElementById('pagina-galeria');
       const gridFotos = document.getElementById('grid-de-fotos');
       
-      gridFotos.innerHTML = ''; // Limpa pra não duplicar
-
-      // Junta as duas fileiras em uma única lista e remove fotos repetidas (se houver)
+      gridFotos.innerHTML = ''; 
       const todasFotos = [...new Set([...fotosFileira1, ...fotosFileira2])];
 
       todasFotos.forEach(foto => {
         const img = document.createElement('img');
         img.src = `assets/${foto}`;
-        img.className = 'gallery-item'; // Reutiliza a classe para o modal escuro funcionar
+        img.className = 'gallery-item'; 
         img.setAttribute('data-type', 'image');
         img.addEventListener('click', () => abrirMedia(img));
         gridFotos.appendChild(img);
       });
 
       paginaGaleria.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Trava o scroll da página de fundo
+      document.body.style.overflow = 'hidden'; 
     }
 
     function fecharGaleria() {
       const paginaGaleria = document.getElementById('pagina-galeria');
       if(paginaGaleria) {
         paginaGaleria.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Destrava o scroll
+        document.body.style.overflow = 'auto'; 
       }
     }
 
