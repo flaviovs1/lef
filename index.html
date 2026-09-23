@@ -10,8 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ==== ESTILOS GERAIS (Otimizados para PC e Mobile) ==== */
-    *, *::before, *::after { box-sizing: border-box; } /* Proteção extra contra quebra de layout */
+    /* ==== ESTILOS GERAIS ==== */
+    *, *::before, *::after { box-sizing: border-box; }
     
     body {
       background-color: #000;
@@ -44,16 +44,15 @@
     .profiles-container { display: flex; gap: 2.5vw; justify-content: center; flex-wrap: wrap; max-width: 1000px;}
     .profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 150px; }
     
-    /* === PERFIS MAIS ARREDONDADOS E MODERNOS === */
     .avatar {
       width: 150px; height: 150px;
-      border-radius: 20px; /* Borda bem mais arredondada */
+      border-radius: 20px; 
       transition: transform 0.2s, border 0.2s, box-shadow 0.2s;
       background-color: transparent; 
       background-size: cover; background-position: center; background-repeat: no-repeat;
       border: 3px solid transparent;
       overflow: hidden; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5); /* Sombra para destacar do fundo */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
     
     .btn-add-profile.avatar { background-color: #1a1a1a; }
@@ -132,8 +131,6 @@
     .nav-links li a.active { background-color: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; color: #fff; font-weight: 600; }
     .nav-right { display: flex; align-items: center; gap: 20px; }
     .nav-search { color: #fff; font-size: 1.2rem; cursor: pointer; }
-    
-    /* Avatar do menu também mais redondinho */
     .nav-avatar { width: 35px; height: 35px; border-radius: 10px; cursor: pointer; background-color: #333; background-size: cover; background-position: center; transition: transform 0.2s;}
     .nav-avatar:hover { transform: scale(1.1); }
 
@@ -342,10 +339,10 @@
       .mobile-categories::-webkit-scrollbar { display: none; }
       .mobile-categories button { background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; border-radius: 10px; padding: 8px 18px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; cursor: pointer; font-family: 'Inter', sans-serif; outline: none; letter-spacing: 0.3px; backdrop-filter: blur(8px); }
 
-      .hero { width: 92%; margin: 110px auto 20px auto; height: 65vh; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); padding: 0 4% 4%; background-color: #000; align-items: center;}
+      .hero { width: 92%; margin: 110px auto 20px auto; height: 65vh; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); padding: 0 4% 4%; background-color: #000; align-items: center; box-sizing: border-box; }
       .hero-video { border-radius: 12px; width: calc(100% + 2px); height: calc(100% + 2px); top: -1px; left: -1px; }
       .hero-overlay { border-radius: 12px; background: linear-gradient(to top, rgba(15,15,20,1) 0%, rgba(15,15,20,0) 80%); width: calc(100% + 2px); height: calc(100% + 2px); top: -1px; left: -1px; }
-      .hero-title { font-size: 2.2em; text-align: center; max-width: 100%; font-weight: 900;}
+      .hero-title { font-size: 2.5em; text-align: center; max-width: 100%; font-weight: 900;}
       .hero-subtitle { display: none; } 
       .hero-meta { justify-content: center; text-align: center; font-size: 0.8rem; width: 100%; flex-wrap: wrap; margin-bottom: 20px; color: #d2d2d2;}
       
@@ -365,7 +362,6 @@
       .bottom-nav-avatar { width: 24px; height: 24px; border-radius: 4px; background-size: cover; background-position: center; border: 1px solid transparent; margin-bottom: 2px;}
       .bottom-nav-item.active .bottom-nav-avatar { border-color: #fff; }
 
-      /* Ajustes Perfis Celular */
       .profile-title { font-size: 32px; padding: 0 20px; margin-top: 50px; }
       .avatar { width: 100px; height: 100px; border-radius: 16px;}
       .avatar-presente { font-size: 3.5rem; }
@@ -404,7 +400,6 @@
       #texto-musica { font-size: 12px; }
       .site-footer { padding-bottom: 90px; }
       
-      /* Ajuste Bug iOS Background Fixed */
       #birthday-content { background-attachment: scroll; }
       .bday-hero h1 { font-size: 2.2rem; }
       .bday-card { padding: 25px; margin: 0 4% 40px; }
@@ -593,6 +588,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     <div class="bday-header-nav">
       <div class="bday-logo">L&F</div>
       <div class="bday-nav-buttons">
+        <button class="btn-main-page" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);" onclick="proximaMusicaBday()"><i class="fas fa-step-forward"></i> Música</button>
         <button class="btn-main-page" onclick="irParaPaginaPrincipal()"><i class="fas fa-home"></i> Ir para o Site</button>
         <button class="btn-back" onclick="voltarParaPerfisDeAniversario()"><i class="fas fa-times"></i> Fechar Presente</button>
       </div>
@@ -617,13 +613,13 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     <div class="bday-gallery">
       <h2>Nossos Melhores Momentos 📸</h2>
       <div class="posters" id="bday-posters-container" style="display: flex; gap: 15px; overflow-x: auto; padding: 10px 0 20px; scrollbar-width: none;">
-        <!-- Preenchido pelo JavaScript automaticamente -->
+        <!-- Preenchido pelo JavaScript automaticamente com as fotos de 60 a 64 -->
       </div>
     </div>
   </div>
 
-  <!-- Áudio Especial de Aniversário -->
-  <audio id="bday-music" src="https://www.dropbox.com/scl/fi/qhg5faor050wlr4hjkn4y/0922-1.mp3?rlkey=uw2xd0jcdr3pn0f5za6wp4wyr&st=1olvq4fh&raw=1" loop></audio>
+  <!-- Áudio Especial de Aniversário agora gerenciado pelo JS -->
+  <audio id="bday-music"></audio>
 
   <!-- ==========================================
        PÁGINA: GALERIA COMPLETA DE FOTOS
@@ -680,8 +676,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
     const backgroundMusic = document.getElementById("background-music");
     const iconePlayPause = document.getElementById("icone-play-pause");
     const textoMusica = document.getElementById("texto-musica");
-    
-    const bdayMusic = document.getElementById("bday-music");
 
     backgroundMusic.addEventListener('ended', () => { mudarMusica(1); });
 
@@ -712,6 +706,26 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         iconePlayPause.className = "fas fa-play";
         iconePlayPause.style.marginLeft = "3px";
       }
+    }
+
+    // ==== MÚSICA DA PÁGINA DE ANIVERSÁRIO ====
+    const bdayPlaylist = [
+      "https://www.dropbox.com/scl/fi/qhg5faor050wlr4hjkn4y/0922-1.mp3?rlkey=uw2xd0jcdr3pn0f5za6wp4wyr&st=1olvq4fh&raw=1",
+      "https://www.dropbox.com/scl/fi/vgnrc616smcin90pvx516/Video-Project-11.m4a?rlkey=o737tmqyng5o1kjjesgo1tmat&st=asf3ifcm&raw=1" // <--- Substitua este texto pelo link da sua segunda música
+    ];
+    let currentBdayTrack = 0;
+    const bdayMusic = document.getElementById("bday-music");
+
+    // Toca a próxima música do aniversário quando a atual acabar
+    bdayMusic.addEventListener('ended', () => {
+        proximaMusicaBday();
+    });
+
+    function proximaMusicaBday() {
+        currentBdayTrack++;
+        if(currentBdayTrack >= bdayPlaylist.length) currentBdayTrack = 0;
+        bdayMusic.src = bdayPlaylist[currentBdayTrack];
+        bdayMusic.play().catch(e => console.log(e));
     }
 
     // ==== ENTRADA (LOGIN NORMAL E ANIVERSÁRIO) ====
@@ -754,6 +768,9 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
 
     // 2. Lógica do Perfil SURPRESA DE ANIVERSÁRIO
     document.querySelector('.btn-aniversario').addEventListener('click', () => {
+        // Reseta pra primeira música do aniversário e dá play
+        currentBdayTrack = 0;
+        bdayMusic.src = bdayPlaylist[currentBdayTrack];
         bdayMusic.play().catch(e => console.log("Áudio bloqueado:", e));
         
         preloader.style.transition = 'opacity 0.5s ease';
@@ -765,13 +782,12 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         }, 500);
     });
 
-    // Função NOVA: Vai direto para o site principal fechando o presente
+    // Vai direto para o site principal fechando o presente
     function irParaPaginaPrincipal() {
       bdayMusic.pause();
       bdayMusic.currentTime = 0;
       birthdayContent.style.display = 'none';
       
-      // Carrega e toca a música principal
       carregarMusica(0);
       backgroundMusic.muted = false;
       backgroundMusic.play().catch(e => console.log(e));
@@ -780,7 +796,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       mainContent.style.display = 'block';
       window.scrollTo(0, 0);
       
-      // Reseta navegação do celular pro "Início"
       ativarBottomNav(document.querySelector('.bottom-nav-item.active'));
     }
 
@@ -1102,6 +1117,11 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       "foto34.jpeg"
     ];
 
+    // Novas Fotos exclusivas do Aniversário (Também aparecerão em "Todas as Fotos")
+    const fotosAniversario = [
+      "foto60.jpeg", "foto61.jpeg", "foto62.jpeg", "foto63.jpeg", "foto64.jpeg", "foto49.jpg, "foto51.jpg",
+    ];
+
     const videosCarrossel = [
       { src: "https://dl.dropboxusercontent.com/scl/fi/d10do5j977zu5m7lsf1mf/video1.mov?rlkey=zhxupfwhduc8ujftdespy6m77&st=8hj4nq03&raw=1#t=0.001" },
       { src: "https://www.dropbox.com/scl/fi/03ax7lnbdrzuiy5v8gzuq/WhatsApp-Video-2026-05-22-at-19.22.34.mp4?rlkey=b2ebsdmsba6z9mrr797nbgil3&st=9g29mx12&raw=1#t=0.001" },
@@ -1126,19 +1146,25 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       containerV.innerHTML = '';
       if(containerBday) containerBday.innerHTML = '';
 
-      fotosFileira1.forEach((foto, index) => {
+      // Adiciona as fotos exclusivas apenas na tela de aniversário
+      if(containerBday) {
+        fotosAniversario.forEach(foto => {
+          const img = document.createElement('img');
+          img.src = `assets/${foto}`;
+          img.className = 'poster gallery-item';
+          img.setAttribute('data-type', 'image');
+          img.addEventListener('click', () => abrirMedia(img));
+          containerBday.appendChild(img);
+        });
+      }
+
+      fotosFileira1.forEach((foto) => {
         const img = document.createElement('img');
         img.src = `assets/${foto}`;
         img.className = 'poster gallery-item';
         img.setAttribute('data-type', 'image');
         img.addEventListener('click', () => abrirMedia(img));
         container1.appendChild(img);
-        
-        if(index < 5 && containerBday) {
-          const imgClone = img.cloneNode(true);
-          imgClone.addEventListener('click', () => abrirMedia(imgClone));
-          containerBday.appendChild(imgClone);
-        }
       });
 
       fotosFileira2.forEach(foto => {
@@ -1150,7 +1176,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         container2.appendChild(img);
       });
 
-      videosCarrossel.forEach((videoObj, index) => {
+      videosCarrossel.forEach((videoObj) => {
         const video = document.createElement('video');
         video.className = 'poster gallery-item';
         video.setAttribute('data-type', 'video');
@@ -1168,14 +1194,6 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         video.addEventListener('mouseout', function() { this.pause(); this.currentTime = 0; });
         video.addEventListener('click', () => abrirMedia(video));
         containerV.appendChild(video);
-
-        if(index < 2 && containerBday) {
-          const videoClone = video.cloneNode(true);
-          videoClone.addEventListener('mouseover', function() { this.play(); });
-          videoClone.addEventListener('mouseout', function() { this.pause(); this.currentTime = 0; });
-          videoClone.addEventListener('click', () => abrirMedia(videoClone));
-          containerBday.appendChild(videoClone);
-        }
       });
     }
 
@@ -1187,7 +1205,8 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
       const gridFotos = document.getElementById('grid-de-fotos');
       
       gridFotos.innerHTML = ''; 
-      const todasFotos = [...new Set([...fotosFileira1, ...fotosFileira2])];
+      // Agora inclui as fotos do aniversário na lista de "Todas as Fotos"
+      const todasFotos = [...new Set([...fotosFileira1, ...fotosFileira2, ...fotosAniversario])];
 
       todasFotos.forEach(foto => {
         const img = document.createElement('img');
