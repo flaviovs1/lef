@@ -648,516 +648,587 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
   <audio id="background-music"></audio>
   <audio id="netflix-sound" src="https://dl.dropboxusercontent.com/scl/fi/y11p7pdt9fg62ijzxas0i/NETFLIX-Sounds-Effect-ROCKY-LAUTA.mp3?rlkey=1b8injsdbs6btbapud934khze&st=42n90toq&raw=1"></audio>
 
-  <script>
-    window.addEventListener('scroll', () => {
-      const navbar = document.getElementById('navbar');
+ <script>
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
       if (window.scrollY > 50) navbar.classList.add('scrolled');
       else navbar.classList.remove('scrolled');
-    });
-
-    function ativarBottomNav(elemento) {
-      const itens = document.querySelectorAll('.bottom-nav-item');
-      itens.forEach(item => item.classList.remove('active'));
-      if(elemento) elemento.classList.add('active');
     }
+  });
 
-    // ==== MÚSICA DE FUNDO PRINCIPAL ====
-    const playlist = [          
-      { url: "https://www.dropbox.com/scl/fi/b1wjla1jcpsq8jcf41gyi/ISSO-AMOR-Paulo-C-sar-Baruk-ft.-Rebeca-Nemer-Baruk-TV.mp3?rlkey=w95520pypui5awtqquei8rjcm&st=9a9jrsr9&raw=1", nome: "Isso é Amor - Paulo Cesar" },
-      { url: "https://www.dropbox.com/scl/fi/g5fc0cbecgrj8hn3375fu/Melim-Ouvi-Dizer-Letra-Mundo-Das-Letras-Mundo-Das-Letras.mp3?rlkey=bwuyfd4dgz0yqfrsq56cuabs3&st=q9vyzbbs&raw=1", nome: "Ouvi Dizer - Merlim" },
-      { url: "https://www.dropbox.com/scl/fi/ici2ibx9jdlgeefl6c4wb/Verde-Lil-s-Margem-Norte-Margem-Norte.mp3?rlkey=xovdns82kikdntug7kpuzosej&st=51ltaehl&raw=1", nome: "Verde lilás - Margem norte" },
-      { url: "https://www.dropbox.com/scl/fi/lxusci3z8yqnnb8ruabvd/Encontro-das-Mar-s-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=0wcqfsee1sokk9ckc1blehmkm&st=kmqg9wan&raw=1", nome: "Encontro de mares - Pedro Valença" },
-      { url: "https://dl.dropboxusercontent.com/scl/fi/mdwsdrki15osd3oh59b14/PEDRO-VALEN-A-E-GABRIELA-STEHLING-Tantos-Mares-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=qfbm8wgxf4qvkugeltiwn0o2r&st=q70gibif&raw=1", nome: "Tantos Mares - Pedro Valença" },
-      { url: "https://dl.dropboxusercontent.com/scl/fi/6iplh4sw8ilo3js20y982/AMOR-EM-TODO-LUGAR-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider.mp3?rlkey=74j5mr450aooquwrs31mbk3sv&st=4ou6yb8g&raw=1", nome: "Amor em todo o Lugar" },
-      { url: "https://dl.dropboxusercontent.com/scl/fi/ttf1skkeghevx05u3ozck/O-Jeito-Que-Voc-Me-Olha-Daniel-L-dtke.mp3?rlkey=eblgdh3x4wen74i4yl05wk2wp&st=03sp5wij&raw=1", nome: "O Jeito Que Você Me Olha" },
-      { url: "https://dl.dropboxusercontent.com/scl/fi/fl9o7cnaeofzytrf9ds5n/QUE-SORTE-A-MINHA-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider-1.mp3?rlkey=9o18v8womj37t74o7t7lte0ob&st=haisk4xf&raw=1", nome: "Que Sorte a Minha" }
-    ];
-    let musicaAtualIndex = 0;
-    const backgroundMusic = document.getElementById("background-music");
-    const iconePlayPause = document.getElementById("icone-play-pause");
-    const textoMusica = document.getElementById("texto-musica");
+  function ativarBottomNav(elemento) {
+    const itens = document.querySelectorAll('.bottom-nav-item');
+    itens.forEach(item => item.classList.remove('active'));
+    if (elemento) elemento.classList.add('active');
+  }
 
+  // ==== MÚSICA DE FUNDO PRINCIPAL ====
+  const playlist = [          
+    { url: "https://www.dropbox.com/scl/fi/b1wjla1jcpsq8jcf41gyi/ISSO-AMOR-Paulo-C-sar-Baruk-ft.-Rebeca-Nemer-Baruk-TV.mp3?rlkey=w95520pypui5awtqquei8rjcm&st=9a9jrsr9&raw=1", nome: "Isso é Amor - Paulo Cesar" },
+    { url: "https://www.dropbox.com/scl/fi/g5fc0cbecgrj8hn3375fu/Melim-Ouvi-Dizer-Letra-Mundo-Das-Letras-Mundo-Das-Letras.mp3?rlkey=bwuyfd4dgz0yqfrsq56cuabs3&st=q9vyzbbs&raw=1", nome: "Ouvi Dizer - Merlim" },
+    { url: "https://www.dropbox.com/scl/fi/ici2ibx9jdlgeefl6c4wb/Verde-Lil-s-Margem-Norte-Margem-Norte.mp3?rlkey=xovdns82kikdntug7kpuzosej&st=51ltaehl&raw=1", nome: "Verde lilás - Margem norte" },
+    { url: "https://www.dropbox.com/scl/fi/lxusci3z8yqnnb8ruabvd/Encontro-das-Mar-s-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=0wcqfsee1sokk9ckc1blehmkm&st=kmqg9wan&raw=1", nome: "Encontro de mares - Pedro Valença" },
+    { url: "https://dl.dropboxusercontent.com/scl/fi/mdwsdrki15osd3oh59b14/PEDRO-VALEN-A-E-GABRIELA-STEHLING-Tantos-Mares-V-deo-Oficial-Pedro-Valen-a.mp3?rlkey=qfbm8wgxf4qvkugeltiwn0o2r&st=q70gibif&raw=1", nome: "Tantos Mares - Pedro Valença" },
+    { url: "https://dl.dropboxusercontent.com/scl/fi/6iplh4sw8ilo3js20y982/AMOR-EM-TODO-LUGAR-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider.mp3?rlkey=74j5mr450aooquwrs31mbk3sv&st=4ou6yb8g&raw=1", nome: "Amor em todo o Lugar" },
+    { url: "https://dl.dropboxusercontent.com/scl/fi/ttf1skkeghevx05u3ozck/O-Jeito-Que-Voc-Me-Olha-Daniel-L-dtke.mp3?rlkey=eblgdh3x4wen74i4yl05wk2wp&st=03sp5wij&raw=1", nome: "O Jeito Que Você Me Olha" },
+    { url: "https://dl.dropboxusercontent.com/scl/fi/fl9o7cnaeofzytrf9ds5n/QUE-SORTE-A-MINHA-Pedro-Valen-a-e-Paula-Schneider-V-deo-Oficial-Paula-Schneider-1.mp3?rlkey=9o18v8womj37t74o7t7lte0ob&st=haisk4xf&raw=1", nome: "Que Sorte a Minha" }
+  ];
+  let musicaAtualIndex = 0;
+  const backgroundMusic = document.getElementById("background-music");
+  const iconePlayPause = document.getElementById("icone-play-pause");
+  const textoMusica = document.getElementById("texto-musica");
+
+  if (backgroundMusic) {
     backgroundMusic.addEventListener('ended', () => { mudarMusica(1); });
+  }
 
-    function carregarMusica(index) {
-      backgroundMusic.src = playlist[index].url;
-      backgroundMusic.load();
-      textoMusica.textContent = playlist[index].nome;
-    }
+  function carregarMusica(index) {
+    if (!backgroundMusic) return;
+    backgroundMusic.src = playlist[index].url;
+    backgroundMusic.load();
+    if (textoMusica) textoMusica.textContent = playlist[index].nome;
+  }
 
-    function mudarMusica(direcao) {
-      musicaAtualIndex += direcao;
-      if (musicaAtualIndex >= playlist.length) musicaAtualIndex = 0; 
-      else if (musicaAtualIndex < 0) musicaAtualIndex = playlist.length - 1; 
-      carregarMusica(musicaAtualIndex);
-      backgroundMusic.play().then(() => {
+  function mudarMusica(direcao) {
+    if (!backgroundMusic) return;
+    musicaAtualIndex += direcao;
+    if (musicaAtualIndex >= playlist.length) musicaAtualIndex = 0; 
+    else if (musicaAtualIndex < 0) musicaAtualIndex = playlist.length - 1; 
+    carregarMusica(musicaAtualIndex);
+    backgroundMusic.play().then(() => {
+      if (iconePlayPause) {
         iconePlayPause.className = "fas fa-pause";
         iconePlayPause.style.marginLeft = "0px";
-      }).catch(e => console.log("Aguardando interação.", e));
-    }
+      }
+    }).catch(e => console.log("Aguardando interação.", e));
+  }
 
-    function pausarTocar() {
-      if (backgroundMusic.paused) {
-        backgroundMusic.play();
+  function pausarTocar() {
+    if (!backgroundMusic) return;
+    if (backgroundMusic.paused) {
+      backgroundMusic.play();
+      if (iconePlayPause) {
         iconePlayPause.className = "fas fa-pause";
         iconePlayPause.style.marginLeft = "0px";
-      } else {
-        backgroundMusic.pause();
+      }
+    } else {
+      backgroundMusic.pause();
+      if (iconePlayPause) {
         iconePlayPause.className = "fas fa-play";
         iconePlayPause.style.marginLeft = "3px";
       }
     }
+  }
 
-    // ==== MÚSICA DA PÁGINA DE ANIVERSÁRIO ====
-    const bdayPlaylist = [
-      "https://www.dropbox.com/scl/fi/qhg5faor050wlr4hjkn4y/0922-1.mp3?rlkey=uw2xd0jcdr3pn0f5za6wp4wyr&st=1olvq4fh&raw=1",
-      "https://www.dropbox.com/scl/fi/vgnrc616smcin90pvx516/Video-Project-11.m4a?rlkey=o737tmqyng5o1kjjesgo1tmat&st=asf3ifcm&raw=1" // <--- Substitua este texto pelo link da sua segunda música
-    ];
-    let currentBdayTrack = 0;
-    const bdayMusic = document.getElementById("bday-music");
+  // ==== MÚSICA DA PÁGINA DE ANIVERSÁRIO ====
+  const bdayPlaylist = [
+    "https://www.dropbox.com/scl/fi/qhg5faor050wlr4hjkn4y/0922-1.mp3?rlkey=uw2xd0jcdr3pn0f5za6wp4wyr&st=1olvq4fh&raw=1"
+  ];
+  let currentBdayTrack = 0;
+  const bdayMusic = document.getElementById("bday-music");
 
-    // Toca a próxima música do aniversário quando a atual acabar
+  if (bdayMusic) {
     bdayMusic.addEventListener('ended', () => {
-        proximaMusicaBday();
+      proximaMusicaBday();
     });
+  }
 
-    function proximaMusicaBday() {
-        currentBdayTrack++;
-        if(currentBdayTrack >= bdayPlaylist.length) currentBdayTrack = 0;
-        bdayMusic.src = bdayPlaylist[currentBdayTrack];
-        bdayMusic.play().catch(e => console.log(e));
-    }
+  function proximaMusicaBday() {
+    if (!bdayMusic || bdayPlaylist.length === 0) return;
+    currentBdayTrack = (currentBdayTrack + 1) % bdayPlaylist.length;
+    bdayMusic.src = bdayPlaylist[currentBdayTrack];
+    bdayMusic.play().catch(e => console.log("Áudio bloqueado:", e));
+  }
 
-    // ==== ENTRADA (LOGIN NORMAL E ANIVERSÁRIO) ====
-    const preloader = document.getElementById('preloader');
-    const introOverlay = document.getElementById('intro-overlay');
-    const nLogoAnim = document.getElementById('n-logo-anim');
-    const mainContent = document.getElementById('main-content');
-    const birthdayContent = document.getElementById('birthday-content');
-    
-    // 1. Lógica do Perfil Normal
-    document.querySelectorAll('.btn-entrar').forEach(btn => {
-      btn.addEventListener('click', () => {
-        carregarMusica(0);
-        backgroundMusic.muted = true; 
-        backgroundMusic.play().catch(e => console.log("Áudio bloqueado:", e)); 
-        const netflixSound = document.getElementById('netflix-sound');
-        netflixSound.volume = 0.6; 
+  // ==== ENTRADA (LOGIN NORMAL E ANIVERSÁRIO) ====
+  const preloader = document.getElementById('preloader');
+  const introOverlay = document.getElementById('intro-overlay');
+  const nLogoAnim = document.getElementById('n-logo-anim');
+  const mainContent = document.getElementById('main-content');
+  const birthdayContent = document.getElementById('birthday-content');
+  
+  // Perfil Principal
+  document.querySelectorAll('.btn-entrar').forEach(btn => {
+    btn.addEventListener('click', () => {
+      carregarMusica(0);
+      if (backgroundMusic) {
+        backgroundMusic.muted = true;
+        backgroundMusic.play().catch(e => console.log("Áudio bloqueado:", e));
+      }
+      const netflixSound = document.getElementById('netflix-sound');
+      if (netflixSound) {
+        netflixSound.volume = 0.6;
         netflixSound.play().catch(e => console.log("Áudio bloqueado:", e));
-        
+      }
+      
+      if (preloader) {
         preloader.style.transition = 'opacity 0.5s ease';
         preloader.style.opacity = '0';
-        setTimeout(() => { 
-          preloader.style.display = 'none'; 
-          introOverlay.style.display = 'flex';
-          nLogoAnim.classList.add('animate-intro'); 
-          setTimeout(() => {
+      }
+      setTimeout(() => { 
+        if (preloader) preloader.style.display = 'none'; 
+        if (introOverlay) introOverlay.style.display = 'flex';
+        if (nLogoAnim) nLogoAnim.classList.add('animate-intro'); 
+        setTimeout(() => {
+          if (introOverlay) {
             introOverlay.style.opacity = '0';
             introOverlay.style.transition = 'opacity 1s ease';
-            setTimeout(() => {
-              introOverlay.style.display = 'none';
-              mainContent.style.display = 'block'; 
+          }
+          setTimeout(() => {
+            if (introOverlay) introOverlay.style.display = 'none';
+            if (mainContent) mainContent.style.display = 'block'; 
+            if (backgroundMusic) {
               backgroundMusic.currentTime = 0; 
               backgroundMusic.muted = false; 
-              iconePlayPause.className = "fas fa-pause";
-            }, 1000); 
-          }, 3500); 
-        }, 500);
-      });
+            }
+            if (iconePlayPause) iconePlayPause.className = "fas fa-pause";
+          }, 1000); 
+        }, 3500); 
+      }, 500);
     });
+  });
 
-    // 2. Lógica do Perfil SURPRESA DE ANIVERSÁRIO
-    document.querySelector('.btn-aniversario').addEventListener('click', () => {
-        // Reseta pra primeira música do aniversário e dá play
-        currentBdayTrack = 0;
+  // Perfil Surpresa de Aniversário
+  const btnAniversario = document.querySelector('.btn-aniversario');
+  if (btnAniversario) {
+    btnAniversario.addEventListener('click', () => {
+      currentBdayTrack = 0;
+      if (bdayMusic && bdayPlaylist.length > 0) {
         bdayMusic.src = bdayPlaylist[currentBdayTrack];
         bdayMusic.play().catch(e => console.log("Áudio bloqueado:", e));
-        
+      }
+      
+      if (preloader) {
         preloader.style.transition = 'opacity 0.5s ease';
         preloader.style.opacity = '0';
-        setTimeout(() => { 
-          preloader.style.display = 'none'; 
-          birthdayContent.style.display = 'block';
-          gerarConfetes();
-        }, 500);
+      }
+      setTimeout(() => { 
+        if (preloader) preloader.style.display = 'none'; 
+        if (birthdayContent) birthdayContent.style.display = 'block';
+        gerarConfetes();
+      }, 500);
     });
+  }
 
-    // Vai direto para o site principal fechando o presente
-    function irParaPaginaPrincipal() {
+  // Botões de perfis bloqueados
+  document.querySelectorAll('#btn-errado-1, #btn-errado-2').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.add('shake');
+      const textSpan = btn.querySelector('.profile-name');
+      if (textSpan) {
+        const originalText = textSpan.textContent;
+        textSpan.textContent = "Opção errada!";
+        textSpan.style.color = "#e50914"; 
+        setTimeout(() => { 
+          btn.classList.remove('shake'); 
+          textSpan.textContent = originalText;
+          textSpan.style.color = "#808080"; 
+        }, 1500);
+      }
+    });
+  });
+
+  function irParaPaginaPrincipal() {
+    if (bdayMusic) {
       bdayMusic.pause();
       bdayMusic.currentTime = 0;
-      birthdayContent.style.display = 'none';
-      
-      carregarMusica(0);
+    }
+    if (birthdayContent) birthdayContent.style.display = 'none';
+    
+    carregarMusica(0);
+    if (backgroundMusic) {
       backgroundMusic.muted = false;
       backgroundMusic.play().catch(e => console.log(e));
-      iconePlayPause.className = "fas fa-pause";
-      
-      mainContent.style.display = 'block';
-      window.scrollTo(0, 0);
-      
-      ativarBottomNav(document.querySelector('.bottom-nav-item.active'));
     }
+    if (iconePlayPause) iconePlayPause.className = "fas fa-pause";
+    
+    if (mainContent) mainContent.style.display = 'block';
+    window.scrollTo(0, 0);
+    
+    ativarBottomNav(document.querySelector('.bottom-nav-item.active'));
+  }
 
-    // Gerador de Confetes
-    function gerarConfetes() {
-      const container = document.getElementById('confetti-container');
-      container.innerHTML = ''; 
-      const cores = ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#f9bec7'];
-      
-      for(let i = 0; i < 70; i++) {
-        const confete = document.createElement('div');
-        confete.classList.add('confetti');
-        confete.style.left = Math.random() * 100 + 'vw';
-        confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
-        confete.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        confete.style.animationDelay = Math.random() * 5 + 's';
-        container.appendChild(confete);
-      }
+  function gerarConfetes() {
+    const container = document.getElementById('confetti-container');
+    if (!container) return;
+    container.innerHTML = ''; 
+    const cores = ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#f9bec7'];
+    
+    for (let i = 0; i < 70; i++) {
+      const confete = document.createElement('div');
+      confete.classList.add('confetti');
+      confete.style.left = Math.random() * 100 + 'vw';
+      confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+      confete.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      confete.style.animationDelay = Math.random() * 5 + 's';
+      container.appendChild(confete);
     }
+  }
 
-    function voltarParaPerfis() {
-      if (!backgroundMusic.paused) pausarTocar();
-      mainContent.style.display = 'none';
-      window.scrollTo(0, 0);
-      nLogoAnim.classList.remove('animate-intro');
-      introOverlay.style.opacity = '1';
+  function voltarParaPerfis() {
+    if (backgroundMusic && !backgroundMusic.paused) pausarTocar();
+    if (mainContent) mainContent.style.display = 'none';
+    window.scrollTo(0, 0);
+    if (nLogoAnim) nLogoAnim.classList.remove('animate-intro');
+    if (introOverlay) introOverlay.style.opacity = '1';
+    if (preloader) {
       preloader.style.display = 'flex';
       setTimeout(() => { preloader.style.opacity = '1'; }, 50);
     }
-    
-    function voltarParaPerfisDeAniversario() {
+  }
+  
+  function voltarParaPerfisDeAniversario() {
+    if (bdayMusic) {
       bdayMusic.pause();
       bdayMusic.currentTime = 0;
-      birthdayContent.style.display = 'none';
-      window.scrollTo(0, 0);
+    }
+    if (birthdayContent) birthdayContent.style.display = 'none';
+    window.scrollTo(0, 0);
+    if (preloader) {
       preloader.style.display = 'flex';
       setTimeout(() => { preloader.style.opacity = '1'; }, 50);
     }
+  }
 
-    // ==== CARROSSEL DE MÍDIAS (Netflix) ====
-    const carouselLocks = {};
-    function scrollCarousel(direction, carouselId) {
-      if (carouselLocks[carouselId]) return;
-      carouselLocks[carouselId] = true;
-      const carousel = document.getElementById(carouselId);
-      const itemWidth = carousel.firstElementChild.offsetWidth + 10; 
-      if (direction === 1) {
-        carousel.scrollBy({ left: itemWidth, behavior: 'smooth' });
-        setTimeout(() => {
-          carousel.style.scrollBehavior = 'auto'; 
-          carousel.appendChild(carousel.firstElementChild); 
-          carousel.scrollLeft -= itemWidth; 
-          carousel.style.scrollBehavior = 'smooth'; 
-          carouselLocks[carouselId] = false; 
-        }, 500); 
-      } else {
+  // ==== CARROSSEL DE MÍDIAS (Netflix) ====
+  const carouselLocks = {};
+  function scrollCarousel(direction, carouselId) {
+    if (carouselLocks[carouselId]) return;
+    carouselLocks[carouselId] = true;
+    const carousel = document.getElementById(carouselId);
+    if (!carousel || !carousel.firstElementChild) {
+      carouselLocks[carouselId] = false;
+      return;
+    }
+    const itemWidth = carousel.firstElementChild.offsetWidth + 10; 
+    if (direction === 1) {
+      carousel.scrollBy({ left: itemWidth, behavior: 'smooth' });
+      setTimeout(() => {
         carousel.style.scrollBehavior = 'auto'; 
-        carousel.prepend(carousel.lastElementChild); 
-        carousel.scrollLeft += itemWidth; 
+        carousel.appendChild(carousel.firstElementChild); 
+        carousel.scrollLeft -= itemWidth; 
+        carousel.style.scrollBehavior = 'smooth'; 
+        carouselLocks[carouselId] = false; 
+      }, 500); 
+    } else {
+      carousel.style.scrollBehavior = 'auto'; 
+      carousel.prepend(carousel.lastElementChild); 
+      carousel.scrollLeft += itemWidth; 
+      requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            carousel.style.scrollBehavior = 'smooth'; 
-            carousel.scrollBy({ left: -itemWidth, behavior: 'smooth' }); 
-            setTimeout(() => { carouselLocks[carouselId] = false; }, 500);
-          });
+          carousel.style.scrollBehavior = 'smooth'; 
+          carousel.scrollBy({ left: -itemWidth, behavior: 'smooth' }); 
+          setTimeout(() => { carouselLocks[carouselId] = false; }, 500);
         });
-      }
+      });
     }
+  }
 
-    function alternarTexto() {
-      const texto = document.getElementById("texto-historia");
-      const btn = document.getElementById("btn-ler-mais");
-      const fade = document.getElementById("fade-texto");
-      if (texto.classList.contains("expandido")) {
-        texto.classList.remove("expandido");
-        fade.classList.remove("oculto");
-        btn.innerHTML = 'Ler mais <i class="fas fa-chevron-down"></i>';
-      } else {
-        texto.classList.add("expandido");
-        fade.classList.add("oculto");
-        btn.innerHTML = 'Ler menos <i class="fas fa-chevron-up"></i>';
-      }
+  function alternarTexto() {
+    const texto = document.getElementById("texto-historia");
+    const btn = document.getElementById("btn-ler-mais");
+    const fade = document.getElementById("fade-texto");
+    if (!texto || !btn) return;
+    if (texto.classList.contains("expandido")) {
+      texto.classList.remove("expandido");
+      if (fade) fade.classList.remove("oculto");
+      btn.innerHTML = 'Ler mais <i class="fas fa-chevron-down"></i>';
+    } else {
+      texto.classList.add("expandido");
+      if (fade) fade.classList.add("oculto");
+      btn.innerHTML = 'Ler menos <i class="fas fa-chevron-up"></i>';
     }
+  }
 
-    // ==== MODAL E PLAYER ESTILO NETFLIX ====
-    const modal = document.getElementById("imageModal");
-    const modalWrapper = document.getElementById("modal-wrapper");
-    const modalBody = document.getElementById("modal-body");
-    const closeImgBtn = document.getElementById("close-img");
-    const prevBtn = document.getElementById("prev-btn");
-    const nextBtn = document.getElementById("next-btn");
+  // ==== MODAL E PLAYER ESTILO NETFLIX ====
+  const modal = document.getElementById("imageModal");
+  const modalWrapper = document.getElementById("modal-wrapper");
+  const modalBody = document.getElementById("modal-body");
+  const closeImgBtn = document.getElementById("close-img");
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
 
-    let currentGalleryGroup = [];
-    let currentIndex = 0;
-    let customVideoElement = null;
-    let playerHideTimer;
-    let isMusicPausedForVideo = false;
+  let currentGalleryGroup = [];
+  let currentIndex = 0;
+  let customVideoElement = null;
+  let playerHideTimer;
+  let isMusicPausedForVideo = false;
 
-    function formatTime(seconds) {
-      if (isNaN(seconds)) return "00:00";
-      const m = Math.floor(seconds / 60);
-      const s = Math.floor(seconds % 60);
-      return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-    }
+  function formatTime(seconds) {
+    if (isNaN(seconds)) return "00:00";
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+  }
 
-    function renderCustomPlayer(src, tituloTop = "O Filme da Nossa Vida", tituloCentro = "Nossa História <span style='font-weight:400; color:#ccc;'>Desde 14 de Outubro</span>") {
-      return `
-        <div class="custom-player-container" id="player-container">
-          <video class="custom-video" id="c-video" src="${src}" playsinline autoplay></video>
+  function renderCustomPlayer(src, tituloTop = "O Filme da Nossa Vida", tituloCentro = "Nossa História <span style='font-weight:400; color:#ccc;'>Desde 14 de Outubro</span>") {
+    return `
+      <div class="custom-player-container" id="player-container">
+        <video class="custom-video" id="c-video" src="${src}" playsinline autoplay></video>
+        
+        <div class="player-overlay" id="player-overlay">
+          <div class="player-header">
+            <button class="btn-back" onclick="fecharModal()"><i class="fas fa-arrow-left"></i></button>
+            <div class="player-title-top">${tituloTop}</div>
+            <div style="width: 40px;" class="desktop-only"></div>
+          </div>
           
-          <div class="player-overlay" id="player-overlay">
-            <div class="player-header">
-              <button class="btn-back" onclick="fecharModal()"><i class="fas fa-arrow-left"></i></button>
-              <div class="player-title-top">${tituloTop}</div>
-              <div style="width: 40px;" class="desktop-only"></div>
+          <div class="player-controls-bg">
+            <div class="timeline-row">
+              <div class="progress-container" id="c-progress-container">
+                <div class="progress-filled" id="c-progress-filled"><div class="progress-thumb"></div></div>
+              </div>
+              <span class="time-display" id="c-time">00:00</span>
             </div>
             
-            <div class="player-controls-bg">
-              <div class="timeline-row">
-                <div class="progress-container" id="c-progress-container">
-                  <div class="progress-filled" id="c-progress-filled"><div class="progress-thumb"></div></div>
-                </div>
-                <span class="time-display" id="c-time">00:00</span>
+            <div class="controls-main">
+              <div class="controls-left">
+                <button class="player-btn" id="c-play"><i class="fas fa-pause"></i></button>
+                <button class="player-btn btn-10s" id="c-rewind"><i class="fas fa-undo"></i><span class="text-10">10</span></button>
+                <button class="player-btn btn-10s" id="c-forward"><i class="fas fa-redo"></i><span class="text-10">10</span></button>
+                <button class="player-btn" id="c-mute"><i class="fas fa-volume-up"></i></button>
               </div>
-              
-              <div class="controls-main">
-                <div class="controls-left">
-                  <button class="player-btn" id="c-play"><i class="fas fa-pause"></i></button>
-                  <button class="player-btn btn-10s" id="c-rewind"><i class="fas fa-undo"></i><span class="text-10">10</span></button>
-                  <button class="player-btn btn-10s" id="c-forward"><i class="fas fa-redo"></i><span class="text-10">10</span></button>
-                  <button class="player-btn" id="c-mute"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="controls-center">${tituloCentro}</div>
-                <div class="controls-right">
-                  <button class="player-btn desktop-only"><i class="fas fa-step-forward"></i></button>
-                  <button class="player-btn desktop-only"><i class="far fa-clone"></i></button> 
-                  <button class="player-btn desktop-only"><i class="far fa-comment-alt"></i></button>
-                  <button class="player-btn desktop-only"><i class="fas fa-tachometer-alt"></i></button>
-                  <button class="player-btn" id="c-fullscreen"><i class="fas fa-expand"></i></button>
-                </div>
+              <div class="controls-center">${tituloCentro}</div>
+              <div class="controls-right">
+                <button class="player-btn desktop-only"><i class="fas fa-step-forward"></i></button>
+                <button class="player-btn desktop-only"><i class="far fa-clone"></i></button> 
+                <button class="player-btn desktop-only"><i class="far fa-comment-alt"></i></button>
+                <button class="player-btn desktop-only"><i class="fas fa-tachometer-alt"></i></button>
+                <button class="player-btn" id="c-fullscreen"><i class="fas fa-expand"></i></button>
               </div>
             </div>
           </div>
         </div>
-      `;
+      </div>
+    `;
+  }
+
+  function bindPlayerEvents() {
+    customVideoElement = document.getElementById("c-video");
+    const overlay = document.getElementById("player-overlay");
+    const container = document.getElementById("player-container");
+    if (!customVideoElement || !overlay || !container) return;
+    
+    const playBtn = document.getElementById("c-play");
+    const rewindBtn = document.getElementById("c-rewind");
+    const forwardBtn = document.getElementById("c-forward");
+    const muteBtn = document.getElementById("c-mute");
+    const fullscreenBtn = document.getElementById("c-fullscreen");
+    
+    const progressContainer = document.getElementById("c-progress-container");
+    const progressFilled = document.getElementById("c-progress-filled");
+    const timeDisplay = document.getElementById("c-time");
+
+    function resetHideTimer() {
+      overlay.classList.remove('idle-hidden');
+      customVideoElement.classList.remove('cursor-active');
+      clearTimeout(playerHideTimer);
+      playerHideTimer = setTimeout(() => {
+        if (!customVideoElement.paused) {
+          overlay.classList.add('idle-hidden');
+          customVideoElement.classList.add('cursor-active');
+        }
+      }, 3000);
     }
 
-    function bindPlayerEvents() {
-      customVideoElement = document.getElementById("c-video");
-      const overlay = document.getElementById("player-overlay");
-      const container = document.getElementById("player-container");
-      
-      const playBtn = document.getElementById("c-play");
-      const rewindBtn = document.getElementById("c-rewind");
-      const forwardBtn = document.getElementById("c-forward");
-      const muteBtn = document.getElementById("c-mute");
-      const fullscreenBtn = document.getElementById("c-fullscreen");
-      
-      const progressContainer = document.getElementById("c-progress-container");
-      const progressFilled = document.getElementById("c-progress-filled");
-      const timeDisplay = document.getElementById("c-time");
+    container.addEventListener('mousemove', resetHideTimer);
+    container.addEventListener('touchstart', resetHideTimer);
+    container.addEventListener('click', resetHideTimer);
 
-      function resetHideTimer() {
-        overlay.classList.remove('idle-hidden');
-        customVideoElement.classList.remove('cursor-active');
-        clearTimeout(playerHideTimer);
-        playerHideTimer = setTimeout(() => {
-          if (!customVideoElement.paused) {
-            overlay.classList.add('idle-hidden');
-            customVideoElement.classList.add('cursor-active');
-          }
-        }, 3000);
+    function togglePlay() {
+      if (customVideoElement.paused) {
+        customVideoElement.play();
+        if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      } else {
+        customVideoElement.pause();
+        if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        overlay.classList.remove('idle-hidden'); 
       }
+    }
+    if (playBtn) playBtn.addEventListener('click', togglePlay);
+    customVideoElement.addEventListener('click', togglePlay);
 
-      container.addEventListener('mousemove', resetHideTimer);
-      container.addEventListener('touchstart', resetHideTimer);
-      container.addEventListener('click', resetHideTimer);
+    customVideoElement.addEventListener('timeupdate', () => {
+      if (!customVideoElement.duration) return;
+      const percent = (customVideoElement.currentTime / customVideoElement.duration) * 100;
+      if (progressFilled) progressFilled.style.width = `${percent}%`;
+      const remaining = customVideoElement.duration - customVideoElement.currentTime;
+      if (timeDisplay) timeDisplay.textContent = formatTime(remaining);
+    });
 
-      function togglePlay() {
-        if (customVideoElement.paused) {
-          customVideoElement.play();
-          playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        } else {
-          customVideoElement.pause();
-          playBtn.innerHTML = '<i class="fas fa-play"></i>';
-          overlay.classList.remove('idle-hidden'); 
-        }
-      }
-      playBtn.addEventListener('click', togglePlay);
-      customVideoElement.addEventListener('click', togglePlay);
-
-      customVideoElement.addEventListener('timeupdate', () => {
-        const percent = (customVideoElement.currentTime / customVideoElement.duration) * 100;
-        progressFilled.style.width = `${percent}%`;
-        const remaining = customVideoElement.duration - customVideoElement.currentTime;
-        timeDisplay.textContent = formatTime(remaining);
-      });
-
+    if (progressContainer) {
       progressContainer.addEventListener('click', (e) => {
         const rect = progressContainer.getBoundingClientRect();
         const pos = (e.clientX - rect.left) / rect.width;
         customVideoElement.currentTime = pos * customVideoElement.duration;
       });
+    }
 
-      rewindBtn.addEventListener('click', () => { customVideoElement.currentTime -= 10; });
-      forwardBtn.addEventListener('click', () => { customVideoElement.currentTime += 10; });
+    if (rewindBtn) rewindBtn.addEventListener('click', () => { customVideoElement.currentTime -= 10; });
+    if (forwardBtn) forwardBtn.addEventListener('click', () => { customVideoElement.currentTime += 10; });
 
+    if (muteBtn) {
       muteBtn.addEventListener('click', () => {
         customVideoElement.muted = !customVideoElement.muted;
         muteBtn.innerHTML = customVideoElement.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
       });
+    }
 
+    if (fullscreenBtn) {
       fullscreenBtn.addEventListener('click', () => {
         if (!document.fullscreenElement) {
-          container.requestFullscreen().catch(err => { console.log("Erro fullscreen", err); });
+          container.requestFullscreen().catch(err => console.log("Erro fullscreen", err));
         } else {
           document.exitFullscreen();
         }
       });
-      
-      resetHideTimer();
     }
+    
+    resetHideTimer();
+  }
 
-    function abrirMedia(item) {
-      const type = item.getAttribute("data-type");
-      currentGalleryGroup = Array.from(document.querySelectorAll(`.gallery-item[data-type="${type}"]`));
-      currentIndex = currentGalleryGroup.indexOf(item);
+  function abrirMedia(item) {
+    const type = item.getAttribute("data-type");
+    currentGalleryGroup = Array.from(document.querySelectorAll(`.gallery-item[data-type="${type}"]`));
+    currentIndex = currentGalleryGroup.indexOf(item);
 
-      modal.style.display = "flex";
-      modalBody.innerHTML = ""; 
+    if (modal) modal.style.display = "flex";
+    if (modalBody) modalBody.innerHTML = ""; 
 
-      if (type === "image") {
-        modalWrapper.className = "modal-content-wrapper image-mode";
-        closeImgBtn.style.display = "flex";
-        prevBtn.style.display = "flex";
-        nextBtn.style.display = "flex";
-        
-        const img = document.createElement("img");
-        img.src = item.src;
-        img.className = "modal-media";
-        modalBody.appendChild(img);
-        
-      } else if (type === "video") {
-        if(!backgroundMusic.paused) { pausarTocar(); isMusicPausedForVideo = true; }
-        if(!bdayMusic.paused) { bdayMusic.pause(); isMusicPausedForVideo = true; }
-
-        modalWrapper.className = "modal-content-wrapper video-mode";
-        closeImgBtn.style.display = "none";
-        prevBtn.style.display = "none";
-        nextBtn.style.display = "none";
-        
-        const videoSrc = item.querySelector("source").src;
-        modalBody.innerHTML = renderCustomPlayer(videoSrc, "Nossas Memórias", "Clipes da nossa galeria");
-        bindPlayerEvents();
-      }
-    }
-
-    function assistirFilmeOficial() {
-      modal.style.display = "flex";
-      modalWrapper.className = "modal-content-wrapper video-mode";
-      closeImgBtn.style.display = "none";
-      prevBtn.style.display = "none";
-      nextBtn.style.display = "none";
+    if (type === "image") {
+      if (modalWrapper) modalWrapper.className = "modal-content-wrapper image-mode";
+      if (closeImgBtn) closeImgBtn.style.display = "flex";
+      if (prevBtn) prevBtn.style.display = "flex";
+      if (nextBtn) nextBtn.style.display = "flex";
       
-      if(!backgroundMusic.paused) { pausarTocar(); isMusicPausedForVideo = true; }
+      const img = document.createElement("img");
+      img.src = item.src;
+      img.className = "modal-media";
+      if (modalBody) modalBody.appendChild(img);
       
-      const linkOficial = "https://www.dropbox.com/scl/fi/qsvxlohe6dhyybcrvio7o/InShot_20260813_235817048.mp4?rlkey=kucg97evcrcl3mgflekydhgfh&st=xnj6pjn2&raw=1";
-      modalBody.innerHTML = renderCustomPlayer(linkOficial, "O Filme da Nossa Vida", "S1:E1 A Promessa de Deus"); 
+    } else if (type === "video") {
+      if (backgroundMusic && !backgroundMusic.paused) { pausarTocar(); isMusicPausedForVideo = true; }
+      if (bdayMusic && !bdayMusic.paused) { bdayMusic.pause(); isMusicPausedForVideo = true; }
+
+      if (modalWrapper) modalWrapper.className = "modal-content-wrapper video-mode";
+      if (closeImgBtn) closeImgBtn.style.display = "none";
+      if (prevBtn) prevBtn.style.display = "none";
+      if (nextBtn) nextBtn.style.display = "none";
+      
+      const sourceEl = item.querySelector("source");
+      const videoSrc = sourceEl ? sourceEl.src : "";
+      if (modalBody) modalBody.innerHTML = renderCustomPlayer(videoSrc, "Nossas Memórias", "Clipes da nossa galeria");
       bindPlayerEvents();
     }
+  }
 
-    function mudarMedia(dir) {
-      currentIndex += dir;
-      if (currentIndex >= currentGalleryGroup.length) currentIndex = 0; 
-      else if (currentIndex < 0) currentIndex = currentGalleryGroup.length - 1; 
-      abrirMedia(currentGalleryGroup[currentIndex]);
-    }
+  function assistirFilmeOficial() {
+    if (modal) modal.style.display = "flex";
+    if (modalWrapper) modalWrapper.className = "modal-content-wrapper video-mode";
+    if (closeImgBtn) closeImgBtn.style.display = "none";
+    if (prevBtn) prevBtn.style.display = "none";
+    if (nextBtn) nextBtn.style.display = "none";
+    
+    if (backgroundMusic && !backgroundMusic.paused) { pausarTocar(); isMusicPausedForVideo = true; }
+    
+    const linkOficial = "https://www.dropbox.com/scl/fi/qsvxlohe6dhyybcrvio7o/InShot_20260813_235817048.mp4?rlkey=kucg97evcrcl3mgflekydhgfh&st=xnj6pjn2&raw=1";
+    if (modalBody) modalBody.innerHTML = renderCustomPlayer(linkOficial, "O Filme da Nossa Vida", "S1:E1 A Promessa de Deus"); 
+    bindPlayerEvents();
+  }
 
-    function fecharModal() {
-      modal.style.display = "none";
-      modalBody.innerHTML = ""; 
-      customVideoElement = null;
-      clearTimeout(playerHideTimer);
-      if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+  function mudarMedia(dir) {
+    if (currentGalleryGroup.length === 0) return;
+    currentIndex += dir;
+    if (currentIndex >= currentGalleryGroup.length) currentIndex = 0; 
+    else if (currentIndex < 0) currentIndex = currentGalleryGroup.length - 1; 
+    abrirMedia(currentGalleryGroup[currentIndex]);
+  }
 
-      if(isMusicPausedForVideo) {
-          if (birthdayContent.style.display === 'block') {
-            bdayMusic.play(); 
-          } else {
-            pausarTocar(); 
-          }
-          isMusicPausedForVideo = false;
+  function fecharModal() {
+    if (modal) modal.style.display = "none";
+    if (modalBody) modalBody.innerHTML = ""; 
+    customVideoElement = null;
+    clearTimeout(playerHideTimer);
+    if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+
+    if (isMusicPausedForVideo) {
+      if (birthdayContent && birthdayContent.style.display === 'block') {
+        if (bdayMusic) bdayMusic.play().catch(e => console.log(e)); 
+      } else {
+        pausarTocar(); 
       }
+      isMusicPausedForVideo = false;
     }
+  }
 
+  if (modal) {
     modal.addEventListener('click', function(event) {
-      if (event.target === modal && modalWrapper.classList.contains('image-mode')) {
+      if (event.target === modal && modalWrapper && modalWrapper.classList.contains('image-mode')) {
         fecharModal();
       }
     });
+  }
 
-    // ==== BANCO DE DADOS DA GALERIA ====
-    
-    const fotosFileira1 = [
-      "foto35.jpg", "foto36.jpg", "foto37.jpg", "foto38.jpg", "foto39.jpg",
-      "foto1.jpg", "foto2.jpg", "foto3.jpg", "foto4.jpg", "foto5.jpeg",
-      "foto6.jpg", "foto7.jpg", "foto8.jpeg", "foto9.jpeg", "foto10.jpeg",
-      "foto11.jpg", "foto12.jpeg", "foto13.jpg", "foto14.jpeg", "foto15.jpg",
-      "foto16.jpg", "foto17.jpg", "foto18.jpg", "foto58.jpg", "foto40.jpg", "foto41.jpg", "foto42.jpg", "foto43.jpg",
-      "foto44.jpg", "foto45.jpg", "foto46.jpg", "foto47.jpg", "foto48.jpg",
-      "foto49.jpg", "foto50.jpg", "foto51.jpg"
-    ];
+  // ==== BANCO DE DADOS DA GALERIA ====
+  const fotosFileira1 = [
+    "foto35.jpg", "foto36.jpg", "foto37.jpg", "foto38.jpg", "foto39.jpg",
+    "foto1.jpg", "foto2.jpg", "foto3.jpg", "foto4.jpg", "foto5.jpeg",
+    "foto6.jpg", "foto7.jpg", "foto8.jpeg", "foto9.jpeg", "foto10.jpeg",
+    "foto11.jpg", "foto12.jpeg", "foto13.jpg", "foto14.jpeg", "foto15.jpg",
+    "foto16.jpg", "foto17.jpg", "foto18.jpg", "foto58.jpg", "foto40.jpg", "foto41.jpg", "foto42.jpg", "foto43.jpg",
+    "foto44.jpg", "foto45.jpg", "foto46.jpg", "foto47.jpg", "foto48.jpg",
+    "foto49.jpg", "foto50.jpg", "foto51.jpg"
+  ];
 
-    const fotosFileira2 = [
-      "foto19.jpg", "foto20.jpg", 
-      "foto21.jpg", "foto22.jpg", "foto23.jpg",
-      "foto24.jpg", "foto25.jpg", "foto26.jpg", "foto27.jpg", "foto28.jpg",
-      "foto29.jpeg", "foto30.jpg", "foto31.jpg", "foto32.jpg", "foto33.jpeg",
-      "foto34.jpeg"
-    ];
+  const fotosFileira2 = [
+    "foto19.jpg", "foto20.jpg", 
+    "foto21.jpg", "foto22.jpg", "foto23.jpg",
+    "foto24.jpg", "foto25.jpg", "foto26.jpg", "foto27.jpg", "foto28.jpg",
+    "foto29.jpeg", "foto30.jpg", "foto31.jpg", "foto32.jpg", "foto33.jpeg",
+    "foto34.jpeg"
+  ];
 
-    // Novas Fotos exclusivas do Aniversário (Também aparecerão em "Todas as Fotos")
-    const fotosAniversario = [
-      "foto60.jpeg", "foto61.jpeg", "foto62.jpeg", "foto63.jpeg", "foto64.jpeg", "foto49.jpg,
-    ];
+  const fotosAniversario = [
+    "foto60.jpeg", "foto61.jpeg", "foto62.jpeg", "foto63.jpeg", "foto64.jpeg"
+  ];
 
-    const videosCarrossel = [
-      { src: "https://dl.dropboxusercontent.com/scl/fi/d10do5j977zu5m7lsf1mf/video1.mov?rlkey=zhxupfwhduc8ujftdespy6m77&st=8hj4nq03&raw=1#t=0.001" },
-      { src: "https://www.dropbox.com/scl/fi/03ax7lnbdrzuiy5v8gzuq/WhatsApp-Video-2026-05-22-at-19.22.34.mp4?rlkey=b2ebsdmsba6z9mrr797nbgil3&st=9g29mx12&raw=1#t=0.001" },
-      { src: "https://www.dropbox.com/scl/fi/02rnz5g1l8stu79je7dgv/WhatsApp-Video-2026-05-24-at-07.48.11.mp4?rlkey=h6zet3o9icmqzxnd17qh12rty&st=dhf16m44&raw=1#t=0.001" },
-      { src: "https://dl.dropboxusercontent.com/scl/fi/6z357cmvsg5d30o5aytzo/video2.mp4?rlkey=tt6yo42tgri5b26k6xoos17np&st=hti99d3n&raw=1#t=0.001" },
-      { src: "https://dl.dropboxusercontent.com/scl/fi/4ubhthtxgh7mpa8pf9ed0/Video3.MOV?rlkey=9g68kq025s1vl9sjofxor7ebp&st=9f2vtaen&raw=1#t=0.001" },
-      { src: "https://dl.dropboxusercontent.com/scl/fi/rlq252xzf1j7z7qavl9vt/copy_0367DA55-75EF-4BC0-BBFE-6EE52390201F.mov?rlkey=p7lfon4mk979ym8yv1k5rjn7t&st=rk4bsnot&raw=1#t=0.001" },
-      { src: "https://dl.dropboxusercontent.com/scl/fi/61fb3xkvs1nn9d61bm2fu/69FDC1CB-BAF4-4A6C-8175-ACFA41FF4BEE.mov?rlkey=z4gg57jro2yxd1xnyk40epo59&st=vscomhub&raw=1#t=0.001" },
-      { src: "https://dl.dropboxusercontent.com/scl/fi/8m6voxpzsjag58tkim79x/20250203_174554.mp4?rlkey=bcnvrreit05nucdvsmik7ilwi&st=2se1apom&raw=1#t=0.001" },
-      { src: "https://dl.dropboxusercontent.com/scl/fi/ilrdpifigx4nwlpowg1ro/IMG_0907.MOV?rlkey=qigo16d35c10qfotisvynijuz&st=9awuxl5s&raw=1#t=0.001" },
-      { src: "https://dl.dropboxusercontent.com/scl/fi/qnh2am25s2486kayg8h5e/20250216_115532.mp4?rlkey=b2v2e0rtttx2a0xg80b85banh&st=na70meot&raw=1", poster: "https://drive.google.com/uc?export=view&id=1JQmS-xo6dTGiT5_d9jQK52hhDJFTIdXn" }
-    ];
+  const videosCarrossel = [
+    { src: "https://dl.dropboxusercontent.com/scl/fi/d10do5j977zu5m7lsf1mf/video1.mov?rlkey=zhxupfwhduc8ujftdespy6m77&st=8hj4nq03&raw=1#t=0.001" },
+    { src: "https://www.dropbox.com/scl/fi/03ax7lnbdrzuiy5v8gzuq/WhatsApp-Video-2026-05-22-at-19.22.34.mp4?rlkey=b2ebsdmsba6z9mrr797nbgil3&st=9g29mx12&raw=1#t=0.001" },
+    { src: "https://www.dropbox.com/scl/fi/02rnz5g1l8stu79je7dgv/WhatsApp-Video-2026-05-24-at-07.48.11.mp4?rlkey=h6zet3o9icmqzxnd17qh12rty&st=dhf16m44&raw=1#t=0.001" },
+    { src: "https://dl.dropboxusercontent.com/scl/fi/6z357cmvsg5d30o5aytzo/video2.mp4?rlkey=tt6yo42tgri5b26k6xoos17np&st=hti99d3n&raw=1#t=0.001" },
+    { src: "https://dl.dropboxusercontent.com/scl/fi/4ubhthtxgh7mpa8pf9ed0/Video3.MOV?rlkey=9g68kq025s1vl9sjofxor7ebp&st=9f2vtaen&raw=1#t=0.001" },
+    { src: "https://dl.dropboxusercontent.com/scl/fi/rlq252xzf1j7z7qavl9vt/copy_0367DA55-75EF-4BC0-BBFE-6EE52390201F.mov?rlkey=p7lfon4mk979ym8yv1k5rjn7t&st=rk4bsnot&raw=1#t=0.001" },
+    { src: "https://dl.dropboxusercontent.com/scl/fi/61fb3xkvs1nn9d61bm2fu/69FDC1CB-BAF4-4A6C-8175-ACFA41FF4BEE.mov?rlkey=z4gg57jro2yxd1xnyk40epo59&st=vscomhub&raw=1#t=0.001" },
+    { src: "https://dl.dropboxusercontent.com/scl/fi/8m6voxpzsjag58tkim79x/20250203_174554.mp4?rlkey=bcnvrreit05nucdvsmik7ilwi&st=2se1apom&raw=1#t=0.001" },
+    { src: "https://dl.dropboxusercontent.com/scl/fi/ilrdpifigx4nwlpowg1ro/IMG_0907.MOV?rlkey=qigo16d35c10qfotisvynijuz&st=9awuxl5s&raw=1#t=0.001" },
+    { src: "https://dl.dropboxusercontent.com/scl/fi/qnh2am25s2486kayg8h5e/20250216_115532.mp4?rlkey=b2v2e0rtttx2a0xg80b85banh&st=na70meot&raw=1", poster: "https://drive.google.com/uc?export=view&id=1JQmS-xo6dTGiT5_d9jQK52hhDJFTIdXn" }
+  ];
 
-    function popularCarrossel() {
-      const container1 = document.getElementById('fotos-row-1');
-      const container2 = document.getElementById('fotos-row-2');
-      const containerV = document.getElementById('videos-row');
-      const containerBday = document.getElementById('bday-posters-container');
+  function popularCarrossel() {
+    const container1 = document.getElementById('fotos-row-1');
+    const container2 = document.getElementById('fotos-row-2');
+    const containerV = document.getElementById('videos-row');
+    const containerBday = document.getElementById('bday-posters-container');
 
-      container1.innerHTML = '';
-      container2.innerHTML = '';
-      containerV.innerHTML = '';
-      if(containerBday) containerBday.innerHTML = '';
+    if (container1) container1.innerHTML = '';
+    if (container2) container2.innerHTML = '';
+    if (containerV) containerV.innerHTML = '';
+    if (containerBday) containerBday.innerHTML = '';
 
-      // Adiciona as fotos exclusivas apenas na tela de aniversário
-      if(containerBday) {
-        fotosAniversario.forEach(foto => {
-          const img = document.createElement('img');
-          img.src = `assets/${foto}`;
-          img.className = 'poster gallery-item';
-          img.setAttribute('data-type', 'image');
-          img.addEventListener('click', () => abrirMedia(img));
-          containerBday.appendChild(img);
-        });
-      }
+    if (containerBday) {
+      fotosAniversario.forEach(foto => {
+        const img = document.createElement('img');
+        img.src = `assets/${foto}`;
+        img.className = 'poster gallery-item';
+        img.setAttribute('data-type', 'image');
+        img.addEventListener('click', () => abrirMedia(img));
+        containerBday.appendChild(img);
+      });
+    }
 
+    if (container1) {
       fotosFileira1.forEach((foto) => {
         const img = document.createElement('img');
         img.src = `assets/${foto}`;
@@ -1166,7 +1237,9 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         img.addEventListener('click', () => abrirMedia(img));
         container1.appendChild(img);
       });
+    }
 
+    if (container2) {
       fotosFileira2.forEach(foto => {
         const img = document.createElement('img');
         img.src = `assets/${foto}`;
@@ -1175,7 +1248,9 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         img.addEventListener('click', () => abrirMedia(img));
         container2.appendChild(img);
       });
+    }
 
+    if (containerV) {
       videosCarrossel.forEach((videoObj) => {
         const video = document.createElement('video');
         video.className = 'poster gallery-item';
@@ -1183,7 +1258,7 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         video.muted = true;
         video.loop = true;
         video.playsInline = true;
-        if(videoObj.poster) { video.setAttribute('poster', videoObj.poster); }
+        if (videoObj.poster) video.setAttribute('poster', videoObj.poster);
         
         const source = document.createElement('source');
         source.src = videoObj.src;
@@ -1196,80 +1271,91 @@ Te amo, amor da minha vida! 👩‍❤️‍👨
         containerV.appendChild(video);
       });
     }
+  }
 
-    popularCarrossel();
+  popularCarrossel();
 
-    // ==== LÓGICA DA PÁGINA "TODAS AS FOTOS" ====
-    function abrirGaleriaCompleta() {
-      const paginaGaleria = document.getElementById('pagina-galeria');
-      const gridFotos = document.getElementById('grid-de-fotos');
-      
-      gridFotos.innerHTML = ''; 
-      // Agora inclui as fotos do aniversário na lista de "Todas as Fotos"
-      const todasFotos = [...new Set([...fotosFileira1, ...fotosFileira2, ...fotosAniversario])];
+  function abrirGaleriaCompleta() {
+    const paginaGaleria = document.getElementById('pagina-galeria');
+    const gridFotos = document.getElementById('grid-de-fotos');
+    if (!paginaGaleria || !gridFotos) return;
+    
+    gridFotos.innerHTML = ''; 
+    const todasFotos = [...new Set([...fotosFileira1, ...fotosFileira2, ...fotosAniversario])];
 
-      todasFotos.forEach(foto => {
-        const img = document.createElement('img');
-        img.src = `assets/${foto}`;
-        img.className = 'gallery-item'; 
-        img.setAttribute('data-type', 'image');
-        img.addEventListener('click', () => abrirMedia(img));
-        gridFotos.appendChild(img);
-      });
+    todasFotos.forEach(foto => {
+      const img = document.createElement('img');
+      img.src = `assets/${foto}`;
+      img.className = 'gallery-item'; 
+      img.setAttribute('data-type', 'image');
+      img.addEventListener('click', () => abrirMedia(img));
+      gridFotos.appendChild(img);
+    });
 
-      paginaGaleria.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; 
+    paginaGaleria.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; 
+  }
+
+  function fecharGaleria() {
+    const paginaGaleria = document.getElementById('pagina-galeria');
+    if (paginaGaleria) {
+      paginaGaleria.style.display = 'none';
+      document.body.style.overflow = 'auto'; 
     }
+  }
 
-    function fecharGaleria() {
-      const paginaGaleria = document.getElementById('pagina-galeria');
-      if(paginaGaleria) {
-        paginaGaleria.style.display = 'none';
-        document.body.style.overflow = 'auto'; 
-      }
+  function updateCounter() {
+    const dataInicio = new Date(2024, 9, 14, 0, 0, 0); 
+    const dataAtual = new Date();
+
+    let anos = dataAtual.getFullYear() - dataInicio.getFullYear();
+    let meses = dataAtual.getMonth() - dataInicio.getMonth();
+    let dias = dataAtual.getDate() - dataInicio.getDate();
+    let horas = dataAtual.getHours() - dataInicio.getHours();
+    let minutos = dataAtual.getMinutes() - dataInicio.getMinutes();
+    let segundos = dataAtual.getSeconds() - dataInicio.getSeconds();
+
+    if (segundos < 0) { segundos += 60; minutos--; }
+    if (minutos < 0) { minutos += 60; horas--; }
+    if (horas < 0) { horas += 24; dias--; }
+    
+    if (dias < 0) {
+      let ultimoDiaMesAnterior = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 0).getDate();
+      dias += ultimoDiaMesAnterior;
+      meses--;
     }
+    
+    if (meses < 0) { meses += 12; anos--; }
 
-    // ==== LÓGICA DO CONTADOR DE TEMPO ====
-    function updateCounter() {
-      const dataInicio = new Date(2024, 9, 14, 0, 0, 0); 
-      const dataAtual = new Date();
+    const elYears = document.getElementById('years');
+    const elMonths = document.getElementById('months');
+    const elDays = document.getElementById('days');
+    const elHours = document.getElementById('hours');
+    const elMinutes = document.getElementById('minutes');
+    const elSeconds = document.getElementById('seconds');
 
-      let anos = dataAtual.getFullYear() - dataInicio.getFullYear();
-      let meses = dataAtual.getMonth() - dataInicio.getMonth();
-      let dias = dataAtual.getDate() - dataInicio.getDate();
-      let horas = dataAtual.getHours() - dataInicio.getHours();
-      let minutos = dataAtual.getMinutes() - dataInicio.getMinutes();
-      let segundos = dataAtual.getSeconds() - dataInicio.getSeconds();
+    if (elYears) elYears.innerText = anos;
+    if (elMonths) elMonths.innerText = meses;
+    if (elDays) elDays.innerText = dias;
+    if (elHours) elHours.innerText = horas;
+    if (elMinutes) elMinutes.innerText = minutos;
+    if (elSeconds) elSeconds.innerText = segundos;
 
-      if (segundos < 0) { segundos += 60; minutos--; }
-      if (minutos < 0) { minutos += 60; horas--; }
-      if (horas < 0) { horas += 24; dias--; }
-      
-      if (dias < 0) {
-        let ultimoDiaMesAnterior = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 0).getDate();
-        dias += ultimoDiaMesAnterior;
-        meses--;
-      }
-      
-      if (meses < 0) { meses += 12; anos--; }
+    const lblYears = document.getElementById('label-years');
+    const lblMonths = document.getElementById('label-months');
+    const lblDays = document.getElementById('label-days');
+    const lblHours = document.getElementById('label-hours');
+    const lblMinutes = document.getElementById('label-minutes');
+    const lblSeconds = document.getElementById('label-seconds');
 
-      document.getElementById('years').innerText = anos;
-      document.getElementById('months').innerText = meses;
-      document.getElementById('days').innerText = dias;
-      document.getElementById('hours').innerText = horas;
-      document.getElementById('minutes').innerText = minutos;
-      document.getElementById('seconds').innerText = segundos;
+    if (lblYears) lblYears.innerText = anos === 1 ? 'Ano' : 'Anos';
+    if (lblMonths) lblMonths.innerText = meses === 1 ? 'Mês' : 'Meses';
+    if (lblDays) lblDays.innerText = dias === 1 ? 'Dia' : 'Dias';
+    if (lblHours) lblHours.innerText = horas === 1 ? 'Hora' : 'Horas';
+    if (lblMinutes) lblMinutes.innerText = minutos === 1 ? 'Minuto' : 'Minutos';
+    if (lblSeconds) lblSeconds.innerText = segundos === 1 ? 'Segundo' : 'Segundos';
+  }
 
-      document.getElementById('label-years').innerText = anos === 1 ? 'Ano' : 'Anos';
-      document.getElementById('label-months').innerText = meses === 1 ? 'Mês' : 'Meses';
-      document.getElementById('label-days').innerText = dias === 1 ? 'Dia' : 'Dias';
-      document.getElementById('label-hours').innerText = horas === 1 ? 'Hora' : 'Horas';
-      document.getElementById('label-minutes').innerText = minutos === 1 ? 'Minuto' : 'Minutos';
-      document.getElementById('label-seconds').innerText = segundos === 1 ? 'Segundo' : 'Segundos';
-    }
-
-    updateCounter();
-    setInterval(updateCounter, 1000);
-  </script>
-</body>
-</html>
+  updateCounter();
+  setInterval(updateCounter, 1000);
+</script>
